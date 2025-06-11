@@ -87,3 +87,4 @@
 
 # GitHub 언어 인식 오버라이드
 *.m linguist-language=C#
+*.wlt linguist-detectable=false
