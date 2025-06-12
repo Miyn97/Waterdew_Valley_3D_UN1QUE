@@ -1,18 +1,18 @@
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class SharkController : MonoBehaviour
+public class SharkController : EnemyController
 {
-    // Start is called before the first frame update
-    void Start()
+    public override void Attack(Transform target)
     {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
+        if (target.CompareTag("Player"))
+        {
+            //target.GetComponent<PlayerHealth>()?.TakeDamage(20f);
+        }
+        else if (target.CompareTag("Raft"))
+        {
+            //target.GetComponent<RaftHealth>()?.TakeDamage(10f);
+        }
     }
 }

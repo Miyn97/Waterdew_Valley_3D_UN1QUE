@@ -4,7 +4,7 @@ using UnityEngine;
 
 public interface IEnemyState
 {
-    void Enter();
-    void Update();
-    void Exit();
+    void Enter(EnemyController enemy);
+    void Update(EnemyController enemy);
+    void Exit(EnemyController enemy);
 }
