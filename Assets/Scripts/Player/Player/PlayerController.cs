@@ -1,102 +1,134 @@
 ﻿using UnityEngine;
 
-// 입력 처리 및 이동 + 달리기 + 점프 제어를 담당하는 컴포넌트
+// 플레이어의 이동 및 점프 처리를 담당하는 컴포넌트
 public class PlayerController : MonoBehaviour
 {
     [Header("이동 설정")]
-    [SerializeField] private float walkSpeed = 5f;              // 기본 걷기 속도 설정
-    [SerializeField] private float runSpeed = 8f;               // Shift 키 입력 시 적용될 달리기 속도 설정
-    [SerializeField] private float jumpPower = 8f;              // 점프 시 y축으로 상승할 초기 속도 값
-    [SerializeField] private float gravity = -20f;              // 중력 가속도 값 (음수 방향으로 작용)
+    [SerializeField] private float walkSpeed = 5f; // 기본 걷기 속도 설정
+    [SerializeField] private float runSpeed = 8f; // Shift 키 입력 시 적용될 달리기 속도 설정
+    [SerializeField] private float jumpPower = 8f; // 점프 시 상승 초기 속도
+    [SerializeField] private float gravity = -20f; // 중력 가속도 설정 (음수)
 
     [Header("점프 설정")]
-    [SerializeField] private float jumpBufferTime = 0.2f;       // 점프 유예 시간 (버퍼) 설정
-    private float jumpBufferCounter = 0f;                       // 현재 프레임 기준으로 남은 점프 버퍼 시간
+    [SerializeField] private float jumpBufferTime = 0.2f; // 점프 유예 시간 설정 (0.2초)
+    private float jumpBufferCounter = 0f; // 현재 프레임 기준 남은 점프 버퍼 시간
 
-    private CharacterController characterController;            // Unity 내장 이동 및 충돌 처리를 위한 컴포넌트 참조
-    private Vector3 moveInput;                                  // 현재 프레임의 수평 이동 입력 방향 값
-    private float verticalVelocity;                             // 수직 방향 이동 속도 (점프 및 중력 처리에 사용)
+    private CharacterController characterController; // 충돌 및 이동 제어용 CharacterController
+    private Vector3 moveInput = Vector3.zero; // 매 프레임 수평 입력 방향을 저장
+    private float verticalVelocity = 0f; // 수직 이동 속도 저장용 (점프/낙하 처리)
+
+    private Camera activeCamera; // 현재 이동 방향 기준이 되는 카메라 캐싱용 참조
 
     private void Awake()
     {
-        characterController = GetComponent<CharacterController>(); // 현재 GameObject에 부착된 CharacterController를 캐싱
+        characterController = GetComponent<CharacterController>(); // CharacterController 컴포넌트 캐싱
+    }
+
+    private void Start()
+    {
+        activeCamera = Camera.main; // 초기 활성 카메라는 MainCamera로 설정
+    }
+
+    private void Update()
+    {
+        // 현재 활성화된 카메라를 매 프레임 기준으로 감지하여 교체
+        Camera mainCam = GameObject.FindWithTag("MainCamera")?.GetComponent<Camera>(); // MainCamera 탐색
+        Camera subCam = GameObject.FindWithTag("SubCamera")?.GetComponent<Camera>(); // SubCamera 탐색
+
+        // 둘 중 활성화된 카메라로 activeCamera 갱신
+        if (mainCam != null && mainCam.enabled)
+            activeCamera = mainCam;
+        else if (subCam != null && subCam.enabled)
+            activeCamera = subCam;
     }
 
     public void ReadMoveInput()
     {
-        float h = Input.GetAxisRaw("Horizontal"); // 좌우 방향키 입력 감지 (A/D)
-        float v = Input.GetAxisRaw("Vertical");   // 전후 방향키 입력 감지 (W/S)
-        moveInput = new Vector3(h, 0f, v).normalized; // 입력 벡터 정규화
+        float h = Input.GetAxisRaw("Horizontal"); // A/D 입력 감지
+        float v = Input.GetAxisRaw("Vertical");   // W/S 입력 감지
 
-        if (moveInput.sqrMagnitude > 0.01f) // 미세 입력 제외
-            transform.forward = moveInput; // 방향에 따라 회전
+        if (activeCamera == null)
+        {
+            moveInput = Vector3.zero; // 카메라가 없으면 이동 없음 처리
+            return;
+        }
 
-        if (Input.GetKeyDown(KeyCode.Space)) // Space 키가 눌렸을 경우
-            jumpBufferCounter = jumpBufferTime; // 점프 유예 시간 초기화
+        Vector3 camForward = activeCamera.transform.forward; // 카메라 기준 전방 벡터
+        Vector3 camRight = activeCamera.transform.right;     // 카메라 기준 우측 벡터
 
-        if (jumpBufferCounter > 0f) // 점프 유예 시간이 남아있다면
-            jumpBufferCounter -= Time.deltaTime; // 감소시킴
+        camForward.y = 0f; // 수직 방향 제거
+        camRight.y = 0f;
+        camForward.Normalize(); // 정규화 (길이 1)
+        camRight.Normalize();
+
+        Vector3 moveDir = camForward * v + camRight * h; // 방향 계산: 카메라 기준 forward/back + right/left
+        moveInput = moveDir.normalized; // 방향 벡터를 정규화하여 캐싱
+
+        if (moveInput.sqrMagnitude > 0.01f)
+            transform.forward = moveInput; // 캐릭터가 이동 방향을 바라보도록 회전
+
+        if (Input.GetKeyDown(KeyCode.Space))
+            jumpBufferCounter = jumpBufferTime; // 점프 유예 시간 시작
     }
 
     public void Move()
     {
-        float speed = Input.GetKey(KeyCode.LeftShift) ? runSpeed : walkSpeed; // Shift 여부로 속도 결정
+        float speed = Input.GetKey(KeyCode.LeftShift) ? runSpeed : walkSpeed; // 걷기/달리기 속도 선택
         Vector3 horizontalMove = moveInput * speed; // 수평 이동 벡터 계산
 
         if (characterController.isGrounded)
         {
-            if (IsJumpBuffered()) // 여기에 jumpBuffer 확인 조건 명시
+            if (IsJumpBuffered()) // 점프 유예 시간이 남아있는 경우
             {
-                verticalVelocity = jumpPower;
-                jumpBufferCounter = 0f;
+                verticalVelocity = jumpPower; // 수직 속도에 점프력 적용
+                jumpBufferCounter = 0f;       // 점프 요청 초기화
             }
             else if (verticalVelocity < 0f)
             {
-                verticalVelocity = -2f;
+                verticalVelocity = -2f; // 접지 유지용 미세 하향 속도 적용
             }
         }
-        else // 공중 상태일 경우
+        else
         {
-            verticalVelocity += gravity * Time.deltaTime; // 중력 누적 적용
+            verticalVelocity += gravity * Time.deltaTime; // 중력에 따라 수직 속도 누적
         }
 
         Vector3 verticalMove = Vector3.up * verticalVelocity; // 수직 이동 벡터 계산
-        Vector3 finalMove = horizontalMove + verticalMove;    // 최종 이동 벡터 합산
+        Vector3 finalMove = horizontalMove + verticalMove; // 전체 이동 벡터 합산
 
-        if (finalMove.y > -0.001f && finalMove.y < 0.001f) // 수직 이동이 너무 작으면
-            finalMove.y = -0.001f; // 최소 이동값 강제 적용 (접지 판단 보정)
+        if (finalMove.y > -0.001f && finalMove.y < 0.001f)
+            finalMove.y = -0.001f; // 접지 판정이 끊기지 않도록 최소 y값 보정
 
-        characterController.Move(finalMove * Time.deltaTime); // 이동 실행 (시간 보정 포함)
+        characterController.Move(finalMove * Time.deltaTime); // 실제 이동 실행 (시간 보정 포함)
     }
 
     public bool HasMovementInput()
     {
-        return moveInput.sqrMagnitude > 0.01f; // 이동 입력 유무 반환
+        return moveInput.sqrMagnitude > 0.01f; // 방향 입력이 존재하는지 반환
     }
 
     public bool IsJumping()
     {
-        return !characterController.isGrounded && verticalVelocity > 0.1f; // 공중에서 상승 중이면 점프 상태
+        return !characterController.isGrounded && verticalVelocity > 0.1f; // 상승 중이면 점프 상태로 간주
     }
 
     public bool IsFalling()
     {
-        return !characterController.isGrounded && verticalVelocity < -0.1f; // 공중에서 하강 중이면 true
+        return !characterController.isGrounded && verticalVelocity < -0.1f; // 하강 중이면 낙하 상태
     }
 
     public bool IsRunning()
     {
-        return HasMovementInput() && Input.GetKey(KeyCode.LeftShift); // 입력 + Shift 조합일 때만 달리기
+        return HasMovementInput() && Input.GetKey(KeyCode.LeftShift); // 이동 + Shift 입력 시 달리기 상태
     }
 
     public bool IsGrounded()
     {
-        return characterController.isGrounded; // Unity 엔진의 접지 판정 반환
+        return characterController.isGrounded; // CharacterController의 접지 상태 반환
     }
 
     public bool IsJumpBuffered()
     {
-        return jumpBufferCounter > 0f; // 점프 버퍼 유지 여부 반환
+        return jumpBufferCounter > 0f; // 점프 유예 시간 잔여 여부
     }
-
 }
