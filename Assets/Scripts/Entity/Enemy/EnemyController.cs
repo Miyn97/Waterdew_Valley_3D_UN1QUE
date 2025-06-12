@@ -10,13 +10,13 @@ public abstract class EnemyController : MonoBehaviour
     [Header("Stats")]
     public float health = 100f;
     public float moveSpeed = 3f;
-    public float attackRange = 2f;
+    public float attackRange = 0.5f;
 
     [Header("Patrol")]
-    public Transform[] patrolPoints;
-    public bool useRandomPatrol = false;
-    public bool useRandomMove = false;
-    public int patrolIndex = 0;
+    public float patrolRadius = 10f;
+
+    [Header("Detection")]
+    public float detectionRange = 10f;
 
     public Transform player;
     public Transform raft;
@@ -61,4 +61,28 @@ public abstract class EnemyController : MonoBehaviour
     }
 
     public abstract void Attack(Transform target);
+
+    private void OnDrawGizmosSelected() // 감지 범위 시각화(나중에 제거)
+    {
+        Gizmos.color = Color.red;
+        Gizmos.DrawWireSphere(transform.position, detectionRange);
+    }
+
+    public Transform GetTarget()
+    {
+        float playerDist = Vector3.Distance(transform.position, player.position);
+        float raftDist = Vector3.Distance(transform.position, raft.position);
+
+        bool playerInRange = playerDist <= detectionRange;
+        bool raftInRange = raftDist <= detectionRange;
+
+        if (playerInRange && raftInRange)
+        {
+            return isPlayerInWater ? player : raft;
+        }
+        if (playerInRange) return player;
+        if (raftInRange) return raft;
+
+        return null;
+    }
 }

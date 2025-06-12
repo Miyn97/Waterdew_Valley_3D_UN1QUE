@@ -15,20 +15,21 @@ public class EnemyIdleState : IEnemyState
     public void Enter(EnemyController enemy)
     {
         waitTime = Random.Range(2f, 4f);
-        Debug.Log("Enemy: Idle 상태 진입");
+        Debug.Log("Idle 상태 진입");
     }
 
     public void Update(EnemyController enemy)
     {
         waitTime -= Time.deltaTime;
 
-        if (Vector3.Distance(enemy.transform.position, enemy.player.position) < 10f)
+        Transform target = enemy.GetTarget();
+        if (target != null)
         {
             enemy.ChangeState(new EnemyChaseState(enemy));
             return;
         }
 
-        if (waitTime <= 0)
+        if (waitTime <= 0f)
         {
             enemy.ChangeState(new EnemyPatrolState(enemy));
         }
@@ -36,6 +37,6 @@ public class EnemyIdleState : IEnemyState
 
     public void Exit(EnemyController enemy)
     {
-        Debug.Log("Enemy: Idle 상태 종료");
+        Debug.Log("Idle 상태 종료");
     }
 }

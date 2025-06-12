@@ -14,20 +14,32 @@ public class EnemyChaseState : IEnemyState
 
     public void Enter(EnemyController enemy)
     {
-        Debug.Log($"Chase 상태 진입");
+        currentTarget = enemy.GetTarget();
+        Debug.Log($"Chase 상태 진입 → 초기 타겟: {currentTarget?.name}");
     }
 
     public void Update(EnemyController enemy)
     {
-        Transform newTarget = enemy.isPlayerInWater ? enemy.player : enemy.raft;
+        Transform newTarget = enemy.GetTarget();
+
+        if (newTarget == null)
+        {
+            enemy.ChangeState(new EnemyIdleState(enemy));
+            return;
+        }
 
         if (newTarget != currentTarget)
         {
             currentTarget = newTarget;
-            Debug.Log($"[Chase] 타겟 변경: {currentTarget.name}");
+            Debug.Log($"Chase 타겟 변경 → {currentTarget.name}");
         }
 
-        if (currentTarget == null) return;
+        float distance = Vector3.Distance(enemy.transform.position, currentTarget.position);
+        if (distance > enemy.detectionRange * 1.2f)
+        {
+            enemy.ChangeState(new EnemyIdleState(enemy));
+            return;
+        }
 
         enemy.transform.position = Vector3.MoveTowards(
             enemy.transform.position,
@@ -35,7 +47,6 @@ public class EnemyChaseState : IEnemyState
             enemy.moveSpeed * Time.deltaTime
         );
 
-        float distance = Vector3.Distance(enemy.transform.position, currentTarget.position);
         if (distance <= enemy.attackRange)
         {
             enemy.ChangeState(new SharkAttackState(enemy, currentTarget));

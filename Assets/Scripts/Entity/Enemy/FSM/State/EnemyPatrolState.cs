@@ -5,70 +5,53 @@ using UnityEngine;
 public class EnemyPatrolState : IEnemyState
 {
     private EnemyController enemy;
-    private Transform targetPoint;
+    private Vector3 targetPosition;
+    private float patrolRadius = 10f;
     private float patrolSpeed;
 
     public EnemyPatrolState(EnemyController enemy)
     {
         this.enemy = enemy;
-        patrolSpeed = enemy.moveSpeed * 0.7f; // 순찰은 살짝 느리게
+        patrolSpeed = enemy.moveSpeed * 0.7f;
     }
 
     public void Enter(EnemyController enemy)
     {
-        SelectNextPoint();
-        Debug.Log("Enemy: Patrol 상태 진입");
+        SetRandomTarget();
+        Debug.Log("Patrol 상태 진입: 랜덤 위치로 이동");
     }
 
     public void Update(EnemyController enemy)
     {
-        if (targetPoint == null)
-        {
-            enemy.ChangeState(new EnemyIdleState(enemy));
-            return;
-        }
-
         enemy.transform.position = Vector3.MoveTowards(
             enemy.transform.position,
-            targetPoint.position,
+            targetPosition,
             patrolSpeed * Time.deltaTime
         );
 
-        float dist = Vector3.Distance(enemy.transform.position, targetPoint.position);
+        float dist = Vector3.Distance(enemy.transform.position, targetPosition);
         if (dist < 0.5f)
         {
-            SelectNextPoint();
+            SetRandomTarget();
         }
 
-        // 플레이어 발견 시 추적 상태로 전환
-        if (Vector3.Distance(enemy.transform.position, enemy.player.position) < 10f)
+        // 감지 범위 안에 유효한 타겟이 있는지 확인
+        Transform target = enemy.GetTarget();
+        if (target != null)
         {
-            enemy.ChangeState(new EnemyPatrolState(enemy));
+            enemy.ChangeState(new EnemyChaseState(enemy));
         }
     }
 
     public void Exit(EnemyController enemy)
     {
-        Debug.Log("Enemy: Patrol 상태 종료");
+        Debug.Log("Patrol 상태 종료");
     }
 
-    private void SelectNextPoint()
+    private void SetRandomTarget()
     {
-        if (enemy.patrolPoints == null || enemy.patrolPoints.Length == 0)
-        {
-            Debug.LogWarning("Patrol 지점이 설정되지 않았습니다.");
-            targetPoint = null;
-            return;
-        }
-
-        if (enemy.useRandomPatrol)
-        {
-            targetPoint = enemy.patrolPoints[Random.Range(0, enemy.patrolPoints.Length)];
-        }
-        else
-        {
-            targetPoint = enemy.patrolPoints[enemy.patrolIndex % enemy.patrolPoints.Length];
-            enemy.patrolIndex++;
-        }
+        Vector2 randomOffset = Random.insideUnitCircle * patrolRadius;
+        Vector3 origin = enemy.transform.position;
+        targetPosition = new Vector3(origin.x + randomOffset.x, origin.y, origin.z + randomOffset.y);
     }
 }
