@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8065336c727174945b4f9033a9283ad6, type: 3}
   m_Name: Wood
   m_EditorClassIdentifier: 
-  itemName: Wood Panel
+  itemName: "\uB098\uBB34 \uC870\uAC01"
   icon: {fileID: 10907, guid: 0000000000000000f000000000000000, type: 0}
   prefab: {fileID: 7621906687189131974, guid: 2de04ffd770cc0145a38baf8f89055d5, type: 3}
   type: 0
