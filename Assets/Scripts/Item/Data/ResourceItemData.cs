@@ -2,17 +2,11 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ResourceItemData : MonoBehaviour
+[CreateAssetMenu(menuName = "Item/Resource")]
+public class ResourceItemData : ItemBaseData
 {
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
+    [Header("Resource 속성")]
+    public string resourceType;
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
+    // 확장 가능
 }
