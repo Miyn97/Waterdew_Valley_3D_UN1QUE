@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 
 using UnityEngine;
 
@@ -54,7 +55,15 @@ public class BuildManager : MonoBehaviour
             Vector2Int gridPos = WorldToGrid(mousePos);
             bool valid = ship.GetBuildablePositions().Contains(gridPos);
 
-            currentPreview.SetPosition(GridToWorld(gridPos));
+            if (valid)
+            {
+                currentPreview.SetPosition(GridToWorld(gridPos), ship.GetComponent<Collider>()); // ship에 Collider 있다고 가정
+            }
+            else
+            {
+                currentPreview.SetPosition(mousePos, null);
+            }
+
             currentPreview.SetValid(valid);
         }
         else // 빌딩 설치 모드
@@ -62,16 +71,19 @@ public class BuildManager : MonoBehaviour
             IBuildableSurface surface = GetSurfaceUnderMouse();
             if (surface != null && surface.CanBuildHere(mousePos))
             {
-                currentPreview.SetPosition(surface.GetSnappedPosition(mousePos));
+                Vector3 snappedPos = surface.GetSnappedPosition(mousePos);
+                Collider surfaceCol = (surface as MonoBehaviour)?.GetComponent<Collider>(); // 안전하게 캐스팅
+                currentPreview.SetPosition(snappedPos, surfaceCol);
                 currentPreview.SetValid(true);
             }
             else
             {
-                currentPreview.SetPosition(mousePos);
+                currentPreview.SetPosition(mousePos, null);
                 currentPreview.SetValid(false);
             }
         }
     }
+
 
     void HandlePlacement()
     {
@@ -79,26 +91,28 @@ public class BuildManager : MonoBehaviour
 
         if (Input.GetMouseButtonDown(0))
         {
-            Vector3 placePos = currentPreview.transform.position;
+            Vector3 mousePos = GetMouseWorldPosition();
 
-            if (datas.IndexOf(currentData) == 0) // 타일
+            if (datas.IndexOf(currentData) == 0)    // 타일 설치
             {
-                Vector2Int gridPos = WorldToGrid(placePos);
+                Vector2Int gridPos = WorldToGrid(mousePos);
                 if (ship.GetBuildablePositions().Contains(gridPos))
                 {
-                    GameObject tile = Instantiate(currentData.prefab, placePos, Quaternion.identity, ship.transform);
+                    Vector3 spawnPos = GridToWorld(gridPos);
+                    GameObject tile = Instantiate(currentData.prefab, spawnPos, Quaternion.identity, ship.transform);
                     Tile tileScript = tile.GetComponent<Tile>();
                     tileScript.gridPosition = gridPos;
                     ship.RegisterTile(gridPos, tileScript);
                 }
             }
-            else // 빌딩
+            else    // 건물 오브젝트 설치
             {
                 IBuildableSurface surface = GetSurfaceUnderMouse();
-                if (surface != null && surface.CanBuildHere(placePos))
+                if (surface != null && surface.CanBuildHere(mousePos))
                 {
-                    Instantiate(currentData.prefab, surface.GetSnappedPosition(placePos), Quaternion.identity);
-                    surface.RegisterBuild(placePos);
+                    Vector3 snapped = surface.GetSnappedPosition(mousePos);
+                    Instantiate(currentData.prefab, currentPreview.transform.position, Quaternion.identity); // 정확한 높이는 프리뷰 기준으로 이미 맞춰짐
+                    surface.RegisterBuild(snapped);
                 }
             }
         }
