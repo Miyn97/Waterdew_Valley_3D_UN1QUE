@@ -12,8 +12,15 @@ public class ItemPickup : MonoBehaviour
         if(other.CompareTag("Player"))
         {
             var inventory = other.GetComponent<Inventory>();
-            inventory.AddItem(itemData, quantity);
-            Destroy(gameObject);
+            if (inventory != null)
+            {
+                inventory.AddItem(itemData, quantity);
+
+                var ui = FindObjectOfType<UIInventory>();
+                if (ui != null) ui.Refresh();
+
+                Destroy(gameObject);
+            }
         }
     }
 }

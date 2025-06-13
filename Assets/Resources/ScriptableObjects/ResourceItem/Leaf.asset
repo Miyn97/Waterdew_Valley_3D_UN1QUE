@@ -10,12 +10,12 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 8065336c727174945b4f9033a9283ad6, type: 3}
-  m_Name: Plastic
+  m_Name: Leaf
   m_EditorClassIdentifier: 
-  itemName: "\uD50C\uB77C\uC2A4\uD2F1"
+  itemName: "\uC57C\uC790\uB098\uBB34 \uC78E"
   icon: {fileID: 10905, guid: 0000000000000000f000000000000000, type: 0}
-  prefab: {fileID: 1536861494303110378, guid: 353060541fb14a9498a19804605ebee7, type: 3}
+  prefab: {fileID: 607729075430925667, guid: 83ddfeb7fe4840544b4fc4c09376336f, type: 3}
   type: 0
   isStackable: 1
   maxStack: 99
-  resourceType: Plastic
+  resourceType: Leaf
