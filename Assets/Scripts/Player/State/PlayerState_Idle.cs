@@ -13,6 +13,14 @@ public class PlayerState_Idle : IState
     public void Enter()
     {
         EventBus.SubscribeVoid("OnMoveStart", OnMoveStart); // 이동 시작 이벤트 구독 등록
+
+        // 수영 중인 상태에서 Idle 상태 진입을 방지
+        if (!player.Controller.IsGrounded()) // 접지되지 않은 경우 수영 상태로 강제 전환
+        {
+            player.FSM.ChangeState(PlayerStateType.Swim);
+            return;
+        }
+
         player.AnimatorWrapper.SetMove(false); // Idle 상태 진입 시 애니메이션에서 이동 상태 false 설정
     }
 
@@ -20,8 +28,9 @@ public class PlayerState_Idle : IState
     {
         player.Controller.ReadMoveInput(); // 방향 및 점프 입력 처리
 
-        // 이동 입력이 있거나 점프 키(Space)가 눌렸을 경우 상태 전환
-        if (player.Controller.HasMovementInput() || Input.GetKeyDown(KeyCode.Space))
+        // 지면에 있을 때만 이동 상태로 전환 가능하도록 조건 추가
+        if (player.Controller.IsGrounded() &&
+            (player.Controller.HasMovementInput() || Input.GetKeyDown(KeyCode.Space)))
         {
             EventBus.PublishVoid("OnMoveStart"); // 이동 시작 이벤트 발행 → FSM 상태 전환 트리거
         }
@@ -35,8 +44,7 @@ public class PlayerState_Idle : IState
         // 마우스 좌클릭 입력 (왼쪽 버튼)
         if (Input.GetMouseButtonDown(0))
         {
-            player.FSM.ChangeState(PlayerStateType.Attack); // 예: 공격 상태
-                                                            // 또는 낚시 FSM 전환: player.FSM.ChangeState(PlayerStateType.Fish);
+            player.FSM.ChangeState(PlayerStateType.Attack); // 공격 상태로 전환
         }
     }
 
@@ -54,6 +62,6 @@ public class PlayerState_Idle : IState
 
     private void OnMoveStart()
     {
-        player.FSM.ChangeState(PlayerStateType.Move); // FSM 상태를 Move로 전환 (기존: new PlayerState_Move)
+        player.FSM.ChangeState(PlayerStateType.Move); // FSM 상태를 Move로 전환
     }
 }

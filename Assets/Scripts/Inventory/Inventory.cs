@@ -18,70 +18,40 @@ public class Inventory : MonoBehaviour
 
     public List<InventorySlot> slots = new List<InventorySlot>();
 
-    public void AddItem(ItemBaseData item, int amount = 1)
+    public bool AddItem(ItemBaseData item, int amount = 1)
     {
-        InventorySlot foundSlot = null;
-
-        // 슬롯 순회해서 같은 아이템이 있는지 찾기
-        foreach (InventorySlot slot in slots)
+        foreach (var slot in slots)
         {
-            if (slot.itemData == item)
+            if (slot.itemData == item && item.IsStackable)
             {
-                foundSlot = slot;
-                break;
+                slot.quantity += amount;
+                return true;
             }
         }
 
-        if (foundSlot != null)
-        {
-            foundSlot.quantity += amount;
-            Debug.Log($"[인벤토리] {item.ItemName} 수량 증가 → {foundSlot.quantity}");
-        }
-        else
-        {
-            slots.Add(new InventorySlot(item, amount));
-            Debug.Log($"[인벤토리] {item.ItemName} 추가됨 → 수량: {amount}");
-        }
+        slots.Add(new InventorySlot(item, amount));
+        return true;
     }
 
-    public void UseItem(ItemBaseData item)
+    public bool UseItem(ItemBaseData item)
     {
-        InventorySlot foundSlot = null;
-
-        // 슬롯에서 해당 아이템 찾기
-        foreach (InventorySlot slot in slots)
+        foreach (var slot in slots)
         {
-            if (slot.itemData == item)
+            if (slot.itemData == item && slot.quantity > 0)
             {
-                foundSlot = slot;
-                break;
+                if (item is IUsable usable)
+                {
+                    usable.Use(gameObject);
+                }
+
+                slot.quantity--;
+                if (slot.quantity <= 0)
+                    slots.Remove(slot);
+
+                return true;
             }
         }
 
-        if (foundSlot == null || foundSlot.quantity <= 0)
-        {
-            Debug.Log($"[인벤토리] {item.ItemName} 없음");
-            return;
-        }
-
-        if (item is IUsable usable)
-        {
-            usable.Use(gameObject); // 플레이어에게 효과 적용
-            foundSlot.quantity--;
-
-            if (foundSlot.quantity <= 0)
-            {
-                slots.Remove(foundSlot);
-                Debug.Log($"[인벤토리] {item.ItemName} 모두 사용됨 → 슬롯 제거");
-            }
-            else
-            {
-                Debug.Log($"[인벤토리] {item.ItemName} 사용됨 → 남은 수량: {foundSlot.quantity}");
-            }
-        }
-        else
-        {
-            Debug.Log($"[인벤토리] {item.ItemName}은(는) 사용할 수 없음");
-        }
+        return false;
     }
 }
