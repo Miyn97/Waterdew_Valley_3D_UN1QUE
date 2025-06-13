@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d8bab4653316d9044a202e4ee1ef87c5, type: 3}
   m_Name: Paddle_Recipe
   m_EditorClassIdentifier: 
+  category: 2
   resultItem: {fileID: 11400000, guid: 1654d8305c0e97247b14e6a96b37f264, type: 2}
   resultQuantity: 1
   requiredItems:

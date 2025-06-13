@@ -11,6 +11,7 @@ public abstract class ItemBaseData : ScriptableObject, IItemData
     [SerializeField] private ItemType type;
     [SerializeField] private bool isStackable = true;
     [SerializeField] private int maxStack = 99;
+    [SerializeField] public string description;
 
     public string ItemName => itemName;
 
@@ -23,4 +24,5 @@ public abstract class ItemBaseData : ScriptableObject, IItemData
     public bool IsStackable => isStackable;
 
     public int MaxStack => maxStack;
+    public string Description => description;
 }

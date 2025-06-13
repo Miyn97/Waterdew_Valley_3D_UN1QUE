@@ -18,4 +18,5 @@ MonoBehaviour:
   type: 1
   isStackable: 0
   maxStack: 1
+  description: 
   slot: 2
