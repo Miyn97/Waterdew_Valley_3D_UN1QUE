@@ -14,12 +14,12 @@ public class Player : MonoBehaviour
 
     private void Awake()
     {
-        FSM = new PlayerFSM(this); // FSM 인스턴스 생성
+        FSM = new PlayerFSM(this); // FSM 인스턴스 생성 및 상태 초기화 준비
     }
 
     private void Start()
     {
-        FSM.ChangeState(new PlayerState_Idle(this)); // 상태 초기 진입
+        FSM.ChangeState(PlayerStateType.Idle); // 상태 초기 진입
     }
 
     private void Update()
@@ -31,4 +31,22 @@ public class Player : MonoBehaviour
     {
         FSM.FixedUpdate(); // 이동 처리 상태용 FixedUpdate 실행
     }
+
+    private void OnEnable()
+    {
+        EventBus.SubscribeVoid("OnPlayerDie", OnPlayerDie); // 사망 이벤트 구독
+    }
+
+    private void OnDisable()
+    {
+        EventBus.UnsubscribeVoid("OnPlayerDie", OnPlayerDie); // 해제
+    }
+
+    private void OnPlayerDie()
+    {
+        //FSM 전환 중 상태가 이미 Dead인 경우 중복 호출될 가능성 방지
+        if (FSM.CurrentStateType != PlayerStateType.Dead)
+            FSM.ChangeState(PlayerStateType.Dead); // FSM 상태를 사망 상태로 변경
+    }
+
 }
