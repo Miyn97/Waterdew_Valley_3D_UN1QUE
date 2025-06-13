@@ -10,10 +10,10 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 252ddf3551864a0459e24459ca04d7fd, type: 3}
-  m_Name: TileData
+  m_Name: OData
   m_EditorClassIdentifier: 
-  objName: "\uD0C0\uC77C"
-  description: "\uADF8\uB0E5 \uD0C0\uC77C"
+  objName: "\uACF5"
+  description: "\uADF8\uB0E5 \uACF5"
   icon: {fileID: 0}
-  prefab: {fileID: 6104728824259346151, guid: 60c1bfb7b54b433478cf1dc559ea2597, type: 3}
-  preview: {fileID: 6104728824259346151, guid: a633d85b7b981b645bae219cd55cadf0, type: 3}
+  prefab: {fileID: 1733416132734880501, guid: ab4deab852ebc6a42bd1bf6fc89e9e2d, type: 3}
+  preview: {fileID: 3589381526465260974, guid: 3087522c6cc5b0f46bf5be682f89202f, type: 3}
