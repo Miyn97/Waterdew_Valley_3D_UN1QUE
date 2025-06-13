@@ -97,7 +97,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ca05261cd4cba8642950b0e563ade9e0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  data: {fileID: 0}
+  data: {fileID: 11400000, guid: 7138c761cea90924885f9fc8f2947cdf, type: 2}
   isOccupied: 0
   gridPosition: {x: 0, y: 0}
 --- !u!114 &728474078615409337
