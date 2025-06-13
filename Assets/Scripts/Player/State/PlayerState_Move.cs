@@ -13,6 +13,14 @@ public class PlayerState_Move : IState
     public void Enter()
     {
         EventBus.SubscribeVoid("OnMoveStop", OnMoveStop); // 이동 멈춤 이벤트에 대한 리스너 등록
+
+        // 수영 중에는 이동 상태 진입을 막고 다시 수영 상태로 전환
+        if (!player.Controller.IsGrounded()) // 접지 상태가 아닌 경우 (물 위에 뜬 경우 포함)
+        {
+            player.FSM.ChangeState(PlayerStateType.Swim); // 잘못된 진입 방지
+            return;
+        }
+
         player.AnimatorWrapper.SetMove(true); // 이동 시작 시 애니메이션 파라미터 활성화
     }
 
@@ -32,14 +40,13 @@ public class PlayerState_Move : IState
         // 갈고리 입력 (임시 Q 키)
         if (Input.GetKeyDown(KeyCode.Q))
         {
-            player.FSM.ChangeState(PlayerStateType.ThrowHook);
+            player.FSM.ChangeState(PlayerStateType.ThrowHook); // 갈고리 상태로 전환
         }
 
         // 마우스 좌클릭 입력 (왼쪽 버튼)
         if (Input.GetMouseButtonDown(0))
         {
-            player.FSM.ChangeState(PlayerStateType.Attack); // 예: 공격 상태
-                                                            // 또는 낚시 FSM 전환: player.FSM.ChangeState(PlayerStateType.Fish);
+            player.FSM.ChangeState(PlayerStateType.Attack); // 공격 상태로 전환
         }
     }
 
