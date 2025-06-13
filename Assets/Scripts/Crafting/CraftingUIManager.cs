@@ -8,9 +8,9 @@ using UnityEngine.UI;
 public class CraftingUIManager : MonoBehaviour
 {
     [Header("UI References")]
-    public Transform categoryBar;                      // 카테고리 버튼 부모
-    public Transform recipeScrollContent;              // 레시피 목록 Content
-    public Transform requireItemScrollContent;         // 재료 목록 Content
+    public Transform categoryBar;                    // 카테고리 버튼 부모
+    public Transform recipeScrollContent;            // 레시피 목록 Content
+    public Transform requireItemScrollContent;       // 재료 목록 Content
 
     public GameObject categoryButtonPrefab;
     public GameObject recipeButtonPrefab;
@@ -19,14 +19,21 @@ public class CraftingUIManager : MonoBehaviour
     public Image recipeIcon;
     public TextMeshProUGUI recipeText;
     public TextMeshProUGUI descriptionText;
-    public Image categoryIconImage;                    // 선택된 카테고리 아이콘
+    public Image categoryIconImage;                  // 선택된 카테고리 아이콘
+    public TextMeshProUGUI categoryText;             // 선택된 카테고리 텍스트
+
+    [Header("Dynamic Panels")]
+    public GameObject recipeListPanel;               // 좌측 레시피 패널 전체
+    public GameObject descriptionPanel;              // 상세 설명 패널 전체
 
     [Header("Data")]
     public List<CraftingRecipe> allRecipes;
-    public List<Sprite> categoryIcons; // enum 순서대로 등록 (Building, Food, Tools, Weapon, Equipment)
+    public List<Sprite> categoryIcons;               // enum 순서대로 등록
 
     private void Start()
     {
+        recipeListPanel.SetActive(false);
+        descriptionPanel.SetActive(false);
         LoadCategoryButtons();
     }
 
@@ -51,22 +58,24 @@ public class CraftingUIManager : MonoBehaviour
     public void OnCategorySelected(CraftCategory category, Sprite categoryIcon)
     {
         categoryIconImage.sprite = categoryIcon;
+        categoryText.text = category.ToString();
 
-        // 기존 레시피 버튼 초기화
+        recipeListPanel.SetActive(true);      // 레시피 목록 활성화
+        descriptionPanel.SetActive(false);    // 설명 패널 초기에는 숨김
+
+        // 기존 레시피 버튼 제거
         foreach (Transform child in recipeScrollContent)
             Destroy(child.gameObject);
 
-        // 선택된 카테고리의 레시피 필터링
+        // 해당 카테고리의 레시피만 필터링
         List<CraftingRecipe> filteredRecipes = new List<CraftingRecipe>();
         foreach (var recipe in allRecipes)
         {
             if (recipe.category == category)
-            {
                 filteredRecipes.Add(recipe);
-            }
         }
 
-        // 버튼 생성
+        // 레시피 버튼 생성
         foreach (var recipe in filteredRecipes)
         {
             GameObject go = Instantiate(recipeButtonPrefab, recipeScrollContent);
@@ -81,6 +90,8 @@ public class CraftingUIManager : MonoBehaviour
 
     public void ShowRecipeDetail(CraftingRecipe recipe)
     {
+        descriptionPanel.SetActive(true);
+
         recipeIcon.sprite = recipe.resultItem.Icon;
         recipeText.text = recipe.resultItem.ItemName;
         descriptionText.text = recipe.resultItem.description;
@@ -89,13 +100,20 @@ public class CraftingUIManager : MonoBehaviour
         foreach (Transform child in requireItemScrollContent)
             Destroy(child.gameObject);
 
-        // 필요 재료 UI 생성
+        // 필요한 재료 표시
         foreach (var req in recipe.requiredItems)
         {
+            if (req.item == null) continue;
+
             GameObject go = Instantiate(requireItemUIPrefab, requireItemScrollContent);
-            go.transform.Find("Icon").GetComponent<Image>().sprite = req.item.Icon;
-            go.transform.Find("Name").GetComponent<TextMeshProUGUI>().text = req.item.ItemName;
-            go.transform.Find("Amount").GetComponent<TextMeshProUGUI>().text = $"x{req.quantity}";
+
+            Transform iconTr = go.transform.Find("Icon");
+            Transform nameTr = go.transform.Find("Name");
+            Transform amountTr = go.transform.Find("Amount");
+
+            if (iconTr != null) iconTr.GetComponent<Image>().sprite = req.item.Icon;
+            if (nameTr != null) nameTr.GetComponent<TextMeshProUGUI>().text = req.item.ItemName;
+            if (amountTr != null) amountTr.GetComponent<TextMeshProUGUI>().text = $"x{req.quantity}";
         }
     }
 }
