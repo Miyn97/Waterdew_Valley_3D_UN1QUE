@@ -16,6 +16,7 @@ public class BuildManager : MonoBehaviour
         HandleNumberKeyInput();
         UpdatePreview();
         HandlePlacement();
+        HandleRotate();
     }
 
     void HandleNumberKeyInput()
@@ -27,6 +28,10 @@ public class BuildManager : MonoBehaviour
         else if (Input.GetKeyDown(KeyCode.Alpha2))
         {
             SetBuildItem(datas[1]);
+        }
+        else if (Input.GetKeyDown(KeyCode.Alpha3))
+        {
+            SetBuildItem(datas[2]);
         }
     }
 
@@ -50,14 +55,14 @@ public class BuildManager : MonoBehaviour
 
         Vector3 mousePos = GetMouseWorldPosition();
 
-        if (datas.IndexOf(currentData) == 0) // 타일 설치 모드
+        if (datas.IndexOf(currentData) == 0) // 타일 관련
         {
             Vector2Int gridPos = WorldToGrid(mousePos);
             bool valid = ship.GetBuildablePositions().Contains(gridPos);
 
             if (valid)
             {
-                currentPreview.SetPosition(GridToWorld(gridPos), ship.GetComponent<Collider>()); // ship에 Collider 있다고 가정
+                currentPreview.SetPosition(GridToWorld(gridPos), ship.GetComponent<Collider>());
             }
             else
             {
@@ -66,7 +71,7 @@ public class BuildManager : MonoBehaviour
 
             currentPreview.SetValid(valid);
         }
-        else // 빌딩 설치 모드
+        else    // 건물 오브젝트 관련
         {
             IBuildableSurface surface = GetSurfaceUnderMouse();
             if (surface != null && surface.CanBuildHere(mousePos))
@@ -83,7 +88,6 @@ public class BuildManager : MonoBehaviour
             }
         }
     }
-
 
     void HandlePlacement()
     {
@@ -111,13 +115,23 @@ public class BuildManager : MonoBehaviour
                 if (surface != null && surface.CanBuildHere(mousePos))
                 {
                     Vector3 snapped = surface.GetSnappedPosition(mousePos);
-                    Instantiate(currentData.prefab, currentPreview.transform.position, Quaternion.identity); // 정확한 높이는 프리뷰 기준으로 이미 맞춰짐
+                    Instantiate(currentData.prefab, currentPreview.transform.position, currentPreview.transform.rotation);
                     surface.RegisterBuild(snapped);
                 }
             }
         }
     }
 
+    // 오른쪽으로 90도 회전
+    void HandleRotate()
+    {
+        if (datas.IndexOf(currentData) != 0 && currentPreview != null && Input.GetKeyDown(KeyCode.R))
+        {
+            currentPreview.RotateClockwise90();
+        }
+    }
+
+    // 타일 전용
     Vector3 GetMouseWorldPosition()
     {
         Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
@@ -128,6 +142,7 @@ public class BuildManager : MonoBehaviour
         return Vector3.zero;
     }
 
+    // 빌딩 전용
     IBuildableSurface GetSurfaceUnderMouse()
     {
         Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);

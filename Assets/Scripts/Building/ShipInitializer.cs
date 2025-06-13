@@ -17,12 +17,9 @@ public class ShipInitializer : MonoBehaviour
         {
             for (int z = 0; z <= 1; z++)
             {
-                Vector3 position = new Vector3(x, 0, z); // y = 0은 바닥 높이
+                Vector3 position = new Vector3(x, 0, z);
                 GameObject tile = Instantiate(tilePrefab, position, Quaternion.identity, shipTransform);
 
-                tile.name = $"Tile_{x}_{z}";
-
-                // 선택사항: 타일 스크립트가 있다면 좌표 저장
                 Tile tileScript = tile.GetComponent<Tile>();
                 if (tileScript != null)
                 {

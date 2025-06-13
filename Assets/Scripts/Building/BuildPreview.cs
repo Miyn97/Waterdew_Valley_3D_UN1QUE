@@ -38,4 +38,9 @@ public class BuildPreview : MonoBehaviour
 
         transform.position = new Vector3(targetPos.x, surfaceTopY + offset, targetPos.z);
     }
+
+    public void RotateClockwise90()
+    {
+        transform.Rotate(0f, 90f, 0f);
+    }
 }

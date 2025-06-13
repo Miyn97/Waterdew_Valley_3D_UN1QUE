@@ -1005,6 +1005,7 @@ MonoBehaviour:
   datas:
   - {fileID: 11400000, guid: 7138c761cea90924885f9fc8f2947cdf, type: 2}
   - {fileID: 11400000, guid: 69e10dd9bcf57d045b8a3fb9a61d2e95, type: 2}
+  - {fileID: 11400000, guid: 3e35c8e5defa6204e809424eacda0da1, type: 2}
   ship: {fileID: 42339437}
 --- !u!4 &1200724716
 Transform:
