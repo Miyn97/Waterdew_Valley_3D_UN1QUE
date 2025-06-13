@@ -115,29 +115,32 @@ public class PlayerController : MonoBehaviour
 
     private void HandleBuoyancy()
     {
-        // 플레이어가 수면 아래에 있을 때만 부력 작동
-        bool isUnderwater = WaterSystem.IsUnderwater(transform.position);
+        float surfaceY = WaterSystem.GetSurfaceY(); // 수면 y 기준값
 
-        // Ctrl로 하강 중이면 강제로 하강 속도 적용
-        if (Input.GetKey(KeyCode.LeftControl))
+        // 수면보다 많이 올라가면 수영 종료 → 점프 상태로 강제 전환
+        if (transform.position.y > surfaceY + 0.8f)
         {
-            verticalVelocity = -swimVerticalSpeed; // 하강
+            EventBus.PublishVoid("ForceSwimToJump"); // 수영 상태 종료 + 점프 전환
+            return; // 이후 부력 처리 중단
         }
-        // Space로 상승 중이면 상승 속도 적용
-        else if (Input.GetKey(KeyCode.Space))
+
+        if (Input.GetKey(KeyCode.Space))
         {
             verticalVelocity = swimVerticalSpeed; // 상승
         }
-        // 아무 키도 안 누르면 부력 적용 (서서히 둥둥 떠오름)
+        else if (Input.GetKey(KeyCode.LeftControl))
+        {
+            verticalVelocity = -swimVerticalSpeed; // 하강
+        }
         else
         {
-            float buoyancy = WaterSystem.CalculateBuoyancy(transform.position); // 위치 기준 부력 계산
-            verticalVelocity = Mathf.Lerp(verticalVelocity, buoyancy, Time.deltaTime * 1.5f); // 부력값에 가까워지도록 감쇠 적용
+            float buoyancy = WaterSystem.CalculateBuoyancy(transform.position);
+            verticalVelocity = Mathf.Lerp(verticalVelocity, buoyancy, Time.deltaTime * 1.5f);
         }
 
-        // 상하 이동 속도 제한
-        verticalVelocity = Mathf.Clamp(verticalVelocity, -3f, 3f); // 위아래 속도 제한
+        verticalVelocity = Mathf.Clamp(verticalVelocity, -3f, 3f); // 속도 제한
     }
+
 
 
     private void HandleGravityAndJump()

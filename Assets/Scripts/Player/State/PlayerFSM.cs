@@ -32,6 +32,8 @@ public class PlayerFSM
         // 물 진입/이탈 이벤트 구독
         EventBus.SubscribeVoid("EnteredWater", OnEnterWater); // 물 진입 시 수영 전이
         EventBus.SubscribeVoid("ExitedWater", OnExitWater);   // 물 이탈 시 Idle 전이
+        EventBus.SubscribeVoid("ForceSwimToJump", OnForceSwimToJump); // 수영 상태 중 점프 전이용
+
     }
 
     // 상태 전환 메서드
@@ -78,5 +80,12 @@ public class PlayerFSM
         else
             ChangeState(PlayerStateType.Idle);
     }
+
+    private void OnForceSwimToJump()
+    {
+        player.Controller.SetSwimMode(false); // 부력 해제
+        ChangeState(PlayerStateType.Jump); // 바로 점프 상태 진입
+    }
+
 
 }

@@ -13,7 +13,6 @@ public class PlayerState_Jump : IState
     public void Enter()
     {
         player.AnimatorWrapper.SetJump(true); // 점프 애니메이션 활성화
-        Debug.Log("Entered Jump State"); // 상태 진입 로그 출력
     }
 
     public void Update()
