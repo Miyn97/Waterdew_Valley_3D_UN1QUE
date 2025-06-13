@@ -54,4 +54,23 @@ public class Inventory : MonoBehaviour
 
         return false;
     }
+
+    public void RemoveItem(ItemBaseData item, int amount)
+    {
+        foreach (var slot in slots)
+        {
+            if (slot.itemData == item)
+            {
+                if (slot.quantity >= amount)
+                {
+                    slot.quantity -= amount;
+                    if (slot.quantity <= 0)
+                    {
+                        slots.Remove(slot);
+                    }
+                    return;
+                }
+            }
+        }
+    }
 }

@@ -5,7 +5,7 @@ using UnityEngine;
 public abstract class ItemBaseData : ScriptableObject, IItemData
 {
     [Header("공통 속성")]
-    [SerializeField] private string itemName;
+    [SerializeField] public string itemName;
     [SerializeField] private Sprite icon;
     [SerializeField] private GameObject prefab;
     [SerializeField] private ItemType type;
