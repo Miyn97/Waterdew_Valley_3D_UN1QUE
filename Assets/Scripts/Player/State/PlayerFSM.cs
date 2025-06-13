@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using UnityEngine;
+using System.Collections.Generic;
 
 // 플레이어 상태머신을 담당하는 클래스
 public class PlayerFSM
@@ -8,13 +9,13 @@ public class PlayerFSM
 
     private Dictionary<PlayerStateType, IState> states; // 상태 캐싱용 딕셔너리
 
-    public PlayerStateType CurrentStateType { get; private set; } // 현재 상태 타입을 외부에 노출
+    public PlayerStateType CurrentStateType { get; private set; } // 현재 상태 타입 외부 노출
 
     public PlayerFSM(Player player)
     {
-        this.player = player; // 대상 플레이어 저장
+        this.player = player; // 플레이어 저장
 
-        // 상태 딕셔너리 초기화 및 등록
+        // 상태 딕셔너리 초기화 및 상태 인스턴스 등록
         states = new Dictionary<PlayerStateType, IState>
         {
             { PlayerStateType.Idle, new PlayerState_Idle(player) },
@@ -27,43 +28,45 @@ public class PlayerFSM
             { PlayerStateType.Dead, new PlayerState_Dead(player) },
             { PlayerStateType.ThrowHook, new PlayerState_ThrowHook(player) },
             { PlayerStateType.Swim, new PlayerState_Swim(player) }
-
         };
+
+        // 수영 진입/이탈 이벤트 구독 처리
+        EventBus.SubscribeVoid("EnteredWater", OnEnterWater); // 물에 들어갔을 때 수영 상태로 전환
+        EventBus.SubscribeVoid("ExitedWater", OnExitWater);   // 물에서 나왔을 때 Idle 상태로 전환
     }
 
     public void ChangeState(PlayerStateType stateType)
     {
-        if (states.TryGetValue(stateType, out var newState)) // 상태가 존재하는 경우
+        if (states.TryGetValue(stateType, out var newState)) // 상태 존재 여부 확인
         {
-            currentState?.Exit(); // 현재 상태 종료 처리
-            currentState = newState; // 새로운 상태로 전환
+            currentState?.Exit(); // 기존 상태 종료
+            currentState = newState; // 새 상태 전환
             CurrentStateType = stateType; // 현재 상태 타입 갱신
-            currentState.Enter(); // 상태 진입 처리
+            currentState.Enter(); // 새 상태 진입
         }
     }
 
     public void Update()
     {
-        currentState?.Update(); // 현재 상태의 Update 호출
+        currentState?.Update(); // 현재 상태 업데이트 호출
     }
 
     public void FixedUpdate()
     {
-        currentState?.FixedUpdate(); // 현재 상태의 FixedUpdate 호출
+        currentState?.FixedUpdate(); // 현재 상태 FixedUpdate 호출
     }
-}
 
-// 플레이어 상태 타입 정의용 열거형
-public enum PlayerStateType
-{
-    Idle,       // 대기 상태
-    Move,       // 이동 상태
-    Jump,       // 점프 상태
-    Fish,       // 낚시 상태
-    Build,      // 건축 상태
-    Craft,      // 제작/요리 상태
-    Attack,     // 공격 상태
-    Dead,       // 사망 상태
-    ThrowHook,  // 갈고리 상태
-    Swim        //수영 상태
+    // 수영 상태 진입 트리거 (WaterZone 통해 이벤트 수신)
+    private void OnEnterWater()
+    {
+        player.Controller.SetSwimMode(true); // 컨트롤러 수영 모드 활성화
+        ChangeState(PlayerStateType.Swim);   // 상태 전환
+    }
+
+    // 수영 상태 종료 트리거 (WaterZone 통해 이벤트 수신)
+    private void OnExitWater()
+    {
+        player.Controller.SetSwimMode(false); // 컨트롤러 수영 모드 비활성화
+        ChangeState(PlayerStateType.Idle);    // Idle로 복귀
+    }
 }
