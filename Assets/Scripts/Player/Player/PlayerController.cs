@@ -17,6 +17,9 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private float swimSpeedMultiplier = 0.5f; // 수영 시 수평 감속 비율
     [SerializeField] private float swimVerticalSpeed = 2f; // 수영 상승/하강 속도
 
+    [Header("참조")]
+    [SerializeField] private Player player; // FSM 상태 확인용 Player 참조
+
     private bool isSwimming = false; // 현재 수영 상태 여부
 
     private CharacterController characterController; // 캐릭터 이동 컨트롤러
@@ -28,6 +31,9 @@ public class PlayerController : MonoBehaviour
     private void Awake()
     {
         characterController = GetComponent<CharacterController>(); // 캐릭터 컨트롤러 캐싱
+
+        if (player == null)
+            player = GetComponent<Player>(); // Player 참조 자동 연결 (없으면 null)
     }
 
     private void Start()
@@ -37,15 +43,14 @@ public class PlayerController : MonoBehaviour
 
     private void Update()
     {
-        // 현재 활성화된 카메라를 매 프레임 추적
-        Camera mainCam = Camera.main;
+        Camera mainCam = Camera.main; // 메인 카메라 가져오기
         if (mainCam != null && mainCam.enabled)
         {
-            activeCamera = mainCam; // MainCamera가 활성 상태일 경우 갱신
+            activeCamera = mainCam; // 메인 카메라가 활성 상태면 설정
         }
         else
         {
-            Camera subCam = GameObject.FindWithTag("SubCamera")?.GetComponent<Camera>(); // SubCamera 탐색
+            Camera subCam = GameObject.FindWithTag("SubCamera")?.GetComponent<Camera>(); // SubCamera 검색
             if (subCam != null && subCam.enabled)
                 activeCamera = subCam;
         }
@@ -58,25 +63,24 @@ public class PlayerController : MonoBehaviour
 
         if (activeCamera == null)
         {
-            moveInput = Vector3.zero; // 카메라가 없을 경우 이동 입력 없음 처리
+            moveInput = Vector3.zero; // 카메라가 없을 경우 입력 없음 처리
             return;
         }
 
-        // 카메라 기준 방향 설정
-        Vector3 camForward = activeCamera.transform.forward;
-        Vector3 camRight = activeCamera.transform.right;
+        Vector3 camForward = activeCamera.transform.forward; // 카메라 기준 전방
+        Vector3 camRight = activeCamera.transform.right;     // 카메라 기준 우측
 
-        camForward.y = 0f;
+        camForward.y = 0f; // 수직 방향 제거
         camRight.y = 0f;
 
-        camForward.Normalize(); // 정규화하여 수평 벡터 보정
+        camForward.Normalize(); // 정규화
         camRight.Normalize();
 
-        Vector3 moveDir = camForward * v + camRight * h;
-        moveInput = moveDir.sqrMagnitude > 0f ? moveDir.normalized : Vector3.zero; // GC 없는 이동 방향 계산
+        Vector3 moveDir = camForward * v + camRight * h; // 방향 계산
+        moveInput = moveDir.sqrMagnitude > 0f ? moveDir.normalized : Vector3.zero; // GC 없는 이동 방향
 
         if (moveInput.sqrMagnitude > 0.01f)
-            transform.forward = moveInput; // 이동 방향으로 회전
+            transform.forward = moveInput; // 캐릭터 회전
 
         if (Input.GetKeyDown(KeyCode.Space))
             jumpBufferCounter = jumpBufferTime; // Space 입력 시 점프 버퍼 시작
@@ -84,61 +88,70 @@ public class PlayerController : MonoBehaviour
 
     public void Move()
     {
-        float speed = Input.GetKey(KeyCode.LeftShift) ? runSpeed : walkSpeed; // 달리기 여부
+        float speed = Input.GetKey(KeyCode.LeftShift) ? runSpeed : walkSpeed; // 걷기 or 달리기 속도
 
         if (isSwimming)
-            speed *= swimSpeedMultiplier; // 수영 시 감속 적용
+            speed *= swimSpeedMultiplier; // 수영 감속 적용
 
-        Vector3 horizontalMove = moveInput * speed; // 수평 이동 계산
+        Vector3 horizontalMove = moveInput * speed; // 수평 이동
 
-        if (isSwimming)
+        if (isSwimming && player.FSM.CurrentStateType == PlayerStateType.Swim)
         {
-            HandleBuoyancy(); // 수영 중일 경우 부력 적용
+            HandleBuoyancy(); // 수영 상태일 때만 부력 적용
         }
         else
         {
-            HandleGravityAndJump(); // 지상 이동 중일 경우 중력 및 점프 처리
+            HandleGravityAndJump(); // 일반 중력 + 점프 적용
         }
 
-        Vector3 verticalMove = Vector3.up * verticalVelocity; // 수직 이동 계산
+        Vector3 verticalMove = Vector3.up * verticalVelocity; // 수직 이동
         Vector3 finalMove = horizontalMove + verticalMove; // 최종 이동 벡터
 
-        // 접지 유지 위한 수직 속도 보정
         if (finalMove.y > -0.001f && finalMove.y < 0.001f)
-            finalMove.y = -0.001f;
+            finalMove.y = -0.001f; // 지면 접촉 유지를 위한 미세 보정
 
-        characterController.Move(finalMove * Time.deltaTime); // 캐릭터 이동 적용
+        characterController.Move(finalMove * Time.deltaTime); // 실제 이동 적용
     }
 
-    // 수영 상태에서의 부력 처리
     private void HandleBuoyancy()
     {
-        verticalVelocity = 0f; // 수직 속도 초기화
+        // 플레이어가 수면 아래에 있을 때만 부력 작동
+        bool isUnderwater = WaterSystem.IsUnderwater(transform.position);
 
-        verticalVelocity += WaterSystem.CalculateBuoyancy(transform.position); // 깊이에 따른 부력 적용
-
-        if (Input.GetKey(KeyCode.Space))
-            verticalVelocity += swimVerticalSpeed; // 상승 입력 처리
-
+        // Ctrl로 하강 중이면 강제로 하강 속도 적용
         if (Input.GetKey(KeyCode.LeftControl))
-            verticalVelocity -= swimVerticalSpeed; // 하강 입력 처리
+        {
+            verticalVelocity = -swimVerticalSpeed; // 하강
+        }
+        // Space로 상승 중이면 상승 속도 적용
+        else if (Input.GetKey(KeyCode.Space))
+        {
+            verticalVelocity = swimVerticalSpeed; // 상승
+        }
+        // 아무 키도 안 누르면 부력 적용 (서서히 둥둥 떠오름)
+        else
+        {
+            float buoyancy = WaterSystem.CalculateBuoyancy(transform.position); // 위치 기준 부력 계산
+            verticalVelocity = Mathf.Lerp(verticalVelocity, buoyancy, Time.deltaTime * 1.5f); // 부력값에 가까워지도록 감쇠 적용
+        }
 
-        verticalVelocity = Mathf.Clamp(verticalVelocity, -3f, 3f); // 수직 속도 제한
+        // 상하 이동 속도 제한
+        verticalVelocity = Mathf.Clamp(verticalVelocity, -3f, 3f); // 위아래 속도 제한
     }
 
-    // 지상 중력 및 점프 처리
+
     private void HandleGravityAndJump()
     {
         if (characterController.isGrounded)
         {
             if (IsJumpBuffered())
             {
-                verticalVelocity = jumpPower; // 점프 적용
-                jumpBufferCounter = 0f;       // 점프 버퍼 초기화
+                verticalVelocity = jumpPower; // 점프
+                jumpBufferCounter = 0f;       // 버퍼 초기화
             }
             else if (verticalVelocity < 0f)
             {
-                verticalVelocity = -2f; // 접지 유지용 보정
+                verticalVelocity = -2f; // 접지 보정
             }
         }
         else
@@ -147,38 +160,43 @@ public class PlayerController : MonoBehaviour
         }
     }
 
+    public void ForceVerticalVelocity(float velocity)
+    {
+        verticalVelocity = velocity; // 외부 수직 속도 강제 설정
+    }
+
     public void SetSwimMode(bool isSwim)
     {
-        isSwimming = isSwim; // 수영 모드 상태 전환
+        isSwimming = isSwim; // 외부에서 수영 모드 설정
     }
 
     public bool HasMovementInput()
     {
-        return moveInput.sqrMagnitude > 0.01f; // 이동 입력 여부 확인
+        return moveInput.sqrMagnitude > 0.01f; // 이동 입력 여부
     }
 
     public bool IsJumping()
     {
-        return !characterController.isGrounded && verticalVelocity > 0.1f; // 상승 중일 때 점프 간주
+        return !characterController.isGrounded && verticalVelocity > 0.1f; // 상승 중 점프 간주
     }
 
     public bool IsFalling()
     {
-        return !characterController.isGrounded && verticalVelocity < -0.1f; // 하강 중일 때 낙하 간주
+        return !characterController.isGrounded && verticalVelocity < -0.1f; // 하강 중 낙하 간주
     }
 
     public bool IsRunning()
     {
-        return HasMovementInput() && Input.GetKey(KeyCode.LeftShift); // 입력 + Shift 상태 → 달리기 간주
+        return HasMovementInput() && Input.GetKey(KeyCode.LeftShift); // 달리기 판단
     }
 
     public bool IsGrounded()
     {
-        return characterController.isGrounded; // 접지 여부 반환
+        return characterController.isGrounded; // 접지 여부
     }
 
     public bool IsJumpBuffered()
     {
-        return jumpBufferCounter > 0f; // 점프 유예 시간 잔여 여부
+        return jumpBufferCounter > 0f; // 점프 유예 체크
     }
 }

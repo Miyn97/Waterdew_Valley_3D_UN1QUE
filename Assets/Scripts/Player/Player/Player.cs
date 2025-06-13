@@ -15,6 +15,14 @@ public class Player : MonoBehaviour
     private void Awake()
     {
         FSM = new PlayerFSM(this); // FSM 인스턴스 생성 (플레이어를 컨텍스트로 전달)
+
+        // animatorWrapper가 비어 있는 경우 자동으로 PlayerAnimation 컴포넌트를 가져옴
+        if (animatorWrapper == null)
+            animatorWrapper = GetComponent<PlayerAnimation>(); // 애니메이션 래퍼 자동 할당
+
+        // controller가 비어 있는 경우 자동으로 PlayerController 컴포넌트를 가져옴
+        if (controller == null)
+            controller = GetComponent<PlayerController>(); // 컨트롤러 자동 할당
     }
 
     private void Start()

@@ -13,15 +13,18 @@ public class PlayerState_Swim : IState
     public void Enter()
     {
         player.AnimatorWrapper.SetSwimming(true); // 수영 애니메이션 파라미터 활성화
+        player.Controller.SetSwimMode(true);      // 컨트롤러 수영 모드 설정
 
-        // 수영 상태 진입 시 Debug 로그 (디버깅용)
-        // Debug.Log("Entered Swim State");
+        player.Controller.ForceVerticalVelocity(-1.5f); // 수영 진입 시 가라앉기 위한 초기 하강 속도 설정
     }
+
 
     public void Update()
     {
         // 수영 중 상태에서는 입력과 부력 처리는 PlayerController에 위임
         // 상태 전이는 WaterZone.cs → EventBus → FSM.OnExitWater() 경유로 처리됨
+
+        player.Controller.ReadMoveInput(); // 입력 반영 추가
 
         // 예외 처리: 물에서 벗어났는데 상태 전환이 안 되었을 경우 대비 (보조 안전장치)
         if (!WaterSystem.IsUnderwater(player.transform.position))
@@ -41,6 +44,6 @@ public class PlayerState_Swim : IState
 
     public void Exit()
     {
-        player.AnimatorWrapper.SetSwimming(false); // 수영 애니메이션 파라미터 비활성화
+        player.AnimatorWrapper.SetSwimming(false); // 애니메이션 파라미터 해제
     }
 }

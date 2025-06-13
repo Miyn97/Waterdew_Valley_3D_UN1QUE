@@ -549,8 +549,8 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 1, y: 1, z: 1}
-  m_Center: {x: 0, y: 0, z: 0}
+  m_Size: {x: 1, y: 6, z: 1}
+  m_Center: {x: 0, y: -3, z: 0}
 --- !u!4 &713845769
 Transform:
   m_ObjectHideFlags: 0
@@ -560,7 +560,7 @@ Transform:
   m_GameObject: {fileID: 713845765}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0.009999848, y: -3.7, z: 0}
+  m_LocalPosition: {x: 0.08999977, y: -4.9, z: 0}
   m_LocalScale: {x: 9.9800005, y: 7.38, z: 10}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -1215,7 +1215,7 @@ Transform:
   m_GameObject: {fileID: 2084522973}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0.08, y: -1.5, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -1233,8 +1233,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 76a8ffef03377fc479ac56c62413bbd1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  waveHeight: 0.5
-  waveFrequency: 36
+  waveHeight: 0.9
+  waveFrequency: 360
   waveSpeed: 1
 --- !u!1 &2096817495
 GameObject:
@@ -1420,6 +1420,7 @@ MonoBehaviour:
   jumpBufferTime: 0.2
   swimSpeedMultiplier: 0.5
   swimVerticalSpeed: 2
+  player: {fileID: 5872774549336767037}
 --- !u!95 &2400877110185424567
 Animator:
   serializedVersion: 5

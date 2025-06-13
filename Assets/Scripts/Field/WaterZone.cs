@@ -5,6 +5,11 @@ public class WaterZone : MonoBehaviour
 {
     private const string PlayerTag = "Player"; // 매 프레임 문자열 비교 방지용 상수 선언
 
+    private void Start()
+    {
+        WaterSystem.SetWaterSurfaceY(-1.2f); // Plane_Visual 위치 기준으로 수면 설정
+    }
+
     // 물에 진입 시 발생하는 트리거
     private void OnTriggerEnter(Collider other)
     {
@@ -23,4 +28,5 @@ public class WaterZone : MonoBehaviour
             EventBus.PublishVoid("ExitedWater"); // 수영 종료 이벤트 발행
         }
     }
+
 }
