@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d8bab4653316d9044a202e4ee1ef87c5, type: 3}
   m_Name: WoodSpear_Recipe
   m_EditorClassIdentifier: 
+  category: 4
   resultItem: {fileID: 11400000, guid: 6252039f28737c64cbfd5c6ccc80d43c, type: 2}
   resultQuantity: 1
   requiredItems:

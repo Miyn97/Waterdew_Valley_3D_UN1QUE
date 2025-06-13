@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d8bab4653316d9044a202e4ee1ef87c5, type: 3}
   m_Name: Rope_Recipe
   m_EditorClassIdentifier: 
+  category: 3
   resultItem: {fileID: 11400000, guid: c505978cf5884384f844ea5c28851866, type: 2}
   resultQuantity: 1
   requiredItems:

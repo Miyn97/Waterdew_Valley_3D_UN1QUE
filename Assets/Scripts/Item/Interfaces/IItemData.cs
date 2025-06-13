@@ -17,6 +17,7 @@ public enum EquipmentSlot
     Armor
 }
 
+
 public interface IItemData
 {
     string ItemName { get; }
@@ -25,4 +26,5 @@ public interface IItemData
     ItemType Type { get; }
     bool IsStackable { get; }
     int MaxStack {  get; }
+    string Description { get; }
 }
