@@ -1,0 +1,22 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d8bab4653316d9044a202e4ee1ef87c5, type: 3}
+  m_Name: LeafArmor_Recipe
+  m_EditorClassIdentifier: 
+  category: 5
+  resultItem: {fileID: 11400000, guid: 209701d47de9ba449acd903aa24c0180, type: 2}
+  resultQuantity: 1
+  requiredItems:
+  - item: {fileID: 11400000, guid: b1af1a3b92c3e4c46ac68a43052657ce, type: 2}
+    quantity: 24
+  - item: {fileID: 11400000, guid: c505978cf5884384f844ea5c28851866, type: 2}
+    quantity: 8

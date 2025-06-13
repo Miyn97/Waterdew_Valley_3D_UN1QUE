@@ -1,0 +1,23 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b3828652fc7cfb845a9ecda8c4e9dfd9, type: 3}
+  m_Name: FishingRod
+  m_EditorClassIdentifier: 
+  itemName: "\uB09A\uC2DC\uB300"
+  icon: {fileID: 10905, guid: 0000000000000000f000000000000000, type: 0}
+  prefab: {fileID: 3546875982803464147, guid: 44efb3f678e069040833428d3f572d79, type: 3}
+  type: 3
+  isStackable: 0
+  maxStack: 1
+  toolType: 2
+  durability: 100
+  modelPrefab: {fileID: 0}

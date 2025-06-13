@@ -5,12 +5,13 @@ using UnityEngine;
 public abstract class ItemBaseData : ScriptableObject, IItemData
 {
     [Header("공통 속성")]
-    [SerializeField] private string itemName;
+    [SerializeField] public string itemName;
     [SerializeField] private Sprite icon;
     [SerializeField] private GameObject prefab;
     [SerializeField] private ItemType type;
     [SerializeField] private bool isStackable = true;
     [SerializeField] private int maxStack = 99;
+    [SerializeField] public string description;
 
     public string ItemName => itemName;
 
@@ -23,4 +24,5 @@ public abstract class ItemBaseData : ScriptableObject, IItemData
     public bool IsStackable => isStackable;
 
     public int MaxStack => maxStack;
+    public string Description => description;
 }
