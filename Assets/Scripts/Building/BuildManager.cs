@@ -1,115 +1,58 @@
-﻿using UnityEngine;
+﻿using System.Collections.Generic;
 
-public class BuildManager : Singleton<BuildManager>
+using UnityEngine;
+
+public class BuildManager : MonoBehaviour
 {
-    [Header("현재 설치 중인 건물")]
-    public BuildingData currentBuildingData;
-    public GameObject previewInstance;
-    public IBuildableObject previewScript;
+    public GameObject tilePrefab;
+    public BuildPreview buildPreview;
+    public Ship ship;
 
-    [Header("설치 가능한 바닥 레이어")]
-    [SerializeField] private LayerMask buildableSurfaceMask;
-
-    private bool isBuilding = false;
-    private int currentRotation = 0;
-
-    protected override void Awake()
+    void Update()
     {
-        base.Awake();
-        previewInstance = currentBuildingData.prefabPreview;
-    }
+        Vector3 worldPos = GetMouseWorldPosition();
+        Vector2Int gridPos = WorldToGrid(worldPos);
 
-    private void Update()
-    {
-        if (!isBuilding || previewInstance == null) return;
+        List<Vector2Int> buildable = ship.GetBuildablePositions();
 
-        UpdatePreviewPosition();
-
-        if (Input.GetKeyDown(KeyCode.R))
+        if (buildable.Contains(gridPos))
         {
-            RotatePreview();
+            buildPreview.SetValid(true);
+            buildPreview.SetPosition(GridToWorld(gridPos));
+        }
+        else
+        {
+            buildPreview.SetValid(false);
+            buildPreview.SetPosition(worldPos);
         }
 
-        if (Input.GetMouseButtonDown(0))
+        if (Input.GetKeyDown(KeyCode.T) && buildable.Contains(gridPos))
         {
-            TryPlaceBuilding();
+            GameObject newTile = Instantiate(tilePrefab, GridToWorld(gridPos), Quaternion.identity, ship.transform);
+            Tile tileScript = newTile.GetComponent<Tile>();
+            tileScript.gridPosition = gridPos;
+            ship.RegisterTile(gridPos, tileScript);
         }
     }
 
-    public void StartPlacingBuilding(BuildingData data)
-    {
-        if (previewInstance != null) Destroy(previewInstance);
-
-        currentBuildingData = data;
-        previewInstance = Instantiate(data.prefabPreview);
-        previewScript = previewInstance.GetComponent<IBuildableObject>();
-        isBuilding = true;
-        currentRotation = 0;
-    }
-
-    private void UpdatePreviewPosition()
+    Vector3 GetMouseWorldPosition()
     {
         Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-        if (Physics.Raycast(ray, out RaycastHit hit, 100f, buildableSurfaceMask))
+        if (Physics.Raycast(ray, out RaycastHit hit, 100f))
         {
-            IBuildableSurface surface = hit.collider.GetComponent<IBuildableSurface>();
-            if (surface != null)
-            {
-                Vector3 snapPos = surface.GetSnappedPosition(hit.point);
-                previewInstance.transform.position = snapPos;
-
-                // 설치 가능 여부에 따라 색상 변경
-                bool canBuild = surface.CanBuildHere(snapPos);
-                SetPreviewColor(canBuild ? Color.green : Color.red);
-            }
+            return hit.point;
         }
+
+        return Vector3.zero;
     }
 
-    private void RotatePreview()
+    Vector2Int WorldToGrid(Vector3 world)
     {
-        previewInstance.transform.Rotate(0, 90, 0);
-        currentRotation = (currentRotation + 90) % 360;
-        previewScript.Rotate();
+        return new Vector2Int(Mathf.RoundToInt(world.x), Mathf.RoundToInt(world.z));
     }
 
-    private void TryPlaceBuilding()
+    Vector3 GridToWorld(Vector2Int grid)
     {
-        Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-        if (Physics.Raycast(ray, out RaycastHit hit, 100f, buildableSurfaceMask))
-        {
-            IBuildableSurface surface = hit.collider.GetComponent<IBuildableSurface>();
-            if (surface != null)
-            {
-                Vector3 snapPos = surface.GetSnappedPosition(hit.point);
-                if (surface.CanBuildHere(snapPos))
-                {
-                    GameObject placed = Instantiate(currentBuildingData.prefab, snapPos, Quaternion.Euler(0, currentRotation, 0));
-                    surface.RegisterBuild(snapPos);
-                    StopPlacing();
-                }
-            }
-        }
-    }
-
-    private void SetPreviewColor(Color color)
-    {
-        foreach (var renderer in previewInstance.GetComponentsInChildren<Renderer>())
-        {
-            foreach (var mat in renderer.materials)
-            {
-                if (mat.HasProperty("_Color"))
-                {
-                    mat.color = color;
-                }
-            }
-        }
-    }
-
-    public void StopPlacing()
-    {
-        if (previewInstance != null) Destroy(previewInstance);
-        previewInstance = null;
-        previewScript = null;
-        isBuilding = false;
+        return new Vector3(grid.x, 0, grid.y);
     }
 }

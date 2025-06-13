@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 
+// 이미 지어진 빌딩
 public interface IBuildableSurface
 {
     /// <summary>
