@@ -1,4 +1,6 @@
-﻿// 플레이어 이동 상태 클래스
+﻿using UnityEngine;
+
+// 플레이어 이동 상태 클래스
 public class PlayerState_Move : IState
 {
     private readonly Player player; // FSM이 조작할 대상 플레이어 참조
@@ -21,13 +23,23 @@ public class PlayerState_Move : IState
         player.AnimatorWrapper.SetRun(player.Controller.IsRunning());   // 달리기 여부에 따라 애니메이션 상태 갱신
         player.AnimatorWrapper.SetJump(player.Controller.IsJumping()); // 공중 상승 중 여부에 따라 점프 애니메이션 갱신
 
-        // 수정 전: 점프 중이 아니고 입력 없을 때 Idle 상태 전환
-        // 문제점: 공중일 때도 입력 없으면 Idle로 전환돼 낙하가 끊김
-
-        // 수정 후: 지면에 있고 이동 입력이 없을 때만 Idle 상태로 전환
+        // 지면에 있고 이동 입력이 없을 때만 Idle 상태로 전환
         if (player.Controller.IsGrounded() && !player.Controller.HasMovementInput())
         {
             EventBus.PublishVoid("OnMoveStop"); // 이동 중단 이벤트 발생 → Idle 상태로 전환됨
+        }
+
+        // 갈고리 입력 (임시 Q 키)
+        if (Input.GetKeyDown(KeyCode.Q))
+        {
+            player.FSM.ChangeState(PlayerStateType.ThrowHook);
+        }
+
+        // 마우스 좌클릭 입력 (왼쪽 버튼)
+        if (Input.GetMouseButtonDown(0))
+        {
+            player.FSM.ChangeState(PlayerStateType.Attack); // 예: 공격 상태
+                                                            // 또는 낚시 FSM 전환: player.FSM.ChangeState(PlayerStateType.Fish);
         }
     }
 
@@ -43,6 +55,6 @@ public class PlayerState_Move : IState
 
     private void OnMoveStop()
     {
-        player.FSM.ChangeState(new PlayerState_Idle(player)); // OnMoveStop 이벤트 수신 시 Idle 상태로 전환
+        player.FSM.ChangeState(PlayerStateType.Idle); // OnMoveStop 이벤트 수신 시 Idle 상태로 전환
     }
 }
