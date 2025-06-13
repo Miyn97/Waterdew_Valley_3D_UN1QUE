@@ -7,7 +7,6 @@ public class EquipmentItemData : ItemBaseData, IEquipable
 {
     [Header("장비 속성")]
     [SerializeField] private EquipmentSlot slot;
-    [SerializeField] private float attackPower;
 
     public EquipmentSlot Slot => slot;
 

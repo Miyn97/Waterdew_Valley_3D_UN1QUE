@@ -6,7 +6,8 @@ public enum ItemType
 {
     Resource,
     Equipment,
-    Consumable
+    Consumable,
+    Useable
 }
 
 public enum EquipmentSlot
