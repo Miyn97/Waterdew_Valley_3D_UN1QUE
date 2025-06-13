@@ -1,9 +1,10 @@
-﻿// 플레이어 조합 상태 클래스
-using UnityEngine;
+﻿using UnityEngine;
 
+// 제작/조합 모드 상태 클래스
 public class PlayerState_Craft : IState
 {
     private readonly Player player;
+    private GameObject dummyUI;
 
     public PlayerState_Craft(Player player)
     {
@@ -12,22 +13,24 @@ public class PlayerState_Craft : IState
 
     public void Enter()
     {
-        player.AnimatorWrapper.SetCrafting(true);
-        Debug.Log("Entered Craft State");
+        dummyUI = GameObject.Find("DummyCraftUI"); // 더미 제작 UI 오브젝트
+        if (dummyUI != null)
+            dummyUI.SetActive(true);
+        Debug.Log("제작 모드 진입");
     }
 
     public void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Escape))
-        {
+        if (Input.GetKeyDown(KeyCode.Escape)) // ESC 키로 닫기
             player.FSM.ChangeState(PlayerStateType.Idle);
-        }
     }
 
     public void FixedUpdate() { }
 
     public void Exit()
     {
-        player.AnimatorWrapper.SetCrafting(false);
+        if (dummyUI != null)
+            dummyUI.SetActive(false);
+        Debug.Log("제작 모드 종료");
     }
 }
