@@ -1,0 +1,67 @@
+﻿using UnityEngine;
+
+// 애니메이션 파라미터 제어 클래스
+public class PlayerAnimation : MonoBehaviour
+{
+    private Animator animator; // Animator 컴포넌트 참조 캐싱용
+
+    private readonly int hashIsMoving = Animator.StringToHash("IsMoving");   // 이동 상태 해시값
+    private readonly int hashIsJumping = Animator.StringToHash("IsJumping"); // 점프 상태 해시값
+    private readonly int hashIsRunning = Animator.StringToHash("IsRunning"); // 달리기 상태 해시값
+    private readonly int hashIsFishing = Animator.StringToHash("IsFishing"); // 낚시 상태 해시값
+    private readonly int hashIsBuilding = Animator.StringToHash("IsBuilding"); // 건축 상태 해시값
+    private readonly int hashIsCrafting = Animator.StringToHash("IsCrafting"); // 조합 상태 해시값
+    private readonly int hashIsAttacking = Animator.StringToHash("IsAttacking"); // 공격 상태 해시값
+    private readonly int hashIsDead = Animator.StringToHash("IsDead"); // 사망 상태 해시값
+    private readonly int hashIsSwimming = Animator.StringToHash("IsSwimming"); // 수영 상태 해시값 추가
+
+    private void Awake()
+    {
+        animator = GetComponent<Animator>(); // Animator 컴포넌트 초기화
+    }
+
+    public void SetMove(bool isMoving)
+    {
+        animator.SetBool(hashIsMoving, isMoving); // "IsMoving" 파라미터 설정
+    }
+
+    public void SetJump(bool isJumping)
+    {
+        animator.SetBool(hashIsJumping, isJumping); // "IsJumping" 파라미터 설정
+    }
+
+    public void SetRun(bool isRunning)
+    {
+        animator.SetBool(hashIsRunning, isRunning); // "IsRunning" 파라미터 설정
+    }
+
+    public void SetFishing(bool isFishing)
+    {
+        animator.SetBool(hashIsFishing, isFishing); // "IsFishing" 파라미터 설정
+    }
+
+    public void SetBuilding(bool isBuilding)
+    {
+        animator.SetBool(hashIsBuilding, isBuilding); // "IsBuilding" 파라미터 설정
+    }
+
+    public void SetCrafting(bool isCrafting)
+    {
+        animator.SetBool(hashIsCrafting, isCrafting); // "IsCrafting" 파라미터 설정
+    }
+
+    public void SetAttacking(bool isAttacking)
+    {
+        animator.SetBool(hashIsAttacking, isAttacking); // "IsAttacking" 파라미터 설정
+    }
+
+    public void SetDead(bool isDead)
+    {
+        animator.SetBool(hashIsDead, isDead); // "IsDead" 파라미터 설정
+    }
+
+    public void SetSwimming(bool isSwimming)
+    {
+        animator.SetBool(hashIsSwimming, isSwimming); // "IsSwimming" 파라미터 설정
+    }
+}

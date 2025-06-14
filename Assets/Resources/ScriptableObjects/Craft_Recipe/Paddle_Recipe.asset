@@ -1,0 +1,24 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d8bab4653316d9044a202e4ee1ef87c5, type: 3}
+  m_Name: Paddle_Recipe
+  m_EditorClassIdentifier: 
+  category: 2
+  resultItem: {fileID: 11400000, guid: 1654d8305c0e97247b14e6a96b37f264, type: 2}
+  resultQuantity: 1
+  requiredItems:
+  - item: {fileID: 11400000, guid: 13ece7a6faa3c6c40b5f7ecf08028f8b, type: 2}
+    quantity: 4
+  - item: {fileID: 11400000, guid: 392893b8299d33b4b8a451c40deea3f6, type: 2}
+    quantity: 6
+  - item: {fileID: 11400000, guid: c505978cf5884384f844ea5c28851866, type: 2}
+    quantity: 2
