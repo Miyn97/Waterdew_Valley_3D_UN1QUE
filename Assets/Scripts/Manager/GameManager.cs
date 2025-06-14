@@ -24,7 +24,6 @@ public class GameManager : Singleton<GameManager>
     // 게임 시작 초기화 함수
     private void InitGame()
     {
-        Debug.Log("게임 초기화 완료");
         // 초기 상태나 월드 설정 등 추가 가능
     }
 

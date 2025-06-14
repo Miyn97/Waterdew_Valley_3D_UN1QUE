@@ -8,14 +8,15 @@ public class WaveMotion : MonoBehaviour
     private Vector3[] originalVertices; // 초기 정점 배열 (수정 불가)
     private Vector3[] modifiedVertices; // 수정될 정점 배열
 
-    [SerializeField] private float waveHeight = 0.5f; // 파도 높이
-    [SerializeField] private float waveFrequency = 36f; // 파도 간격
+    [SerializeField] private float waveHeight = 0.9f; // 파도 높이
+    [SerializeField] private float waveFrequency = 360f; // 파도 간격
     [SerializeField] private float waveSpeed = 1f; // 파도 속도
 
     private void Awake()
     {
         // 메시 가져오기 및 정점 배열 캐싱
         mesh = GetComponent<MeshFilter>().mesh; // 메쉬 필터에서 메시 추출
+        mesh.MarkDynamic(); // 메쉬가 자주 변경될 것임을 Unity에 명시하여 성능 최적화
         originalVertices = mesh.vertices; // 원본 정점 정보 저장
         modifiedVertices = new Vector3[originalVertices.Length]; // 수정용 정점 배열 생성
         System.Array.Copy(originalVertices, modifiedVertices, originalVertices.Length); // GC 없는 복사

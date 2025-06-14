@@ -4,80 +4,90 @@
 public class Player : MonoBehaviour
 {
     [Header("컴포넌트 참조")]
-    [SerializeField] private PlayerController controller; // 입력 처리용 컴포넌트
-    [SerializeField] private PlayerAnimation animatorWrapper; // 애니메이션 처리용
+    [SerializeField] private PlayerController controller; // 이동/점프/수영 처리용 컨트롤러
+    [SerializeField] private PlayerAnimation animatorWrapper; // 애니메이션 래퍼 클래스 (Animator 파라미터 제어용)
 
-    public PlayerController Controller => controller; // 외부에서 읽기 전용
-    public PlayerAnimation AnimatorWrapper => animatorWrapper; // 외부에서 읽기 전용
+    public PlayerController Controller => controller; // 외부에서 접근 가능한 컨트롤러 프로퍼티 (읽기 전용)
+    public PlayerAnimation AnimatorWrapper => animatorWrapper; // 외부에서 접근 가능한 애니메이션 래퍼 프로퍼티
 
-    public PlayerFSM FSM { get; private set; } // FSM 상태머신
+    public PlayerFSM FSM { get; private set; } // 플레이어 FSM 상태머신
 
     private void Awake()
     {
-        FSM = new PlayerFSM(this); // FSM 인스턴스 생성 및 상태 초기화 준비
+        FSM = new PlayerFSM(this); // FSM 인스턴스 생성 (플레이어를 컨텍스트로 전달)
+
+        // animatorWrapper가 비어 있는 경우 자동으로 PlayerAnimation 컴포넌트를 가져옴
+        if (animatorWrapper == null)
+            animatorWrapper = GetComponent<PlayerAnimation>(); // 애니메이션 래퍼 자동 할당
+
+        // controller가 비어 있는 경우 자동으로 PlayerController 컴포넌트를 가져옴
+        if (controller == null)
+            controller = GetComponent<PlayerController>(); // 컨트롤러 자동 할당
     }
 
     private void Start()
     {
-        FSM.ChangeState(PlayerStateType.Idle); // 상태 초기 진입
-        RegisterWaterEvents(); // 바다 진입/이탈 이벤트 등록
+        FSM.ChangeState(PlayerStateType.Idle); // 시작 시 기본 Idle 상태로 진입
+        RegisterWaterEvents(); // 바다 진입/이탈 이벤트 구독 등록
     }
 
     private void Update()
     {
-        FSM.Update(); // 상태 Update 실행
+        FSM.Update(); // 현재 상태의 Update 메서드 호출
     }
 
     private void FixedUpdate()
     {
-        FSM.FixedUpdate(); // 이동 처리 상태용 FixedUpdate 실행
+        FSM.FixedUpdate(); // 현재 상태의 FixedUpdate 호출 (이동 및 중력/부력 처리용)
     }
 
     private void OnEnable()
     {
-        EventBus.SubscribeVoid("OnPlayerDie", OnPlayerDie); // 사망 이벤트 구독
+        // 사망 이벤트 수신 등록 (체력 0 → 상태 전이)
+        EventBus.SubscribeVoid("OnPlayerDie", OnPlayerDie);
     }
 
     private void OnDisable()
     {
-        EventBus.UnsubscribeVoid("OnPlayerDie", OnPlayerDie); // 해제
-        UnregisterWaterEvents(); // 물 관련 이벤트도 해제
+        EventBus.UnsubscribeVoid("OnPlayerDie", OnPlayerDie); // 사망 이벤트 구독 해제
+        UnregisterWaterEvents(); // 수영 관련 이벤트 구독 해제
     }
 
     private void OnPlayerDie()
     {
-        //FSM 전환 중 상태가 이미 Dead인 경우 중복 호출될 가능성 방지
+        // 현재 상태가 이미 Dead인 경우 중복 전이 방지
         if (FSM.CurrentStateType != PlayerStateType.Dead)
-            FSM.ChangeState(PlayerStateType.Dead); // FSM 상태를 사망 상태로 변경
+            FSM.ChangeState(PlayerStateType.Dead); // 사망 상태로 전이
     }
 
-    // 수영 진입/이탈 이벤트 등록 함수
+    // 물 진입/이탈 이벤트 등록
     private void RegisterWaterEvents()
     {
-        // 물에 진입했을 때 수영 상태로 전환
-        EventBus.SubscribeVoid("EnteredWater", OnEnterWater);
-
-        // 물에서 나왔을 때 이동 또는 대기 상태로 전환
-        EventBus.SubscribeVoid("ExitedWater", OnExitWater);
+        EventBus.SubscribeVoid("EnteredWater", OnEnterWater); // 물 진입 이벤트 구독
+        EventBus.SubscribeVoid("ExitedWater", OnExitWater);   // 물 이탈 이벤트 구독
     }
 
-    // 수영 관련 이벤트 해제 함수 (OnDisable에서 호출)
+    // 물 진입/이탈 이벤트 해제
     private void UnregisterWaterEvents()
     {
-        EventBus.UnsubscribeVoid("EnteredWater", OnEnterWater);
-        EventBus.UnsubscribeVoid("ExitedWater", OnExitWater);
+        EventBus.UnsubscribeVoid("EnteredWater", OnEnterWater); // 진입 이벤트 해제
+        EventBus.UnsubscribeVoid("ExitedWater", OnExitWater);   // 이탈 이벤트 해제
     }
 
     // 수영 상태 진입 처리
     private void OnEnterWater()
     {
-        FSM.ChangeState(PlayerStateType.Swim); // FSM을 수영 상태로 전환
+        FSM.ChangeState(PlayerStateType.Swim); // 수영 상태로 전이 (수면 아래일 경우)
     }
 
     // 수영 상태 탈출 처리
     private void OnExitWater()
     {
-        // 이동 입력이 있을 경우 Move 상태로, 없으면 Idle 상태로 전환
+        // 안전 처리: controller 존재 여부 체크 후 상태 전이
+        if (controller == null)
+            return;
+
+        // 입력이 있는 경우 → 이동 상태, 입력 없을 경우 → 대기 상태
         if (controller.HasMovementInput())
             FSM.ChangeState(PlayerStateType.Move);
         else
