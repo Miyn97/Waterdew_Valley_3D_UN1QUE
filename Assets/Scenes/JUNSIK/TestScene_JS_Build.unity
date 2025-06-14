@@ -710,6 +710,8 @@ MonoBehaviour:
   jumpPower: 8
   gravity: -20
   jumpBufferTime: 0.2
+  swimSpeedMultiplier: 0.5
+  swimVerticalSpeed: 2
 --- !u!114 &923123305
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1000,9 +1002,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9af1250eee9dcd74ba3ba7065d7549b5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  tilePrefab: {fileID: 6104728824259346151, guid: 60c1bfb7b54b433478cf1dc559ea2597,
-    type: 3}
-  buildPreview: {fileID: 1713327060}
+  datas:
+  - {fileID: 11400000, guid: 7138c761cea90924885f9fc8f2947cdf, type: 2}
+  - {fileID: 11400000, guid: 69e10dd9bcf57d045b8a3fb9a61d2e95, type: 2}
+  - {fileID: 11400000, guid: 3e35c8e5defa6204e809424eacda0da1, type: 2}
   ship: {fileID: 42339437}
 --- !u!4 &1200724716
 Transform:
@@ -1019,86 +1022,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1001 &1713327059
-PrefabInstance:
-  m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    serializedVersion: 3
-    m_TransformParent: {fileID: 0}
-    m_Modifications:
-    - target: {fileID: 2650935789060031583, guid: a633d85b7b981b645bae219cd55cadf0,
-        type: 3}
-      propertyPath: m_LocalPosition.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2650935789060031583, guid: a633d85b7b981b645bae219cd55cadf0,
-        type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2650935789060031583, guid: a633d85b7b981b645bae219cd55cadf0,
-        type: 3}
-      propertyPath: m_LocalPosition.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2650935789060031583, guid: a633d85b7b981b645bae219cd55cadf0,
-        type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 2650935789060031583, guid: a633d85b7b981b645bae219cd55cadf0,
-        type: 3}
-      propertyPath: m_LocalRotation.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2650935789060031583, guid: a633d85b7b981b645bae219cd55cadf0,
-        type: 3}
-      propertyPath: m_LocalRotation.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2650935789060031583, guid: a633d85b7b981b645bae219cd55cadf0,
-        type: 3}
-      propertyPath: m_LocalRotation.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2650935789060031583, guid: a633d85b7b981b645bae219cd55cadf0,
-        type: 3}
-      propertyPath: m_LocalEulerAnglesHint.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2650935789060031583, guid: a633d85b7b981b645bae219cd55cadf0,
-        type: 3}
-      propertyPath: m_LocalEulerAnglesHint.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2650935789060031583, guid: a633d85b7b981b645bae219cd55cadf0,
-        type: 3}
-      propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6104728824259346151, guid: a633d85b7b981b645bae219cd55cadf0,
-        type: 3}
-      propertyPath: m_Name
-      value: TilePreview
-      objectReference: {fileID: 0}
-    m_RemovedComponents: []
-    m_RemovedGameObjects: []
-    m_AddedGameObjects: []
-    m_AddedComponents: []
-  m_SourcePrefab: {fileID: 100100000, guid: a633d85b7b981b645bae219cd55cadf0, type: 3}
---- !u!114 &1713327060 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 728474078615409337, guid: a633d85b7b981b645bae219cd55cadf0,
-    type: 3}
-  m_PrefabInstance: {fileID: 1713327059}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 761cd899117791749a6035b9a3b0617f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &1729072538
 GameObject:
   m_ObjectHideFlags: 0
@@ -1254,4 +1177,3 @@ SceneRoots:
   - {fileID: 588173564}
   - {fileID: 42339435}
   - {fileID: 1200724716}
-  - {fileID: 1713327059}
