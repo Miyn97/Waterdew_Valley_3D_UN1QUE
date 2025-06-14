@@ -88,3 +88,6 @@
 # GitHub 언어 인식 오버라이드
 *.m linguist-language=C#
 *.wlt linguist-detectable=false
+
+# LFS 추적 추가
+*.asset filter=lfs diff=lfs merge=lfs -text
