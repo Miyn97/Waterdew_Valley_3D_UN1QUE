@@ -3,91 +3,61 @@ using System.Collections;
 
 public class Bobber : MonoBehaviour
 {
-    private Transform raftTransform;
-    private Vector3 offsetFromRaft;
-    private bool hasBait = false;
+    private Transform startPoint; // 출발 위치 (낚싯대 끝)
+    [SerializeField] private float throwSpeed = 10f;
+    [SerializeField] private LayerMask waterLayer;
 
-    [SerializeField] private float minBiteTime = 10f;
-    [SerializeField] private float maxBiteTime = 30f;
-    [SerializeField] private float qteWindow = 0.5f;
+    private Vector3 targetPosition;
+    private bool isFlying = false;
 
-    [SerializeField] private FishData[] fishTable;
-    [SerializeField] private GameObject splashEffect;
-
-    private bool isQTEActive = false;
-    private bool fishCaught = false;
-
-    public void Initialize(Vector3 initialPosition, Transform raft, bool bait)
+    public void Throw(Transform _startPoint, Vector3 direction, float distance)
     {
-        transform.position = initialPosition;
-        raftTransform = raft;
-        offsetFromRaft = initialPosition - raft.position;
-        hasBait = bait;
+        startPoint = _startPoint;
+        targetPosition = transform.position + direction * distance;
+        isFlying = true;
 
-        if (hasBait)
+        // 낚시 찌가 날아갈 동안 충돌 감지
+        // Rigidbody.velocity를 쓰지 않고 직접 이동
+        StopAllCoroutines();
+        StartCoroutine(MoveToTarget());
+    }
+
+    private IEnumerator MoveToTarget()
+    {
+        while (isFlying && Vector3.Distance(transform.position, targetPosition) > 0.1f)
         {
-            StartCoroutine(FishBiteRoutine());
+            transform.position = Vector3.MoveTowards(transform.position, targetPosition, throwSpeed * Time.deltaTime);
+            yield return null;
+        }
+
+        isFlying = false;
+
+        // 충돌 감지는 OnTriggerEnter로 별도 처리
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if (!isFlying) return;
+
+        isFlying = false;
+
+        if (((1 << other.gameObject.layer) & waterLayer) != 0)
+        {
+            // 바다와 닿음 => 낚시 시작
+            Debug.Log("바다에 착수!");
+            //FishingSystem.Instance.StartFishing(this);
+        }
+        else
+        {
+            // 바다 아님 => 복귀
+            Debug.Log("바다 아님, Bobber 복귀");
+            ReturnToStart();
         }
     }
 
-    void Update()
+    public void ReturnToStart()
     {
-        // 배 따라 위치 조정
-        if (raftTransform != null)
-        {
-            transform.position = raftTransform.position + offsetFromRaft;
-        }
-
-        // QTE 처리
-        if (isQTEActive && Input.GetMouseButtonDown(0))
-        {
-            isQTEActive = false;
-            fishCaught = true;
-            OnFishCaught();
-        }
-    }
-
-    IEnumerator FishBiteRoutine()
-    {
-        float waitTime = Random.Range(minBiteTime, maxBiteTime);
-        yield return new WaitForSeconds(waitTime);
-
-        isQTEActive = true;
-        float qteTime = Random.Range(0.25f, 0.75f);
-        yield return new WaitForSeconds(qteTime);
-
-        if (!fishCaught)
-        {
-            isQTEActive = false;
-            Debug.Log("물고기 놓침!");
-            Destroy(gameObject);
-        }
-    }
-
-    void OnFishCaught()
-    {
-        // 확률 기반 물고기 결정
-        FishData caught = GetRandomFish();
-        Debug.Log($"물고기 잡힘: {caught.itemName}");
-
-        // TODO: 인벤토리 추가, UI 표시 등
-        Destroy(gameObject);
-    }
-
-    FishData GetRandomFish()
-    {
-        float total = 0f;
-        foreach (var fish in fishTable) total += fish.probability;
-        float rand = Random.Range(0, total);
-
-        float cumulative = 0f;
-        foreach (var fish in fishTable)
-        {
-            cumulative += fish.probability;
-            if (rand <= cumulative)
-                return fish;
-        }
-
-        return fishTable[0]; // fallback
+        StopAllCoroutines();
+        transform.position = startPoint.position;
     }
 }

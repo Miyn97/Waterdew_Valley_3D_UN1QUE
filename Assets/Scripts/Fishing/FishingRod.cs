@@ -4,7 +4,7 @@ public class FishingRod : MonoBehaviour
 {
     [Header("References")]
     public Bobber bobber;                // Bobber 오브젝트 참조
-    public Transform castOrigin;         // 낚시대에서 던질 기준 위치
+    public Transform startPoint;         // 낚시대 끝
 
     [Header("Casting Settings")]
     public float maxDistance = 10f;
@@ -50,17 +50,17 @@ public class FishingRod : MonoBehaviour
 
         // 마우스 위치 기준으로 방향 계산 (월드에서 마우스 클릭 지점)
         Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-        Plane plane = new Plane(Vector3.up, castOrigin.position); // 수평면
+        Plane plane = new Plane(Vector3.up, startPoint.position); // 수평면
 
         if (plane.Raycast(ray, out float enter))
         {
             Vector3 hitPoint = ray.GetPoint(enter);
-            Vector3 direction = (hitPoint - castOrigin.position).normalized;
+            Vector3 direction = (hitPoint - startPoint.position).normalized;
 
             // Bobber에 던지라고 요청 (방향 + 거리)
-            bobber.Throw(direction, distance);
+            bobber.Throw(startPoint, direction, distance);
 
-            Debug.DrawLine(castOrigin.position, castOrigin.position + direction * distance, Color.green, 2f);
+            Debug.DrawLine(startPoint.position, startPoint.position + direction * distance, Color.green, 2f);
         }
     }
 }
