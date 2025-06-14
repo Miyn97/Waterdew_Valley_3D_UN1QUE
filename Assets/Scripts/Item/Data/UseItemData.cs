@@ -1,8 +1,18 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+
 using UnityEngine;
 
-public enum ToolType { Hook, Spear, FishingRod, Axe }
+public enum ToolType
+{
+    Hook,
+    FishingRod,
+    Axe,
+    Hammer,
+    Paddle,
+    Spear,
+    Bow
+}
 
 [CreateAssetMenu(menuName = "Item/Useable")]
 public class UseItemData : ItemBaseData, IUsable
@@ -16,14 +26,25 @@ public class UseItemData : ItemBaseData, IUsable
 
         switch (toolType)
         {
-            case ToolType.Spear:
-                // 공격 처리
-                break;
             case ToolType.Hook:
-                // 자원 끌기
                 break;
+
             case ToolType.FishingRod:
-                // 낚시 처리
+                break;
+
+            case ToolType.Axe:
+                break;
+
+            case ToolType.Hammer:
+                break;
+
+            case ToolType.Paddle:
+                break;
+            case ToolType
+            .Spear:
+                break;
+
+            case ToolType.Bow:
                 break;
         }
     }

@@ -30,6 +30,10 @@ public class CraftingUIManager : MonoBehaviour
     public List<CraftingRecipe> allRecipes;
     public List<Sprite> categoryIcons;               // enum 순서대로 등록
 
+    public Button craftButton;
+    public CraftingSystem craftingSystem;
+    private CraftingRecipe currentSelectedRecipe;
+
     private void Start()
     {
         recipeListPanel.SetActive(false);
@@ -91,29 +95,41 @@ public class CraftingUIManager : MonoBehaviour
     public void ShowRecipeDetail(CraftingRecipe recipe)
     {
         descriptionPanel.SetActive(true);
+        currentSelectedRecipe = recipe;
 
         recipeIcon.sprite = recipe.resultItem.Icon;
         recipeText.text = recipe.resultItem.ItemName;
         descriptionText.text = recipe.resultItem.description;
 
-        // 기존 재료 UI 제거
         foreach (Transform child in requireItemScrollContent)
             Destroy(child.gameObject);
 
-        // 필요한 재료 표시
         foreach (var req in recipe.requiredItems)
         {
             if (req.item == null) continue;
 
             GameObject go = Instantiate(requireItemUIPrefab, requireItemScrollContent);
+            go.transform.Find("Icon").GetComponent<Image>().sprite = req.item.Icon;
+            go.transform.Find("Name").GetComponent<TextMeshProUGUI>().text = req.item.ItemName;
+            go.transform.Find("Amount").GetComponent<TextMeshProUGUI>().text = $"x{req.quantity}";
+        }
 
-            Transform iconTr = go.transform.Find("Icon");
-            Transform nameTr = go.transform.Find("Name");
-            Transform amountTr = go.transform.Find("Amount");
+        craftButton.onClick.RemoveAllListeners();
+        craftButton.onClick.AddListener(OnClickCraft);
+    }
 
-            if (iconTr != null) iconTr.GetComponent<Image>().sprite = req.item.Icon;
-            if (nameTr != null) nameTr.GetComponent<TextMeshProUGUI>().text = req.item.ItemName;
-            if (amountTr != null) amountTr.GetComponent<TextMeshProUGUI>().text = $"x{req.quantity}";
+    public void OnClickCraft()
+    {
+        if (currentSelectedRecipe == null) return;
+
+        if (craftingSystem.CanCraft(currentSelectedRecipe))
+        {
+            craftingSystem.Craft(currentSelectedRecipe);
+            ShowRecipeDetail(currentSelectedRecipe); // UI 갱신
+        }
+        else
+        {
+            Debug.LogWarning("재료가 부족합니다.");
         }
     }
 }

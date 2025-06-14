@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+
 using UnityEngine;
 
 public class Inventory : MonoBehaviour
@@ -17,6 +18,16 @@ public class Inventory : MonoBehaviour
     }
 
     public List<InventorySlot> slots = new List<InventorySlot>();
+
+    public bool HasItem(ItemBaseData item, int amount)
+    {
+        foreach (var slot in slots)
+        {
+            if (slot.itemData == item && slot.quantity >= amount)
+                return true;
+        }
+        return false;
+    }
 
     public bool AddItem(ItemBaseData item, int amount = 1)
     {
