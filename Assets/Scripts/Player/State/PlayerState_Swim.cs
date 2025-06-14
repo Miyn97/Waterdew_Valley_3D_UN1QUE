@@ -12,35 +12,38 @@ public class PlayerState_Swim : IState
 
     public void Enter()
     {
-        // 수영 상태 진입 시 애니메이션 파라미터 설정
-        player.AnimatorWrapper.SetSwimming(true); // "IsSwimming" 파라미터를 true로 설정
+        player.AnimatorWrapper.SetSwimming(true); // 수영 애니메이션 파라미터 활성화
+        player.Controller.SetSwimMode(true);      // 컨트롤러 수영 모드 설정
 
-        // 수영 상태 진입 로그 출력
-        Debug.Log("Entered Swim State");
+        player.Controller.ForceVerticalVelocity(-1.5f); // 수영 진입 시 가라앉기 위한 초기 하강 속도 설정
     }
+
 
     public void Update()
     {
-        // 플레이어가 물 밖으로 나왔는지 판단 (y 좌표로 단순 판별)
-        if (player.transform.position.y > 0.5f)
+        // 수영 중 상태에서는 입력과 부력 처리는 PlayerController에 위임
+        // 상태 전이는 WaterZone.cs → EventBus → FSM.OnExitWater() 경유로 처리됨
+
+        player.Controller.ReadMoveInput(); // 입력 반영 추가
+
+        // 예외 처리: 물에서 벗어났는데 상태 전환이 안 되었을 경우 대비 (보조 안전장치)
+        if (!WaterSystem.IsUnderwater(player.transform.position))
         {
-            // 이동 입력 여부에 따라 Idle 또는 Move 상태로 전환
+            // 이동 입력 여부에 따라 적절한 상태 전환 (수동 백업 루트)
             if (player.Controller.HasMovementInput())
-                player.FSM.ChangeState(PlayerStateType.Move); // 이동 상태로 전환
+                player.FSM.ChangeState(PlayerStateType.Move);
             else
-                player.FSM.ChangeState(PlayerStateType.Idle); // 대기 상태로 전환
+                player.FSM.ChangeState(PlayerStateType.Idle);
         }
     }
 
     public void FixedUpdate()
     {
-        // 수영 중에도 기본적인 물리 이동은 유지 (수영용 Move()로 대체 가능)
-        player.Controller.Move(); // 수직/수평 이동 적용
+        player.Controller.Move(); // 수영 중 이동/부력 적용 처리
     }
 
     public void Exit()
     {
-        // 수영 상태에서 나올 때 애니메이션 파라미터 해제
-        player.AnimatorWrapper.SetSwimming(false); // "IsSwimming" 파라미터를 false로 설정
+        player.AnimatorWrapper.SetSwimming(false); // 애니메이션 파라미터 해제
     }
 }
