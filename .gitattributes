@@ -79,3 +79,12 @@
 *NavMesh*.asset      filter=lfs diff=lfs merge=lfs -text
 *TerrainData*.asset  filter=lfs diff=lfs merge=lfs -text
 
+# [보완] 폴더 메타도 줄바꿈 통일
+*/ folder.meta text eol=lf
+
+# [선택] OcclusionCulling, ReflectionProbe 등 대형 바이너리 예외 처리
+#*OcclusionCullingData*.asset filter=lfs diff=lfs merge=lfs -text
+#*ReflectionProbe*.asset      filter=lfs diff=lfs merge=lfs -text
+
+# [정리] 중복 방지용 meta 설정 통합
+*.meta merge=unityyamlmerge text eol=lf
