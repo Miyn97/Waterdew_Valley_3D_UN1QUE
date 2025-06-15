@@ -159,7 +159,7 @@ TerrainCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_TerrainData: {fileID: 15600000, guid: c75d965b5fdcf4b0cb4f5384ab05ea73, type: 2}
+  m_TerrainData: {fileID: 15600000, guid: 0412bb435f768e046b397ae060fa970d, type: 2}
   m_EnableTreeColliders: 1
 --- !u!218 &35368632
 Terrain:
@@ -170,7 +170,7 @@ Terrain:
   m_GameObject: {fileID: 35368630}
   m_Enabled: 1
   serializedVersion: 6
-  m_TerrainData: {fileID: 15600000, guid: c75d965b5fdcf4b0cb4f5384ab05ea73, type: 2}
+  m_TerrainData: {fileID: 15600000, guid: 0412bb435f768e046b397ae060fa970d, type: 2}
   m_TreeDistance: 5000
   m_TreeBillboardDistance: 50
   m_TreeCrossFadeLength: 5
@@ -535,7 +535,7 @@ PrefabInstance:
     - target: {fileID: 5902617080424904079, guid: 4f7ce925a322d1148be2962a73478285,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: -51
+      value: -57.07
       objectReference: {fileID: 0}
     - target: {fileID: 5902617080424904079, guid: 4f7ce925a322d1148be2962a73478285,
         type: 3}
@@ -545,7 +545,7 @@ PrefabInstance:
     - target: {fileID: 5902617080424904079, guid: 4f7ce925a322d1148be2962a73478285,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: 476
+      value: 20
       objectReference: {fileID: 0}
     - target: {fileID: 5902617080424904079, guid: 4f7ce925a322d1148be2962a73478285,
         type: 3}
@@ -618,7 +618,7 @@ Transform:
   m_GameObject: {fileID: 1670555531}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -1125.0579, y: 248.89975, z: -49.177856}
+  m_LocalPosition: {x: -324.9, y: 248.89975, z: -49.177856}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -653,7 +653,7 @@ Terrain:
   m_GameObject: {fileID: 1670555531}
   m_Enabled: 1
   serializedVersion: 6
-  m_TerrainData: {fileID: 15600000, guid: 3c91bb7b720f3444f9c375e6de153f7e, type: 2}
+  m_TerrainData: {fileID: 15600000, guid: 0412bb435f768e046b397ae060fa970d, type: 2}
   m_TreeDistance: 5000
   m_TreeBillboardDistance: 50
   m_TreeCrossFadeLength: 5
