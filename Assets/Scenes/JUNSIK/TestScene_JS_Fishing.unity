@@ -565,6 +565,37 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &882752993
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 882752994}
+  m_Layer: 0
+  m_Name: StartPoint
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &882752994
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 882752993}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0.6, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 5345863441645092065}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &900866243
 GameObject:
   m_ObjectHideFlags: 0
@@ -873,10 +904,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3e7b435a8a282b64fb9f93870b5b8d3b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  throwSpeed: 10
-  waterLayer:
-    serializedVersion: 2
-    m_Bits: 16
+  rb: {fileID: 0}
+  returnSpeed: 5
 --- !u!54 &1532034689
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -1933,15 +1962,16 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6632254249179733088}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0.42261827, w: 0.9063079}
-  m_LocalPosition: {x: 0, y: 0.117, z: 0.808}
+  m_LocalRotation: {x: 0.42261827, y: 0, z: 0, w: 0.9063079}
+  m_LocalPosition: {x: 0.8, y: 0, z: 0}
   m_LocalScale: {x: 0.1, y: 1, z: 0.1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1762640037874969065}
   - {fileID: 1532034687}
+  - {fileID: 882752994}
   m_Father: {fileID: 8636661889074462051}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 50}
+  m_LocalEulerAnglesHint: {x: 50, y: 0, z: 0}
 --- !u!114 &5441226901025741876
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2280,7 +2310,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   bobber: {fileID: 1532034688}
-  startPoint: {fileID: 1532034687}
+  startPoint: {fileID: 882752994}
   maxDistance: 10
   maxChargeTime: 1
 --- !u!23 &8953440798384910473

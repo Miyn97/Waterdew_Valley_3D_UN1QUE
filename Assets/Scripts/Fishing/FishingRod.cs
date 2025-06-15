@@ -58,7 +58,7 @@ public class FishingRod : MonoBehaviour
             Vector3 direction = (hitPoint - startPoint.position).normalized;
 
             // Bobber에 던지라고 요청 (방향 + 거리)
-            bobber.Throw(startPoint, direction, distance);
+            bobber.Throw(direction, distance);
 
             Debug.DrawLine(startPoint.position, startPoint.position + direction * distance, Color.green, 2f);
         }
