@@ -2,16 +2,24 @@
 
 public class Bobber : MonoBehaviour
 {
-    public Rigidbody rb;
-    public float returnSpeed = 5f;
+    [SerializeField] private Transform startPosition;
+    private Rigidbody rb;
 
-    private Vector3 originalPosition;
     private bool isFlying = false;
 
     void Awake()
     {
-        originalPosition = transform.position;
         rb = GetComponent<Rigidbody>();
+    }
+
+    private void OnEnable()
+    {
+        EventBus.SubscribeVoid("ReturnToStart", ReturnToStart);
+    }
+
+    private void OnDisable()
+    {
+        EventBus.UnsubscribeVoid("ReturnToStart", ReturnToStart);
     }
 
     public void Throw(Vector3 direction, float power)
@@ -19,9 +27,9 @@ public class Bobber : MonoBehaviour
         if (isFlying) return; // 중복 방지
         isFlying = true;
 
+        rb.isKinematic = false;
         rb.velocity = Vector3.zero;
         rb.angularVelocity = Vector3.zero;
-        rb.isKinematic = false;
 
         rb.AddForce(direction * power, ForceMode.Impulse);
     }
@@ -30,18 +38,18 @@ public class Bobber : MonoBehaviour
     {
         isFlying = false;
         rb.isKinematic = true;
-        transform.position = originalPosition;
+        transform.position = startPosition.position;
     }
 
-    private void OnCollisionEnter(Collision collision)
+    private void OnTriggerEnter(Collider other)
     {
-        if (collision.gameObject.CompareTag("Ocean"))
+        if (other.CompareTag("Water"))
         {
-            // 낚시 시작 로직
+            // 낚시 이벤트 시작
+            EventBus.PublishVoid("StartFishing");
         }
         else
         {
-            // 바다가 아니면 실패
             ReturnToStart();
         }
     }

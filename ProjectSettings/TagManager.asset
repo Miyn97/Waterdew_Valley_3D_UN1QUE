@@ -6,6 +6,7 @@ TagManager:
   tags:
   - Raft
   - SubCamera
+  - Water
   layers:
   - Default
   - TransparentFX

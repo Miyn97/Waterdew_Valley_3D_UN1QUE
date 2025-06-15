@@ -1,18 +1,26 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
+[RequireComponent(typeof(LineRenderer))]
 public class FishingLine : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
+    [SerializeField] private Transform rodTip;
+    [SerializeField] private Transform bobber;
+
+    private LineRenderer line;
+
+    private void Awake()
     {
-        
+        line = GetComponent<LineRenderer>();
+        line.positionCount = 2;
     }
 
-    // Update is called once per frame
-    void Update()
+    private void Update()
     {
-        
+        if (rodTip == null || bobber == null)
+            return;
+
+        // 항상 낚싯대와 찌 사이를 선으로 그림
+        line.SetPosition(0, rodTip.position);
+        line.SetPosition(1, bobber.position);
     }
 }
