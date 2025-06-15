@@ -12,6 +12,9 @@ public class FishingLine : MonoBehaviour
     {
         line = GetComponent<LineRenderer>();
         line.positionCount = 2;
+        line.startWidth = 0.01f;
+        line.endWidth = 0.01f;
+        line.useWorldSpace = true;
     }
 
     private void Update()

@@ -43,6 +43,10 @@ public class Bobber : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
+        rb.isKinematic = true;
+        rb.velocity = Vector3.zero;
+        rb.angularVelocity = Vector3.zero;
+
         if (other.CompareTag("Water"))
         {
             // 낚시 이벤트 시작
