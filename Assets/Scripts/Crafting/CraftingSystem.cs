@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+
 using UnityEngine;
 
 public class CraftingSystem : MonoBehaviour
@@ -34,7 +35,7 @@ public class CraftingSystem : MonoBehaviour
     {
         if (!CanCraft(recipe))
         {
-            Debug.Log("❌ 재료가 부족합니다!");
+            Debug.Log("재료가 부족합니다");
             return;
         }
 
@@ -46,5 +47,6 @@ public class CraftingSystem : MonoBehaviour
 
         // 결과 아이템 추가
         inventory.AddItem(recipe.resultItem, recipe.resultQuantity);
+        Debug.Log($"제작 완료: {recipe.resultItem.ItemName}");
     }
 }

@@ -16,7 +16,7 @@ public abstract class EnemyController : MonoBehaviour
     public float patrolRadius = 10f;
 
     [Header("Detection")]
-    public float detectionRange = 10f;
+    public float detectionRange = 25f;
 
     public Transform player;
     public Transform raft;
