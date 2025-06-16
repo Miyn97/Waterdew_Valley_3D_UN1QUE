@@ -1114,7 +1114,7 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 1, y: 6, z: 1}
   m_Center: {x: 0, y: -3, z: 0}
---- !u!84 &906252520
+--- !u!84 &891103513
 RenderTexture:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -1144,7 +1144,7 @@ RenderTexture:
   m_TextureSettings:
     serializedVersion: 2
     m_FilterMode: 1
-    m_Aniso: 1
+    m_Aniso: 0
     m_MipBias: 0
     m_WrapU: 1
     m_WrapV: 1
@@ -1887,6 +1887,7 @@ GameObject:
   - component: {fileID: 6690902105328845332}
   - component: {fileID: 6690902105328845336}
   - component: {fileID: 6690902105328845335}
+  - component: {fileID: 6690902105328845339}
   - component: {fileID: 6690902105328845338}
   - component: {fileID: 6690902105328845333}
   - component: {fileID: 6690902105328845334}
@@ -7602,6 +7603,26 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   enemy: {fileID: 4246919589055662462}
+--- !u!114 &6690902105328845339
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 103899982562034388}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fc43e08e663af4647a452b92ff06d3b7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  maxHealth: 100
+  maxHunger: 100
+  maxThirst: 100
+  hungerDecayRate: 1
+  thirstDecayRate: 2
+  playerHealth: 80
+  playerHunger: 100
+  playerThirst: 100
 --- !u!1 &6720142573523600338
 GameObject:
   m_ObjectHideFlags: 0
@@ -32639,7 +32660,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   computeOverride: 0
-  _depthTex: {fileID: 906252520}
+  _depthTex: {fileID: 891103513}
   bakedDepthTex: {fileID: 0}
   _waves:
   - amplitude: 0.30540264
