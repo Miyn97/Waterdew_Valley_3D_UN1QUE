@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+<<<<<<<< HEAD:Assets/Scenes/SUMIN/Asset/com.verasl.water-system/Editor/BuoyantObjectEditor.cs.meta
+guid: b27dadc1aeeb9074bac430cdff3784fe
+========
+guid: 871c03c087962ed43a2486253efa6c2a
+>>>>>>>> develop:Assets/Scripts/UI/UI/MainUI.cs.meta
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences: []
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

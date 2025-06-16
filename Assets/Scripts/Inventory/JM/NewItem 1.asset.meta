@@ -1,0 +1,12 @@
+fileFormatVersion: 2
+<<<<<<<< HEAD:Assets/Scenes/SUMIN/Asset/com.verasl.water-system/Scripts/Data/WaterResources.asset.meta
+guid: 76f6ec520aa889e43b017dce55d91332
+========
+guid: c5339f3db8161a04ab63447e4c9eebbe
+>>>>>>>> develop:Assets/Scripts/Inventory/JM/NewItem 1.asset.meta
+NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: 11400000
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

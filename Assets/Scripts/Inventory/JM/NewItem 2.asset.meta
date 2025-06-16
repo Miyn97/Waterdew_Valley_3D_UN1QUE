@@ -1,0 +1,12 @@
+fileFormatVersion: 2
+<<<<<<<< HEAD:Assets/Scenes/SUMIN/Asset/com.verasl.water-system/Materials/Caustics.mat.meta
+guid: ae3dfbab184f38a48a14317b80ccb41f
+========
+guid: 61e11d1fd6172b8489a7b15070e6c5e7
+>>>>>>>> develop:Assets/Scripts/Inventory/JM/NewItem 2.asset.meta
+NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: 11400000
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
