@@ -707,8 +707,7 @@ Transform:
   m_LocalPosition: {x: 0, y: 0.58, z: 0.75}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
-  m_Children:
-  - {fileID: 1919555857}
+  m_Children: []
   m_Father: {fileID: 8636661889074462051}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &832575517
@@ -1453,7 +1452,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1919555857
 Transform:
   m_ObjectHideFlags: 0
@@ -1462,13 +1461,13 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1919555856}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 1.6800001, z: 0.75}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 689723485}
-  m_Father: {fileID: 822414661}
+  m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1919555858
 MonoBehaviour:
@@ -2147,6 +2146,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   controller: {fileID: 1924696180898033980}
   animatorWrapper: {fileID: 5441226901025741876}
+  hand: {fileID: 822414661}
+  fishingRodPrefab: {fileID: 5877046999365019029, guid: d9fc4e67fb7469d43bd318c6d10c6f2e,
+    type: 3}
+  hammerPrefab: {fileID: 0}
+  ropePrefab: {fileID: 2588234626549800564, guid: 0561a657ab291b041b0560c07c46a34e,
+    type: 3}
 --- !u!143 &5887707716496253122
 CharacterController:
   m_ObjectHideFlags: 0
@@ -2465,3 +2470,4 @@ SceneRoots:
   - {fileID: 1706281058}
   - {fileID: 1362470456}
   - {fileID: 2024082453}
+  - {fileID: 1919555857}

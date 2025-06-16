@@ -1162,6 +1162,80 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1824802933}
   m_Mesh: {fileID: 10210, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!1001 &1839475038
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 8636661889074462051}
+    m_Modifications:
+    - target: {fileID: 643511942312956743, guid: d9fc4e67fb7469d43bd318c6d10c6f2e,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0.75
+      objectReference: {fileID: 0}
+    - target: {fileID: 643511942312956743, guid: d9fc4e67fb7469d43bd318c6d10c6f2e,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 643511942312956743, guid: d9fc4e67fb7469d43bd318c6d10c6f2e,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 643511942312956743, guid: d9fc4e67fb7469d43bd318c6d10c6f2e,
+        type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 0.9063079
+      objectReference: {fileID: 0}
+    - target: {fileID: 643511942312956743, guid: d9fc4e67fb7469d43bd318c6d10c6f2e,
+        type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0.42261827
+      objectReference: {fileID: 0}
+    - target: {fileID: 643511942312956743, guid: d9fc4e67fb7469d43bd318c6d10c6f2e,
+        type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 643511942312956743, guid: d9fc4e67fb7469d43bd318c6d10c6f2e,
+        type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 643511942312956743, guid: d9fc4e67fb7469d43bd318c6d10c6f2e,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 50
+      objectReference: {fileID: 0}
+    - target: {fileID: 643511942312956743, guid: d9fc4e67fb7469d43bd318c6d10c6f2e,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 643511942312956743, guid: d9fc4e67fb7469d43bd318c6d10c6f2e,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5877046999365019029, guid: d9fc4e67fb7469d43bd318c6d10c6f2e,
+        type: 3}
+      propertyPath: m_Name
+      value: FishingRodTest
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: d9fc4e67fb7469d43bd318c6d10c6f2e, type: 3}
+--- !u!4 &1839475039 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 643511942312956743, guid: d9fc4e67fb7469d43bd318c6d10c6f2e,
+    type: 3}
+  m_PrefabInstance: {fileID: 1839475038}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1869185235
 GameObject:
   m_ObjectHideFlags: 0
@@ -1778,8 +1852,7 @@ MonoBehaviour:
   controller: {fileID: 1924696180898033980}
   animatorWrapper: {fileID: 5441226901025741876}
   hand: {fileID: 822414661}
-  fishingRodPrefab: {fileID: 5877046999365019029, guid: d9fc4e67fb7469d43bd318c6d10c6f2e,
-    type: 3}
+  fishingRodPrefab: {fileID: 0}
   hammerPrefab: {fileID: 0}
   ropePrefab: {fileID: 2588234626549800564, guid: 0561a657ab291b041b0560c07c46a34e,
     type: 3}
@@ -1961,6 +2034,7 @@ Transform:
   - {fileID: 7406540825214047504}
   - {fileID: 8981953579902211906}
   - {fileID: 822414661}
+  - {fileID: 1839475039}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!23 &8953440798384910473
