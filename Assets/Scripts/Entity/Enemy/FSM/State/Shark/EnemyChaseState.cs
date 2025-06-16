@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-
 public class EnemyChaseState : IEnemyState
 {
     private EnemyController enemy;
@@ -50,6 +49,14 @@ public class EnemyChaseState : IEnemyState
         {
             Vector3 fromPos = shark.headTransform ? shark.headTransform.position : shark.transform.position;
             destination = shark.GetClosestCornerPosition(currentTarget.position, fromPos);
+        }
+
+        // 회전 처리 (진행 방향)
+        Vector3 direction = (destination - enemy.transform.position).normalized;
+        if (direction != Vector3.zero)
+        {
+            Quaternion targetRotation = Quaternion.LookRotation(direction);
+            enemy.transform.rotation = Quaternion.Slerp(enemy.transform.rotation, targetRotation, 5f * Time.deltaTime);
         }
 
         // 이동 처리
