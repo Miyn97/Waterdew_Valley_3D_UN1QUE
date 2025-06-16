@@ -44,21 +44,14 @@ public class FishingRod : MonoBehaviour
 
     void Cast()
     {
-        // 0~1 범위로 캐스팅 퍼센트
         float chargePercent = Mathf.Clamp01(chargeTimer / maxChargeTime);
         float distance = chargePercent * maxDistance;
 
-        // 마우스 위치 기준으로 방향 계산 (월드에서 마우스 클릭 지점)
         Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-        Plane plane = new Plane(Vector3.up, startPoint.position); // 수평면
+        Vector3 targetPoint = ray.GetPoint(10f); // 화면 기준 10f 앞
 
-        if (plane.Raycast(ray, out float enter))
-        {
-            Vector3 hitPoint = ray.GetPoint(enter);
-            Vector3 direction = (hitPoint - startPoint.position).normalized;
+        Vector3 direction = (targetPoint - startPoint.position).normalized;
 
-            // Bobber에 던지라고 요청 (방향 + 거리)
-            bobber.Throw(direction, distance);
-        }
+        bobber.Throw(direction, distance);
     }
 }
