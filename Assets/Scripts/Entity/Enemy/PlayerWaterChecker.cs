@@ -9,6 +9,6 @@ public class PlayerWaterChecker : MonoBehaviour
     void Update()
     {
         // 임시 : Y 좌표가 0.5 이하이면 물 속으로 간주
-        enemy.isPlayerInWater = transform.position.y < 0.5f;
+        enemy.isPlayerInWater = transform.position.y < -1.5f;
     }
 }
