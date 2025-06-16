@@ -41,9 +41,28 @@ public class EnemyChaseState : IEnemyState
             return;
         }
 
+        // 이동 타겟 설정
+        Vector3 destination = currentTarget.position;
+
+        // 뗏목이면 가장 가까운 모서리로 추적
+        if (currentTarget.CompareTag("Raft") && enemy is SharkController shark)
+        {
+            Vector3 fromPos = shark.headTransform ? shark.headTransform.position : shark.transform.position;
+            destination = shark.GetClosestCornerPosition(currentTarget.position, fromPos);
+        }
+
+        // 회전 처리 (진행 방향)
+        Vector3 direction = (destination - enemy.transform.position).normalized;
+        if (direction != Vector3.zero)
+        {
+            Quaternion targetRotation = Quaternion.LookRotation(direction);
+            enemy.transform.rotation = Quaternion.Slerp(enemy.transform.rotation, targetRotation, 5f * Time.deltaTime);
+        }
+
+        // 이동 처리
         enemy.transform.position = Vector3.MoveTowards(
             enemy.transform.position,
-            currentTarget.position,
+            destination,
             enemy.moveSpeed * Time.deltaTime
         );
 
