@@ -26,7 +26,7 @@ public class JmInvenManager : MonoBehaviour
     public TestItem item1;
     public TestItem item2;
 
-    void Start()
+    private void Awake()
     {
         slotManager.Init(defaultColumns, defaultRows);
         sizeManager.ResizeContent(defaultColumns, defaultRows);

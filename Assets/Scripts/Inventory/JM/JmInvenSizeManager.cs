@@ -18,6 +18,10 @@ public class JmInvenSizeManager : MonoBehaviour
     public float spacingX = 20f;
     public float spacingY = 20f;
 
+    public Vector2 baseMainInventorySize = new Vector2(640, 770);
+    public int baseColumns = 5;
+    public int baseRows = 2;
+
     public void ResizeContent(int columns, int rows)
     {
         GridLayoutGroup grid = contentRect.GetComponent<GridLayoutGroup>();
@@ -27,18 +31,27 @@ public class JmInvenSizeManager : MonoBehaviour
         float totalHeight = rows * (slotHeight + spacingY) - spacingY + padding.top + padding.bottom;
 
         contentRect.sizeDelta = new Vector2(totalWidth, totalHeight);
-        ResizeMainInventoryBase();
+
+        // 여기가 핵심!
+        inventoryAreaRect.sizeDelta = new Vector2(inventoryAreaRect.sizeDelta.x, totalHeight);
+
+        ResizeMainInventoryBase(columns, rows);
     }
 
-    public void ResizeMainInventoryBase()
+    public void ResizeMainInventoryBase(int columns, int rows)
     {
         var vertical = mainInventoryBaseRect.GetComponent<VerticalLayoutGroup>();
         var padding = vertical.padding;
+        float spacing = vertical.spacing;
 
-        float currentInventoryHeight = inventoryAreaRect.sizeDelta.y;
-        float newHeight = mainInventoryBaseRect.sizeDelta.y - inventoryAreaRect.sizeDelta.y + currentInventoryHeight;
-        float newWidth = inventoryAreaRect.sizeDelta.x + padding.left + padding.right;
+        // contentRect 크기 기준으로 증가분 계산
+        float widthGrowth = (columns - baseColumns) * (slotWidth + spacingX);
+        float heightGrowth = (rows - baseRows) * (slotHeight + spacingY);
+
+        float newWidth = baseMainInventorySize.x + widthGrowth;
+        float newHeight = baseMainInventorySize.y + heightGrowth;
 
         mainInventoryBaseRect.sizeDelta = new Vector2(newWidth, newHeight);
+
     }
 }
