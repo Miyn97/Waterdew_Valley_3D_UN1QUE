@@ -25,6 +25,11 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private Volume underwaterVolume; // 수중 상태용 볼륨
     [SerializeField] private float waterSurfaceY = 0f; // 수면 기준 Y (WaterSystem에서 가져올 수도 있음)
 
+    [Header("시점 전환 설정")]
+    [SerializeField] private GameObject bodyRoot; // 플레이어 외형 루트 (예: Body_010)
+    [SerializeField] private bool isFirstPerson = false; // 현재 시점이 1인칭인지 여부
+
+
 
     private bool isSwimming = false; // 현재 수영 상태 여부
 
@@ -39,11 +44,18 @@ public class PlayerController : MonoBehaviour
 
     private void Awake()
     {
-        characterController = GetComponent<CharacterController>(); // 캐릭터 컨트롤러 캐싱
+        characterController = GetComponent<CharacterController>();
 
         if (player == null)
-            player = GetComponent<Player>(); // Player 참조 자동 연결 (없으면 null)
+            player = GetComponent<Player>();
+
+        if (bodyRoot == null)
+        {
+            Transform found = transform.Find("Body_010"); // 외형 루트 자동 탐색
+            if (found != null) bodyRoot = found.gameObject;
+        }
     }
+
 
     private void Start()
     {
@@ -70,28 +82,38 @@ public class PlayerController : MonoBehaviour
         // 플레이어가 수면 아래에 있을 경우 물 속 효과 적용
         if (underwaterVolume != null)
         {
-            bool isUnderwater = transform.position.y < waterSurfaceY - 0.2f;
+            float playerY = transform.position.y;
+            float surfaceY = waterSurfaceY;
 
-            if (isUnderwater && underwaterVolume.weight != 1f)
-            {
-                underwaterVolume.weight = 1f; // 물 속 진입 시 효과 적용
-            }
-            else if (!isUnderwater && underwaterVolume.weight != 0f)
-            {
-                underwaterVolume.weight = 0f; // 수면 위로 나오면 끔
-            }
+            // 수영 중이면서 수면보다 낮으면 수중 효과 적용
+            bool shouldApplyUnderwater =
+                player.FSM.CurrentStateType == PlayerStateType.Swim &&
+                playerY < surfaceY - 0.2f;
+
+            // 상태에 따라 Volume 전환
+            underwaterVolume.weight = shouldApplyUnderwater ? 1f : 0f;
         }
-
-        if (Input.GetKeyDown(KeyCode.U))
-        {
-            if (underwaterVolume != null)
-            {
-                underwaterVolume.weight = underwaterVolume.weight == 1f ? 0f : 1f;
-                Debug.Log("수중 효과 토글: " + underwaterVolume.weight);
-            }
-        }
-
     }
+
+    // 시점 전환 시 외형 숨김 처리
+    public void SetFirstPersonView(bool enable)
+    {
+        isFirstPerson = enable;
+
+        if (bodyRoot != null)
+        {
+            // 기존 Renderer.enabled 방식 대신 → GameObject 비활성화
+            SkinnedMeshRenderer[] skinnedMeshes = bodyRoot.GetComponentsInChildren<SkinnedMeshRenderer>(true);
+
+            foreach (var smr in skinnedMeshes)
+            {
+                smr.gameObject.SetActive(!enable); // 1인칭이면 비활성화, 3인칭이면 활성화
+                Debug.Log($"[SkinnedMeshRenderer] {smr.gameObject.name} 활성화: {!enable}");
+            }
+        }
+    }
+
+
 
     public void ReadMoveInput()
     {
