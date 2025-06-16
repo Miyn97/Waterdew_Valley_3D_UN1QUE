@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.Rendering;
 
 // 플레이어의 이동 및 점프 + 수영 부력까지 처리하는 컨트롤러 컴포넌트
 public class PlayerController : MonoBehaviour
@@ -20,6 +21,11 @@ public class PlayerController : MonoBehaviour
     [Header("참조")]
     [SerializeField] private Player player; // FSM 상태 확인용 Player 참조
 
+    [Header("수중 효과")]
+    [SerializeField] private Volume underwaterVolume; // 수중 상태용 볼륨
+    [SerializeField] private float waterSurfaceY = 0f; // 수면 기준 Y (WaterSystem에서 가져올 수도 있음)
+
+
     private bool isSwimming = false; // 현재 수영 상태 여부
 
     private CharacterController characterController; // 캐릭터 이동 컨트롤러
@@ -27,6 +33,9 @@ public class PlayerController : MonoBehaviour
     private float verticalVelocity = 0f; // y축 이동 속도 (점프/낙하/부력 포함)
 
     private Camera activeCamera; // 현재 참조 중인 카메라
+
+    public Volume UnderwaterVolume => underwaterVolume; // 외부 상태에서 접근 가능하도록 프로퍼티 제공
+
 
     private void Awake()
     {
@@ -39,6 +48,9 @@ public class PlayerController : MonoBehaviour
     private void Start()
     {
         activeCamera = Camera.main; // 시작 시 메인 카메라 캐싱
+
+        // WaterSystem에서 수면 높이 가져오기 (초기화 한 번만)
+        waterSurfaceY = WaterSystem.GetSurfaceY(); // WaterSystem에 해당 메서드가 존재해야 함
     }
 
     private void Update()
@@ -54,6 +66,31 @@ public class PlayerController : MonoBehaviour
             if (subCam != null && subCam.enabled)
                 activeCamera = subCam;
         }
+
+        // 플레이어가 수면 아래에 있을 경우 물 속 효과 적용
+        if (underwaterVolume != null)
+        {
+            bool isUnderwater = transform.position.y < waterSurfaceY - 0.2f;
+
+            if (isUnderwater && underwaterVolume.weight != 1f)
+            {
+                underwaterVolume.weight = 1f; // 물 속 진입 시 효과 적용
+            }
+            else if (!isUnderwater && underwaterVolume.weight != 0f)
+            {
+                underwaterVolume.weight = 0f; // 수면 위로 나오면 끔
+            }
+        }
+
+        if (Input.GetKeyDown(KeyCode.U))
+        {
+            if (underwaterVolume != null)
+            {
+                underwaterVolume.weight = underwaterVolume.weight == 1f ? 0f : 1f;
+                Debug.Log("수중 효과 토글: " + underwaterVolume.weight);
+            }
+        }
+
     }
 
     public void ReadMoveInput()
