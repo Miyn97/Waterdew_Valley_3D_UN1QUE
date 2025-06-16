@@ -28,7 +28,8 @@ public class PlayerState_Move : IState
     {
         player.Controller.ReadMoveInput(); // 입력을 받아 수평 이동 방향 및 점프 요청 처리
 
-        player.AnimatorWrapper.SetRun(player.Controller.IsRunning());   // 달리기 여부에 따라 애니메이션 상태 갱신
+        //player.AnimatorWrapper.SetRun(player.Controller.IsRunning());   // 달리기 여부에 따라 애니메이션 상태 갱신
+        bool isRunning = player.Controller.IsRunning();
         player.AnimatorWrapper.SetJump(player.Controller.IsJumping()); // 공중 상승 중 여부에 따라 점프 애니메이션 갱신
 
         // 지면에 있고 이동 입력이 없을 때만 Idle 상태로 전환
@@ -62,10 +63,22 @@ public class PlayerState_Move : IState
         }
 
         // 달리기 상태일 경우 Blend Tree 방향 전달
-        if (player.Controller.IsRunning())
+        //if (player.Controller.IsRunning())
+        //{
+        //    Vector3 input = player.Controller.GetMoveInput(); // 카메라 기준 이동 방향
+        //    player.AnimatorWrapper.SetDirection(input.x, input.z); // 방향 파라미터 전달
+        //}
+
+        // 방향값은 달릴 때만 넘기기
+        if (isRunning)
         {
-            Vector3 input = player.Controller.GetMoveInput(); // 카메라 기준 이동 방향
-            player.AnimatorWrapper.SetDirection(input.x, input.z); // 방향 파라미터 전달
+            Vector3 input = player.Controller.GetMoveInput();
+            player.AnimatorWrapper.SetDirection(input.x, input.z);
+        }
+        else
+        {
+            // 멈췄을 땐 0으로 고정해줘야 Blend Tree가 중앙으로 돌아감
+            player.AnimatorWrapper.SetDirection(0f, 0f);
         }
 
     }
