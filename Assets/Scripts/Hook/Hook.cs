@@ -17,16 +17,6 @@ public class Hook : MonoBehaviour
         hookSystem = GetComponent<HookSystem>();
     }
 
-    private void OnEnable()
-    {
-        EventBus.SubscribeVoid("ReturnToHand", ReturnToHand);
-    }
-
-    private void OnDisable()
-    {
-        EventBus.UnsubscribeVoid("ReturnToHand", ReturnToHand);
-    }
-
     public void Throw(Vector3 direction, float power)
     {
         if (isFlying || isReturning) return; // 중복 방지
