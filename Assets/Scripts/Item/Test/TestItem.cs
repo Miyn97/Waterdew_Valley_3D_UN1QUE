@@ -8,5 +8,6 @@ public class TestItem : ScriptableObject
 {
     public string itemName;
     public Sprite icon;
+    public string des;
     public int itemID;
 }

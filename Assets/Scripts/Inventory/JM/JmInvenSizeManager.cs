@@ -5,12 +5,16 @@ using UnityEngine.UI;
 
 public class JmInvenSizeManager : MonoBehaviour
 {
+    [Header("참조")]
     public RectTransform contentRect;
     public RectTransform mainInventoryBaseRect;
     public RectTransform inventoryAreaRect;
 
+    [Header("슬롯 사이즈")]
     public float slotWidth = 90f;
     public float slotHeight = 90f;
+
+    [Header("스캐핑(갭)")]
     public float spacingX = 20f;
     public float spacingY = 20f;
 

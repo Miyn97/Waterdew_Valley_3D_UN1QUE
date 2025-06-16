@@ -515,6 +515,7 @@ GameObject:
   - component: {fileID: 492167601}
   - component: {fileID: 492167603}
   - component: {fileID: 492167602}
+  - component: {fileID: 492167604}
   m_Layer: 5
   m_Name: SelectedItemInfoSection
   m_TagString: Untagged
@@ -582,6 +583,21 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 492167600}
   m_CullTransparentMesh: 1
+--- !u!114 &492167604
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 492167600}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a93e6608dbf5b5f43967db9e882e2214, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  iconObj: {fileID: 148025554}
+  nameTxt: {fileID: 731330301}
+  desTxt: {fileID: 429761486}
 --- !u!1 &634918197
 GameObject:
   m_ObjectHideFlags: 0
@@ -2200,8 +2216,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   slotManager: {fileID: 1772266010}
   sizeManager: {fileID: 1772266011}
+  infoManager: {fileID: 492167604}
   defaultColumns: 5
   defaultRows: 2
+  nowSelectedItem: {fileID: 0}
+  isSelected: 0
+  selectedSlot1: {fileID: 0}
+  selectedSlot2: {fileID: 0}
   item1: {fileID: 11400000, guid: c5339f3db8161a04ab63447e4c9eebbe, type: 2}
   item2: {fileID: 11400000, guid: 61e11d1fd6172b8489a7b15070e6c5e7, type: 2}
 --- !u!1 &2020196275

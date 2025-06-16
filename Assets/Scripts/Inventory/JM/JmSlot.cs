@@ -7,7 +7,8 @@ public class JmSlot : MonoBehaviour
     public Image iconImage;
 
     public int slotIndex;
-    
+
+
     public void SetIndex(int index)
     {
         slotIndex = index;

@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class JmInvenSlotManager : MonoBehaviour
 {
+
     public GameObject slotPrefab;
     public Transform contentParent;
 

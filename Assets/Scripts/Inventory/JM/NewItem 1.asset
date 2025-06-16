@@ -14,4 +14,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   itemName: One
   icon: {fileID: 10901, guid: 0000000000000000f000000000000000, type: 0}
+  des: "\uC751\uC560, \uC544\uC774\uD15C 1"
   itemID: 0
