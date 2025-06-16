@@ -32,7 +32,7 @@ public class SharkController : EnemyController
     // 뗏목의 가장 가까운 모서리를 계산
     private Transform GetClosestCorner(Transform raftTransform, Vector3 fromPosition)
     {
-        float halfSize = 0.5f; // Raft 한 타일 크기 기준
+        float halfSize = 5f; // Raft 한 타일 크기 기준
         Vector3[] cornerOffsets =
         {
             new Vector3(-halfSize, 0, -halfSize),
