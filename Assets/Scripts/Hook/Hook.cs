@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Hook : MonoBehaviour
 {
-    [SerializeField] private Transform startPosition;
+    public Transform startPosition;
     private Rigidbody rb;
     private HookSystem hookSystem;
 

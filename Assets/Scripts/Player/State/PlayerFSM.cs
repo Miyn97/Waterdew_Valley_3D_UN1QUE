@@ -86,6 +86,4 @@ public class PlayerFSM
         player.Controller.SetSwimMode(false); // 부력 해제
         ChangeState(PlayerStateType.Jump); // 바로 점프 상태 진입
     }
-
-
 }

@@ -3,7 +3,7 @@
 [RequireComponent(typeof(LineRenderer))]
 public class Rope : MonoBehaviour
 {
-    [SerializeField] private Transform handTransform;
+    public Transform handTransform;
     [SerializeField] private Transform hookTransform;
 
     private LineRenderer line;
