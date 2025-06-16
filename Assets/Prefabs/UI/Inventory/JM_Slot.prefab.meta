@@ -1,0 +1,11 @@
+fileFormatVersion: 2
+<<<<<<<< HEAD:Assets/Scenes/SUMIN/Asset/com.verasl.water-system/Meshes/Plane_Collider.prefab.meta
+guid: db284a57c059db542b8c31854240f2aa
+========
+guid: 16f233f30bcfd1b41a28a24255d3508d
+>>>>>>>> develop:Assets/Prefabs/UI/Inventory/JM_Slot.prefab.meta
+PrefabImporter:
+  externalObjects: {}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

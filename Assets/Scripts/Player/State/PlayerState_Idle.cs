@@ -21,8 +21,15 @@ public class PlayerState_Idle : IState
             return;
         }
 
+        // Idle 상태 진입 시 수중 효과 강제 OFF 처리
+        if (player.Controller.UnderwaterVolume != null) // null 체크
+        {
+            player.Controller.UnderwaterVolume.weight = 0f; // 수면 위 상태 확정 시 강제 끔
+        }
+
         player.AnimatorWrapper.SetMove(false); // Idle 상태 진입 시 애니메이션에서 이동 상태 false 설정
     }
+
 
     public void Update()
     {
