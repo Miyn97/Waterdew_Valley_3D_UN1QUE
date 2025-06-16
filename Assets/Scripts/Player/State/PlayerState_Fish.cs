@@ -4,6 +4,7 @@ using UnityEngine;
 public class PlayerState_Fish : IState
 {
     private readonly Player player;
+    private GameObject fishingRodPrefab;
 
     public PlayerState_Fish(Player player)
     {
@@ -12,22 +13,24 @@ public class PlayerState_Fish : IState
 
     public void Enter()
     {
-        player.AnimatorWrapper.SetFishing(true);
         Debug.Log("Entered Fish State");
+        fishingRodPrefab = Object.Instantiate(player.fishingRodPrefab, player.hand.position, Quaternion.identity, player.hand);
     }
 
     public void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Escape))
-        {
-            player.FSM.ChangeState(PlayerStateType.Idle);
-        }
+        if (Input.GetKeyDown(KeyCode.F))
+            player.FSM.ChangeState(PlayerStateType.Idle); // 원상태로 복귀
     }
 
-    public void FixedUpdate() { }
+    public void FixedUpdate()
+    {
+
+    }
 
     public void Exit()
     {
-        player.AnimatorWrapper.SetFishing(false);
+        Debug.Log("낚시 모드 해제");
+        Object.Destroy(fishingRodPrefab);
     }
 }

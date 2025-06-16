@@ -3,6 +3,9 @@
 public class PlayerState_ThrowHook : IState
 {
     private readonly Player player;
+    private GameObject ropePrefab;
+    private Rope rope;
+    private Hook hook;
 
     public PlayerState_ThrowHook(Player player)
     {
@@ -12,26 +15,27 @@ public class PlayerState_ThrowHook : IState
     public void Enter()
     {
         Debug.Log("Entered ThrowHook State");
-        // 갈고리 캐스팅 애니메이션 시작 또는 UI
-        // player.AnimatorWrapper.SetThrowHook(true); // 필요 시
+        ropePrefab = Object.Instantiate(player.ropePrefab, player.hand.position, Quaternion.identity, player.hand);
+        rope = ropePrefab.GetComponent<Rope>();
+        hook = ropePrefab.GetComponentInChildren<Hook>();
+        rope.handTransform = rope.startPoint = player.hand;
+        hook.startPosition = player.hand;
     }
 
     public void Update()
     {
-        // 입력 해제 또는 던지기 완료 시 상태 복귀
-        if (Input.GetMouseButtonUp(0)) // 예: 버튼 떼면 완료
-        {
-            if (player.Controller.HasMovementInput())
-                player.FSM.ChangeState(PlayerStateType.Move);
-            else
-                player.FSM.ChangeState(PlayerStateType.Idle);
-        }
+        if (Input.GetKeyDown(KeyCode.Q))
+            player.FSM.ChangeState(PlayerStateType.Idle); // 원상태로 복귀
     }
 
-    public void FixedUpdate() { }
+    public void FixedUpdate()
+    {
+
+    }
 
     public void Exit()
     {
-        // player.AnimatorWrapper.SetThrowHook(false); // 필요 시
+        Debug.Log("훅 모드 해제");
+        Object.Destroy(ropePrefab);
     }
 }

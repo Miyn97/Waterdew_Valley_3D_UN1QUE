@@ -7,6 +7,11 @@ public class Player : MonoBehaviour
     [SerializeField] private PlayerController controller; // 이동/점프/수영 처리용 컨트롤러
     [SerializeField] private PlayerAnimation animatorWrapper; // 애니메이션 래퍼 클래스 (Animator 파라미터 제어용)
 
+    public Transform hand;
+    public GameObject fishingRodPrefab;
+    public GameObject hammerPrefab;
+    public GameObject ropePrefab;
+
     public PlayerController Controller => controller; // 외부에서 접근 가능한 컨트롤러 프로퍼티 (읽기 전용)
     public PlayerAnimation AnimatorWrapper => animatorWrapper; // 외부에서 접근 가능한 애니메이션 래퍼 프로퍼티
 
