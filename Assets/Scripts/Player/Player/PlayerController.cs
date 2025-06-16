@@ -265,4 +265,11 @@ public class PlayerController : MonoBehaviour
         return moveInput; // 현재 입력 방향 외부 제공
     }
 
+    public void SetActiveCamera(Camera cam)
+    {
+        if (cam != null)
+        {
+            activeCamera = cam;
+        }
+    }
 }

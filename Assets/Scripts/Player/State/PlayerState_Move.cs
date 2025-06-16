@@ -62,25 +62,31 @@ public class PlayerState_Move : IState
             player.FSM.ChangeState(PlayerStateType.Attack); // 공격 상태로 전환
         }
 
-        // 달리기 상태일 경우 Blend Tree 방향 전달
-        //if (player.Controller.IsRunning())
-        //{
-        //    Vector3 input = player.Controller.GetMoveInput(); // 카메라 기준 이동 방향
-        //    player.AnimatorWrapper.SetDirection(input.x, input.z); // 방향 파라미터 전달
-        //}
-
         // 방향값은 달릴 때만 넘기기
-        if (isRunning)
+        if (isRunning && player.PlayerCamera != null)
         {
             Vector3 input = player.Controller.GetMoveInput();
-            player.AnimatorWrapper.SetDirection(input.x, input.z);
+
+            Vector3 camForward = player.PlayerCamera.transform.forward;
+            Vector3 camRight = player.PlayerCamera.transform.right;
+
+            camForward.y = 0f;
+            camRight.y = 0f;
+
+            camForward.Normalize();
+            camRight.Normalize();
+
+            Vector3 moveDir = camForward * input.z + camRight * input.x;
+
+            float horizontal = Vector3.Dot(moveDir, player.transform.right);
+            float vertical = Vector3.Dot(moveDir, player.transform.forward);
+
+            player.AnimatorWrapper.SetDirection(horizontal, vertical);
         }
         else
         {
-            // 멈췄을 땐 0으로 고정해줘야 Blend Tree가 중앙으로 돌아감
-            player.AnimatorWrapper.SetDirection(0f, 0f);
+            player.AnimatorWrapper.SetDirection(0f, 0f); // 멈추면 중앙
         }
-
     }
 
     public void FixedUpdate()
