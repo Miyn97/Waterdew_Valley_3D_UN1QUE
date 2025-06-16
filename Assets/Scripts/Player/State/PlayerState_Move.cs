@@ -40,7 +40,19 @@ public class PlayerState_Move : IState
         // 갈고리 입력 (임시 Q 키)
         if (Input.GetKeyDown(KeyCode.Q))
         {
-            player.FSM.ChangeState(PlayerStateType.ThrowHook); // 갈고리 상태로 전환
+            player.FSM.ChangeState(PlayerStateType.ThrowHook);
+        }
+
+        // 갈고리 입력 (임시 F 키)
+        if (Input.GetKeyDown(KeyCode.F))
+        {
+            player.FSM.ChangeState(PlayerStateType.Fish);
+        }
+
+        // 갈고리 입력 (임시 B 키)
+        if (Input.GetKeyDown(KeyCode.B))
+        {
+            player.FSM.ChangeState(PlayerStateType.Build);
         }
 
         // 마우스 좌클릭 입력 (왼쪽 버튼)
