@@ -168,7 +168,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: efd9ae2d437ce2d49ae3ad930f4a4347, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  tilePrefab: {fileID: 6104728824259346151, guid: 60c1bfb7b54b433478cf1dc559ea2597,
+  tilePrefab: {fileID: 6214569973135850105, guid: 92b391fe5a5bbe34da58aa2e71361bbd,
     type: 3}
   shipTransform: {fileID: 42339435}
 --- !u!114 &42339437
@@ -805,6 +805,10 @@ MonoBehaviour:
   swimSpeedMultiplier: 0.5
   swimVerticalSpeed: 2
   player: {fileID: 0}
+  underwaterVolume: {fileID: 0}
+  waterSurfaceY: 0
+  bodyRoot: {fileID: 0}
+  isFirstPerson: 0
 --- !u!114 &923123305
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -819,6 +823,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   controller: {fileID: 923123304}
   animatorWrapper: {fileID: 923123303}
+  hand: {fileID: 0}
+  fishingRodPrefab: {fileID: 0}
+  hammerPrefab: {fileID: 0}
+  ropePrefab: {fileID: 0}
 --- !u!143 &923123306
 CharacterController:
   m_ObjectHideFlags: 0
