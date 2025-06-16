@@ -60,6 +60,14 @@ public class PlayerState_Move : IState
         {
             player.FSM.ChangeState(PlayerStateType.Attack); // 공격 상태로 전환
         }
+
+        // 달리기 상태일 경우 Blend Tree 방향 전달
+        if (player.Controller.IsRunning())
+        {
+            Vector3 input = player.Controller.GetMoveInput(); // 카메라 기준 이동 방향
+            player.AnimatorWrapper.SetDirection(input.x, input.z); // 방향 파라미터 전달
+        }
+
     }
 
     public void FixedUpdate()

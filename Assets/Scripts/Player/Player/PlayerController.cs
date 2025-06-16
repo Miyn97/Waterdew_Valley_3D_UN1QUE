@@ -113,8 +113,6 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-
-
     public void ReadMoveInput()
     {
         float h = Input.GetAxisRaw("Horizontal"); // A/D 입력
@@ -261,4 +259,10 @@ public class PlayerController : MonoBehaviour
     {
         return jumpBufferCounter > 0f; // 점프 유예 체크
     }
+
+    public Vector3 GetMoveInput()
+    {
+        return moveInput; // 현재 입력 방향 외부 제공
+    }
+
 }
