@@ -28,7 +28,7 @@ public class PlayerState_Move : IState
     {
         player.Controller.ReadMoveInput(); // 입력을 받아 수평 이동 방향 및 점프 요청 처리
 
-        //player.AnimatorWrapper.SetRun(player.Controller.IsRunning());   // 달리기 여부에 따라 애니메이션 상태 갱신
+        player.AnimatorWrapper.SetRun(player.Controller.IsRunning());   // 달리기 여부에 따라 애니메이션 상태 갱신
         bool isRunning = player.Controller.IsRunning();
         player.AnimatorWrapper.SetJump(player.Controller.IsJumping()); // 공중 상승 중 여부에 따라 점프 애니메이션 갱신
 
