@@ -824,6 +824,7 @@ MonoBehaviour:
   raft: {fileID: 0}
   isPlayerInWater: 0
   isDead: 0
+  headTransform: {fileID: 0}
 --- !u!1 &5637031425179094898
 GameObject:
   m_ObjectHideFlags: 0

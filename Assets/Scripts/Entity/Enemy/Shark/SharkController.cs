@@ -1,13 +1,14 @@
 ﻿using UnityEngine;
 
+
 public class SharkController : EnemyController
 {
-    [Header("Shark Specific")]
-    public Transform headTransform; // 상어 머리 위치 (공격 기준점)
+    [Header("상어 공격 판정 위치 설정")]
+    public Transform headTransform; // 공격 기준점 (머리 위치)
 
     public override void Attack(Transform target)
     {
-        Vector3 attackOrigin = headTransform != null ? headTransform.position : transform.position;
+        Vector3 attackOrigin = headTransform ? headTransform.position : transform.position;
 
         if (target.CompareTag("Player"))
         {
@@ -20,19 +21,17 @@ public class SharkController : EnemyController
         }
         else if (target.CompareTag("Raft"))
         {
-            Transform closestCorner = GetClosestCorner(target, attackOrigin);
-            if (closestCorner != null)
-            {
-                Debug.Log($"Shark가 뗏목의 가장 가까운 모서리({closestCorner.position})를 공격했습니다.");
-                // 예시: closestCorner.GetComponent<RaftPart>()?.TakeDamage(10f);
-            }
+            Vector3 closestCorner = GetClosestCornerPosition(target.position, attackOrigin);
+            Debug.DrawLine(attackOrigin, closestCorner, Color.red, 1f); // 디버깅용
+            Debug.Log($"Shark가 뗏목의 가장 가까운 모서리({closestCorner})를 공격했습니다.");
+
+            // Raft 내구도 감소 로직 추가 필요
         }
     }
 
-    // 뗏목의 가장 가까운 모서리를 계산
-    private Transform GetClosestCorner(Transform raftTransform, Vector3 fromPosition)
+    public Vector3 GetClosestCornerPosition(Vector3 raftCenter, Vector3 fromPosition)
     {
-        float halfSize = 5f; // Raft 한 타일 크기 기준
+        float halfSize = 5f; // 타일의 절반
         Vector3[] cornerOffsets =
         {
             new Vector3(-halfSize, 0, -halfSize),
@@ -41,23 +40,20 @@ public class SharkController : EnemyController
             new Vector3(halfSize, 0, halfSize),
         };
 
+        Vector3 closestCorner = Vector3.zero;
         float minDistance = Mathf.Infinity;
-        Vector3 closestPoint = Vector3.zero;
 
         foreach (var offset in cornerOffsets)
         {
-            Vector3 corner = raftTransform.position + offset;
-            float distance = Vector3.Distance(fromPosition, corner);
-            if (distance < minDistance)
+            Vector3 cornerPos = raftCenter + offset;
+            float dist = Vector3.Distance(fromPosition, cornerPos);
+            if (dist < minDistance)
             {
-                minDistance = distance;
-                closestPoint = corner;
+                minDistance = dist;
+                closestCorner = cornerPos;
             }
         }
 
-        // 위치만 필요한 경우 Transform 대신 Vector3로도 충분하지만, 필요한 경우 실제 Transform으로 반환
-        Transform temp = new GameObject("TempCorner").transform;
-        temp.position = closestPoint;
-        return temp;
+        return closestCorner;
     }
 }
