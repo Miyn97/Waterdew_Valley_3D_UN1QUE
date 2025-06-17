@@ -16,63 +16,56 @@ public class PlayerAnimation : MonoBehaviour
     private readonly int hashIsSwimming = Animator.StringToHash("IsSwimming"); // 수영 상태 해시값 추가
     private readonly int hashHorizontal = Animator.StringToHash("Horizontal"); // 좌우 입력
     private readonly int hashVertical = Animator.StringToHash("Vertical");     // 전후 입력
-
-
     private void Awake()
     {
         animator = GetComponent<Animator>(); // Animator 컴포넌트 초기화
     }
-
     public void SetMove(bool isMoving)
     {
         animator.SetBool(hashIsMoving, isMoving); // "IsMoving" 파라미터 설정
     }
-
     public void SetJump(bool isJumping)
     {
         animator.SetBool(hashIsJumping, isJumping); // "IsJumping" 파라미터 설정
     }
-
     public void SetRun(bool isRunning)
     {
         animator.SetBool(hashIsRunning, isRunning); // "IsRunning" 파라미터 설정
     }
-
     public void SetFishing(bool isFishing)
     {
         animator.SetBool(hashIsFishing, isFishing); // "IsFishing" 파라미터 설정
     }
-
     public void SetBuilding(bool isBuilding)
     {
         animator.SetBool(hashIsBuilding, isBuilding); // "IsBuilding" 파라미터 설정
     }
-
     public void SetCrafting(bool isCrafting)
     {
         animator.SetBool(hashIsCrafting, isCrafting); // "IsCrafting" 파라미터 설정
     }
-
     public void SetAttacking(bool isAttacking)
     {
         animator.SetBool(hashIsAttacking, isAttacking); // "IsAttacking" 파라미터 설정
     }
-
     public void SetDead(bool isDead)
     {
         animator.SetBool(hashIsDead, isDead); // "IsDead" 파라미터 설정
     }
-
+    private void EnsureInitialized()
+    {
+        if (animator == null)
+            animator = GetComponent<Animator>();
+    }
     public void SetSwimming(bool isSwimming)
     {
-        animator.SetBool(hashIsSwimming, isSwimming); // "IsSwimming" 파라미터 설정
+        EnsureInitialized(); // null일 경우에만 초기화
+        animator.SetBool(hashIsSwimming, isSwimming);
     }
-
     // 방향 파라미터 설정 (Blend Tree용)
     public void SetDirection(float horizontal, float vertical)
     {
         animator.SetFloat(hashHorizontal, horizontal); // "Horizontal" 파라미터 설정
         animator.SetFloat(hashVertical, vertical);     // "Vertical" 파라미터 설정
     }
-
 }
