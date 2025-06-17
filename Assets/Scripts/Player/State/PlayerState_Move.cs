@@ -29,6 +29,7 @@ public class PlayerState_Move : IState
         player.Controller.ReadMoveInput(); // 입력을 받아 수평 이동 방향 및 점프 요청 처리
 
         player.AnimatorWrapper.SetRun(player.Controller.IsRunning());   // 달리기 여부에 따라 애니메이션 상태 갱신
+        bool isRunning = player.Controller.IsRunning();
         player.AnimatorWrapper.SetJump(player.Controller.IsJumping()); // 공중 상승 중 여부에 따라 점프 애니메이션 갱신
 
         // 지면에 있고 이동 입력이 없을 때만 Idle 상태로 전환
@@ -59,6 +60,32 @@ public class PlayerState_Move : IState
         if (Input.GetMouseButtonDown(0))
         {
             player.FSM.ChangeState(PlayerStateType.Attack); // 공격 상태로 전환
+        }
+
+        // 방향값은 달릴 때만 넘기기
+        if (isRunning && player.PlayerCamera != null)
+        {
+            Vector3 input = player.Controller.GetMoveInput();
+
+            Vector3 camForward = player.PlayerCamera.transform.forward;
+            Vector3 camRight = player.PlayerCamera.transform.right;
+
+            camForward.y = 0f;
+            camRight.y = 0f;
+
+            camForward.Normalize();
+            camRight.Normalize();
+
+            Vector3 moveDir = camForward * input.z + camRight * input.x;
+
+            float horizontal = Vector3.Dot(moveDir, player.transform.right);
+            float vertical = Vector3.Dot(moveDir, player.transform.forward);
+
+            player.AnimatorWrapper.SetDirection(horizontal, vertical);
+        }
+        else
+        {
+            player.AnimatorWrapper.SetDirection(0f, 0f); // 멈추면 중앙
         }
     }
 

@@ -6,6 +6,8 @@ public class Player : MonoBehaviour
     [Header("컴포넌트 참조")]
     [SerializeField] private PlayerController controller; // 이동/점프/수영 처리용 컨트롤러
     [SerializeField] private PlayerAnimation animatorWrapper; // 애니메이션 래퍼 클래스 (Animator 파라미터 제어용)
+    [SerializeField] private Camera playerCamera; // 현재 플레이어가 사용할 카메라 (3인칭 기준)
+    public GameObject buildManager;
 
     public Transform hand;
     public GameObject fishingRodPrefab;
@@ -14,6 +16,7 @@ public class Player : MonoBehaviour
 
     public PlayerController Controller => controller; // 외부에서 접근 가능한 컨트롤러 프로퍼티 (읽기 전용)
     public PlayerAnimation AnimatorWrapper => animatorWrapper; // 외부에서 접근 가능한 애니메이션 래퍼 프로퍼티
+    public Camera PlayerCamera => playerCamera; // 외부에서 사용할 카메라 반환용 프로퍼티
 
     public PlayerFSM FSM { get; private set; } // 플레이어 FSM 상태머신
 
@@ -28,6 +31,10 @@ public class Player : MonoBehaviour
         // controller가 비어 있는 경우 자동으로 PlayerController 컴포넌트를 가져옴
         if (controller == null)
             controller = GetComponent<PlayerController>(); // 컨트롤러 자동 할당
+
+        // playerCamera가 비어 있는 경우 자동으로 Camera.main을 가져옴
+        if (playerCamera == null)
+            playerCamera = Camera.main; // 카메라 참조 자동 할당
     }
 
     private void Start()

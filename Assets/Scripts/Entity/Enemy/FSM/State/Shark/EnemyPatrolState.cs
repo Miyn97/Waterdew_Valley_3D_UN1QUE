@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+
 public class EnemyPatrolState : IEnemyState
 {
     private EnemyController enemy;
@@ -23,6 +24,19 @@ public class EnemyPatrolState : IEnemyState
 
     public void Update(EnemyController enemy)
     {
+        // 회전 처리
+        Vector3 direction = (targetPosition - enemy.transform.position).normalized;
+        if (direction != Vector3.zero)
+        {
+            Quaternion targetRotation = Quaternion.LookRotation(direction);
+            enemy.transform.rotation = Quaternion.Slerp(
+                enemy.transform.rotation,
+                targetRotation,
+                5f * Time.deltaTime
+            );
+        }
+
+        // 이동
         enemy.transform.position = Vector3.MoveTowards(
             enemy.transform.position,
             targetPosition,
@@ -35,7 +49,6 @@ public class EnemyPatrolState : IEnemyState
             SetRandomTarget();
         }
 
-        // 감지 범위 안에 유효한 타겟이 있는지 확인
         Transform target = enemy.GetTarget();
         if (target != null)
         {

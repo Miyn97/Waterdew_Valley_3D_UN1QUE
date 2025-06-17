@@ -7,7 +7,7 @@ public class SharkAttackState : IEnemyState
     private EnemyController enemy;
     private Transform target;
 
-    private float attackDelay = 0.8f;  // 공격까지 대기 시간
+    private float attackDelay = 0.8f;
     private float elapsedTime = 0f;
     private bool hasAttacked = false;
 
@@ -23,7 +23,7 @@ public class SharkAttackState : IEnemyState
         elapsedTime = 0f;
         hasAttacked = false;
 
-        // 공격 애니메이션 재생
+        // 애니메이션 추가
         // enemy.Animator.SetTrigger("Attack");
     }
 
@@ -37,7 +37,6 @@ public class SharkAttackState : IEnemyState
             hasAttacked = true;
         }
 
-        // 공격 후 잠시 후 상태 전환
         if (hasAttacked && elapsedTime >= attackDelay + 0.5f)
         {
             enemy.ChangeState(new EnemyIdleState(enemy));

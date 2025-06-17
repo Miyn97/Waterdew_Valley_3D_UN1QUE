@@ -1,7 +1,12 @@
 fileFormatVersion: 2
+<<<<<<<< HEAD:Assets/Prefabs/Item/UseableItem/fishing_pole.prefab.meta
+guid: 9ea3ca04401066940862c4c5e3eb658e
+PrefabImporter:
+========
 guid: b4af0b910cb22df4e8509c40f2441af0
 folderAsset: yes
 DefaultImporter:
+>>>>>>>> develop:Assets/Scenes/YEONJU/01_Assets/04_Objects/Raft Builder Kit.meta
   externalObjects: {}
   userData: 
   assetBundleName: 
