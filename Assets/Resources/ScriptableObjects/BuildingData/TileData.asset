@@ -15,5 +15,5 @@ MonoBehaviour:
   objName: "\uD0C0\uC77C"
   description: "\uADF8\uB0E5 \uD0C0\uC77C"
   icon: {fileID: 0}
-  prefab: {fileID: 6214569973135850105, guid: 92b391fe5a5bbe34da58aa2e71361bbd, type: 3}
-  preview: {fileID: 8477797825199551375, guid: 7118d83cbcabce1429c71b0edda909e6, type: 3}
+  prefab: {fileID: 2680447892472314014, guid: 37e10e1c218916443b5de800b18f00b1, type: 3}
+  preview: {fileID: 5512009672133412789, guid: b57eb8071b930c34e8dc99f2f8739f79, type: 3}
