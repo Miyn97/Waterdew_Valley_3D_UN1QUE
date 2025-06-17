@@ -13,11 +13,12 @@ MonoBehaviour:
   m_Name: Hammer
   m_EditorClassIdentifier: 
   itemName: "\uB9DD\uCE58"
-  icon: {fileID: 10905, guid: 0000000000000000f000000000000000, type: 0}
-  prefab: {fileID: 3117215516917313736, guid: 60a4f98ab1c84aa4988c610df895b0f1, type: 3}
+  icon: {fileID: 21300000, guid: 01c9194cc8b7c094fb377d2ec19c7dad, type: 3}
+  prefab: {fileID: 1580518533087796411, guid: 0a80dedd8710842c0984f9a940b40f90, type: 3}
   type: 3
   isStackable: 0
   maxStack: 1
+  description: "\uB5CF\uBAA9\uC744 \uB113\uD790 \uB54C \uC720\uC6A9\uD569\uB2C8\uB2E4."
   toolType: 0
   durability: 100
   modelPrefab: {fileID: 0}

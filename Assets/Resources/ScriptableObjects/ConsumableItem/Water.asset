@@ -13,10 +13,12 @@ MonoBehaviour:
   m_Name: Water
   m_EditorClassIdentifier: 
   itemName: "\uBB3C"
-  icon: {fileID: 10905, guid: 0000000000000000f000000000000000, type: 0}
-  prefab: {fileID: 8436072403668069981, guid: 6d98a3312bef6364da0a22c38c0ad7f0, type: 3}
+  icon: {fileID: 21300000, guid: 215cea3c05016d94688262dec1fd9ba8, type: 3}
+  prefab: {fileID: 7993356241941259300, guid: 6490d4c5aa0b044e49aab15f250a9f5c, type: 3}
   type: 2
   isStackable: 1
   maxStack: 99
-  description: 
-  fullAmount: 30
+  description: "\uB2F4\uC218\uB294 \uBC14\uB2E4\uC5D0\uC11C \uB9E4\uC6B0 \uC911\uC694\uD569\uB2C8\uB2E4."
+  consumableType: 0
+  thirstRecoveryAmount: 40
+  hungerRecoveryAmount: 0

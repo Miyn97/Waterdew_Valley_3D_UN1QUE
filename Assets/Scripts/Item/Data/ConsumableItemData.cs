@@ -6,12 +6,15 @@ using UnityEngine;
 public enum ConsumableType
 {
     Water,
-    Food
+    Food,
+    Both
 }
 
 [CreateAssetMenu(menuName = "Item/Consumable")]
 public class ConsumableItemData : ItemBaseData
 {
     public ConsumableType consumableType;
-    public int recoverAmount;
+    public int thirstRecoveryAmount;
+    public int hungerRecoveryAmount;
+
 }
