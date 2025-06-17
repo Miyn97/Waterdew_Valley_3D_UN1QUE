@@ -10,10 +10,10 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 252ddf3551864a0459e24459ca04d7fd, type: 3}
-  m_Name: OData
+  m_Name: PillarData
   m_EditorClassIdentifier: 
-  objName: "\uACF5"
-  description: "\uADF8\uB0E5 \uACF5"
+  objName: "\uAE30\uB465"
+  description: "\uBC1C\uD310\uC744 \uC9C0\uC744 \uC218 \uC788\uB294 \uAE30\uB465\uC785\uB2C8\uB2E4."
   icon: {fileID: 0}
-  prefab: {fileID: 1733416132734880501, guid: ab4deab852ebc6a42bd1bf6fc89e9e2d, type: 3}
-  preview: {fileID: 3589381526465260974, guid: 3087522c6cc5b0f46bf5be682f89202f, type: 3}
+  prefab: {fileID: 8547695551205101515, guid: 99d5ed07335ee6d418a8a3fe43bf4e95, type: 3}
+  preview: {fileID: 4956872707566799451, guid: 5fc16786d7717a3429b1908f09536bc6, type: 3}

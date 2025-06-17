@@ -18,7 +18,7 @@ public class PlayerState_ThrowHook : IState
         ropePrefab = Object.Instantiate(player.ropePrefab, player.hand.position, Quaternion.identity, player.hand);
         rope = ropePrefab.GetComponent<Rope>();
         hook = ropePrefab.GetComponentInChildren<Hook>();
-        rope.handTransform = rope.startPoint = player.hand;
+        rope.startPoint = player.hand;
         hook.startPosition = player.hand;
     }
 

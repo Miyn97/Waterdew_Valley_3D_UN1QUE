@@ -1,16 +1,12 @@
 ﻿using UnityEngine;
 
-[RequireComponent(typeof(LineRenderer))]
 public class Rope : MonoBehaviour
 {
-    public Transform handTransform;
     [SerializeField] private Transform hookTransform;
-
-    private LineRenderer line;
 
     [Header("References")]
     public Hook hook;
-    public Transform startPoint; // == handTransform
+    public Transform startPoint;
 
     [Header("Casting Settings")]
     public float maxDistance = 10f;
@@ -19,29 +15,9 @@ public class Rope : MonoBehaviour
     private float chargeTimer = 0f;
     private bool isCharging = false;
 
-    private void Awake()
-    {
-        line = GetComponent<LineRenderer>();
-        line.positionCount = 2;
-        line.startWidth = 1f;
-        line.endWidth = 1f;
-        line.useWorldSpace = true;
-    }
-
     void Update()
     {
-        DrawLine();
         HandleInput();
-    }
-
-    private void DrawLine()
-    {
-        if (handTransform == null || hookTransform == null)
-            return;
-
-        // 항상 손과 훅 사이를 선으로 그림(로프)
-        line.SetPosition(0, handTransform.position);
-        line.SetPosition(1, hookTransform.position);
     }
 
     void HandleInput()

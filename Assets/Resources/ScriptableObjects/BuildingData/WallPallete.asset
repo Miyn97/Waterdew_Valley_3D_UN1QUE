@@ -10,10 +10,10 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 252ddf3551864a0459e24459ca04d7fd, type: 3}
-  m_Name: QuadData
+  m_Name: WallPallete
   m_EditorClassIdentifier: 
-  objName: "\uCFFC\uB4DC"
-  description: "\uCFFC\uB4DC"
+  objName: "\uBCBD \uD314\uB808\uD2B8"
+  description: "\uBCBD \uD314\uB808\uD2B8\uC785\uB2C8\uB2E4."
   icon: {fileID: 0}
-  prefab: {fileID: 3494717173565053952, guid: 690f8e7bc5113c5469b3572a486a2184, type: 3}
-  preview: {fileID: 3918591909584123569, guid: a38f3112dfe502242934da9f9d8b5a63, type: 3}
+  prefab: {fileID: 6846051206053151885, guid: 04030db68fc7b0048aac2b6f9edb6667, type: 3}
+  preview: {fileID: 5333774340281592154, guid: e3ab9d94b564afe46bf593c49bb72058, type: 3}

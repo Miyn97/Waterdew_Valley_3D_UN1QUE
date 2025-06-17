@@ -33,6 +33,14 @@ public class BuildManager : MonoBehaviour
         {
             SetBuildItem(datas[2]);
         }
+        else if (Input.GetKeyDown(KeyCode.Alpha4))
+        {
+            SetBuildItem(datas[3]);
+        }
+        else if (Input.GetKeyDown(KeyCode.Alpha5))
+        {
+            SetBuildItem(datas[4]);
+        }
     }
 
     void SetBuildItem(BuildingData data)
