@@ -1,4 +1,6 @@
-﻿using TMPro;
+﻿using System.Collections;
+
+using TMPro;
 
 using UnityEngine;
 
@@ -37,20 +39,18 @@ public class FishUI : MonoBehaviour
     private void OnSuccessText()
     {
         successText.SetActive(true);
-    }
-
-    private void OffSuccessText()
-    {
-        successText.SetActive(false);
+        StartCoroutine(HideAfterDelay(successText, 2f));
     }
 
     private void OnFailText()
     {
         failText.SetActive(true);
+        StartCoroutine(HideAfterDelay(failText, 2f));
     }
 
-    private void OffFailText()
+    private IEnumerator HideAfterDelay(GameObject target, float delay)
     {
-        failText.SetActive(false);
+        yield return new WaitForSeconds(delay);
+        target.SetActive(false);
     }
 }
