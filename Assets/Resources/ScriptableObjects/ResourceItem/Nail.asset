@@ -14,7 +14,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   itemName: "\uBABB"
   icon: {fileID: 10905, guid: 0000000000000000f000000000000000, type: 0}
-  prefab: {fileID: 1786007373481261352, guid: 60e6736684ca6164daa7970693e185e4, type: 3}
+  prefab: {fileID: 0}
   type: 0
   isStackable: 1
   maxStack: 99
+  description: 

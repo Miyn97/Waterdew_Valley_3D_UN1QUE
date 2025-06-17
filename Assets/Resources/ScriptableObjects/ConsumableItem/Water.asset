@@ -14,9 +14,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   itemName: "\uBB3C"
   icon: {fileID: 10905, guid: 0000000000000000f000000000000000, type: 0}
-  prefab: {fileID: 8436072403668069981, guid: 6d98a3312bef6364da0a22c38c0ad7f0, type: 3}
+  prefab: {fileID: 7993356241941259300, guid: 6490d4c5aa0b044e49aab15f250a9f5c, type: 3}
   type: 2
   isStackable: 1
   maxStack: 99
   description: 
-  fullAmount: 30
+  consumableType: 0
+  recoverAmount: 0

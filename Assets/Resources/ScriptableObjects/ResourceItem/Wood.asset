@@ -14,8 +14,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   itemName: "\uB098\uBB34 \uC870\uAC01"
   icon: {fileID: 10905, guid: 0000000000000000f000000000000000, type: 0}
-  prefab: {fileID: 7621906687189131974, guid: 2de04ffd770cc0145a38baf8f89055d5, type: 3}
+  prefab: {fileID: 8638354714538972203, guid: 3853a543c430347acaa34cd540c05f51, type: 3}
   type: 0
   isStackable: 1
   maxStack: 99
-  resourceType: Wood
+  description: 

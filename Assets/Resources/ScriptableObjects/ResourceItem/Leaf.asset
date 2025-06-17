@@ -14,8 +14,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   itemName: "\uC57C\uC790\uB098\uBB34 \uC78E"
   icon: {fileID: 10905, guid: 0000000000000000f000000000000000, type: 0}
-  prefab: {fileID: 607729075430925667, guid: 83ddfeb7fe4840544b4fc4c09376336f, type: 3}
+  prefab: {fileID: 8964299191736726765, guid: 2126a50e32fc9c843868031cb6cadb19, type: 3}
   type: 0
   isStackable: 1
   maxStack: 99
-  resourceType: Leaf
+  description: 

@@ -14,8 +14,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   itemName: "\uD50C\uB77C\uC2A4\uD2F1"
   icon: {fileID: 10905, guid: 0000000000000000f000000000000000, type: 0}
-  prefab: {fileID: 1536861494303110378, guid: 353060541fb14a9498a19804605ebee7, type: 3}
+  prefab: {fileID: 4689160306675340893, guid: 7efe1fccacd2744d28308d038215b749, type: 3}
   type: 0
   isStackable: 1
   maxStack: 99
-  resourceType: Plastic
+  description: 

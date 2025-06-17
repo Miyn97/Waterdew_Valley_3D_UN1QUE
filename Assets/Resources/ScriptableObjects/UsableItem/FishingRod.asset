@@ -14,10 +14,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   itemName: "\uB09A\uC2DC\uB300"
   icon: {fileID: 10905, guid: 0000000000000000f000000000000000, type: 0}
-  prefab: {fileID: 3546875982803464147, guid: 44efb3f678e069040833428d3f572d79, type: 3}
+  prefab: {fileID: 710172043394107229, guid: b8ed8cf95e6884a74bf55806fd281091, type: 3}
   type: 3
   isStackable: 0
   maxStack: 1
+  description: 
   toolType: 2
   durability: 100
   modelPrefab: {fileID: 0}
