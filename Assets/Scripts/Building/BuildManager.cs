@@ -132,6 +132,15 @@ public class BuildManager : MonoBehaviour
         }
     }
 
+    public void ClearPreview()
+    {
+        if (currentPreview != null)
+        {
+            Destroy(currentPreview.gameObject);
+            currentPreview = null;
+        }
+    }
+
     // 타일 전용
     public Vector3 GetMouseWorldPosition()
     {
