@@ -17,16 +17,22 @@ public class Ship : MonoBehaviour
             placedTiles.Add(position, tile);
     }
 
+    public void UnregisterTile(Vector2Int position)
+    {
+        if (IsOccupied(position))
+            placedTiles.Remove(position);
+    }
+
     public List<Vector2Int> GetBuildablePositions()
     {
         HashSet<Vector2Int> result = new();
 
         Vector2Int[] directions = {
-            Vector2Int.up, Vector2Int.down,
-            Vector2Int.left, Vector2Int.right
+            new Vector2Int(0, 2), new Vector2Int(0, -2),
+            new Vector2Int(-2, 0), new Vector2Int(2, 0)
         };
 
-        foreach (var tile in placedTiles.Values)
+        foreach (Tile tile in placedTiles.Values)
         {
             foreach (var dir in directions)
             {

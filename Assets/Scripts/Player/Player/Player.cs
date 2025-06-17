@@ -7,6 +7,7 @@ public class Player : MonoBehaviour
     [SerializeField] private PlayerController controller; // 이동/점프/수영 처리용 컨트롤러
     [SerializeField] private PlayerAnimation animatorWrapper; // 애니메이션 래퍼 클래스 (Animator 파라미터 제어용)
     [SerializeField] private Camera playerCamera; // 현재 플레이어가 사용할 카메라 (3인칭 기준)
+    public GameObject buildManager;
 
     public Transform hand;
     public GameObject fishingRodPrefab;

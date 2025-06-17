@@ -4,6 +4,7 @@ public class Tile : MonoBehaviour, IBuildableSurface
 {
     [SerializeField] private BuildingData data;
     [SerializeField] private bool isOccupied = false;  // 타일 위에 이미 설치되어 있는가?
+    private Ship ship;
 
     public Vector2Int gridPosition; // 이 타일의 위치
 
@@ -27,5 +28,16 @@ public class Tile : MonoBehaviour, IBuildableSurface
     public void UnregisterBuild()
     {
         isOccupied = false;
+    }
+
+    public void Init(Ship shipRef)
+    {
+        ship = shipRef;
+    }
+
+    public void DestroyTile()
+    {
+        ship.UnregisterTile(gridPosition);
+        Destroy(gameObject);
     }
 }
