@@ -13,9 +13,9 @@ GameObject:
   - component: {fileID: 6989257722616171544}
   - component: {fileID: 7777411928475517282}
   - component: {fileID: 5937210015328170709}
-  - component: {fileID: -68486931836657441}
+  - component: {fileID: 2285235144343931796}
   m_Layer: 0
-  m_Name: Fish
+  m_Name: CookedFish
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -119,9 +119,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e9d1641d7de2593488a719375469f3a9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  itemData: {fileID: 11400000, guid: b3efc8b62b235e34b8a6908d4bd641fb, type: 2}
+  itemData: {fileID: 11400000, guid: f78d26875f1ca254bb8df9464d3f9c9d, type: 2}
   quantity: 1
---- !u!54 &-68486931836657441
+--- !u!54 &2285235144343931796
 Rigidbody:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
