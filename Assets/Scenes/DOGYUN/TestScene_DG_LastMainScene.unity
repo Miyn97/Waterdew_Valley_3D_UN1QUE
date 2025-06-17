@@ -4716,7 +4716,7 @@ GameObject:
   - component: {fileID: 9117907528212044060}
   - component: {fileID: 1477318470182388217}
   - component: {fileID: 7307129703931118262}
-  m_Layer: 13
+  m_Layer: 0
   m_Name: WoodFloor2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -6921,7 +6921,7 @@ GameObject:
   - component: {fileID: 6559478322292844932}
   m_Layer: 0
   m_Name: Raft
-  m_TagString: Untagged
+  m_TagString: Raft
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -8751,7 +8751,7 @@ GameObject:
   - component: {fileID: 2614070732422953386}
   - component: {fileID: 4161366224964955495}
   - component: {fileID: 5730270092190750113}
-  m_Layer: 13
+  m_Layer: 0
   m_Name: Bottle2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -8872,7 +8872,7 @@ GameObject:
   - component: {fileID: 2453829398443002222}
   - component: {fileID: 4578734916808973731}
   - component: {fileID: 5317847243495613797}
-  m_Layer: 13
+  m_Layer: 0
   m_Name: Bottle1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
