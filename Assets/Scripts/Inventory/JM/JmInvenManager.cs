@@ -11,9 +11,13 @@ public class JmInvenManager : MonoBehaviour
     public int defaultColumns = 5;
     public int defaultRows = 2;
 
+    [Header("퀵슬롯")]
+    public JmQuickSlotManager quickSlotManager;
+
     [Header("선택 관련")]
-    public ItemBaseData nowSelectedItem;
-    //    나중에 아이템 데이터 넣는다면 이곳 바꾸기!
+    public JmSlot nowSelectedSlot;
+    //    현재 선택된 슬롯(퀵슬롯 설정용)
+
     public bool isSelected = false;
 
     public JmSlot selectedSlot1;

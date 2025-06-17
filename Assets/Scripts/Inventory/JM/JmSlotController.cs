@@ -19,6 +19,25 @@ public class JmSlotController : MonoBehaviour, IPointerClickHandler
         invenManager = GetComponentInParent<JmInvenManager>();
     }
 
+    private void Update()
+    {
+        if (invenManager.nowSelectedSlot != null)
+        {
+            for (int i = 0; i < 9; i++)
+            {
+                if (Input.GetKeyDown(KeyCode.Alpha1 + i))
+                {
+                    invenManager.quickSlotManager.SetQuickSlot(i, invenManager.nowSelectedSlot);
+
+                    Debug.Log($"퀵슬롯 {i + 1}번에 {invenManager.nowSelectedSlot} 등록!");
+
+                    invenManager.nowSelectedSlot = null;
+                    break;
+                }
+            }
+        }
+    }
+
     public void OnPointerClick(PointerEventData eventData)
     {
         float timeSinceLastClick = Time.time - lastClickTime;
@@ -68,7 +87,6 @@ public class JmSlotController : MonoBehaviour, IPointerClickHandler
                 //    상태 초기화
                 invenManager.selectedSlot1 = null;
                 invenManager.selectedSlot2 = null;
-                invenManager.nowSelectedItem = null;
                 invenManager.isSelected = false;
 
                 Debug.Log("아이템 옮기기 완료!");
@@ -92,7 +110,6 @@ public class JmSlotController : MonoBehaviour, IPointerClickHandler
                 invenManager.selectedSlot1 = null;
                 invenManager.selectedSlot2 = null;
                 invenManager.isSelected = false;
-                invenManager.nowSelectedItem = null;
 
                 Debug.Log("아이템 교체 완료!");
             }
@@ -102,7 +119,11 @@ public class JmSlotController : MonoBehaviour, IPointerClickHandler
         {
             if (slot != null && slot.currentItem != null)
             {
+                invenManager.nowSelectedSlot = null;
+                //    이전에 선택됬던거 할당 해제하기!
+
                 invenManager.infoManager.UpdateInfoState(slot.currentItem);
+                invenManager.nowSelectedSlot = slot;
                 Debug.Log("아이템이 정보 확인하기!");
             }
         }
@@ -120,7 +141,6 @@ public class JmSlotController : MonoBehaviour, IPointerClickHandler
                 invenManager.infoManager.UpdateInfoState(slot.currentItem);
                 //    누른 인벤 슬롯 정보 업데이트 하기(혹여나를 위해)
 
-                invenManager.nowSelectedItem = slot.currentItem;
                 invenManager.selectedSlot1 = slot;
                 //    인벤토리 매니저에 처음 누른 슬롯 지정하기
 

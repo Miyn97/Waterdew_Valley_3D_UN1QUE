@@ -85,9 +85,8 @@ GameObject:
   m_Component:
   - component: {fileID: 8221001822324137464}
   - component: {fileID: 6252977677502987576}
+  - component: {fileID: 2593353882423441358}
   - component: {fileID: 3187950078282137622}
-  - component: {fileID: 5140437521159524255}
-  - component: {fileID: 8380959819149190946}
   - component: {fileID: 5914898343795768350}
   m_Layer: 5
   m_Name: QuickSlot
@@ -124,6 +123,22 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3131984594904250166}
   m_CullTransparentMesh: 1
+--- !u!114 &2593353882423441358
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3131984594904250166}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 002883ee4b4d40d458e6263c158fb860, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  currentItem: {fileID: 0}
+  iconImage: {fileID: 6627585753152243316}
+  slotIndex: 0
+  linkedSlot: {fileID: 0}
 --- !u!114 &3187950078282137622
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -154,34 +169,6 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
---- !u!114 &5140437521159524255
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3131984594904250166}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 839c72a339522f74d8759d302afc5b90, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  quickSlots: []
-  slotPrefab: {fileID: 0}
-  contentParent: {fileID: 0}
---- !u!114 &8380959819149190946
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3131984594904250166}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 86a33b7254baee643aba5f1241fe4e1e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  invenManager: {fileID: 0}
 --- !u!114 &5914898343795768350
 MonoBehaviour:
   m_ObjectHideFlags: 0

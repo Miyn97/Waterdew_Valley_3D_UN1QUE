@@ -7,14 +7,8 @@ public class JmQuickSlot : JmSlot
 {
     public JmSlot linkedSlot = null;
 
-    public void SetLinkedSlot(JmSlot targetSlot)
+    new public void UpdateData()
     {
-        if(linkedSlot != null)
-        {
-            linkedSlot = null;
-        }
-
-        linkedSlot = targetSlot;
+        iconImage.sprite = linkedSlot.currentItem.Icon;
     }
-
 }

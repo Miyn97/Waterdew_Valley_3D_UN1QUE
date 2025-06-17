@@ -52,4 +52,17 @@ public class JmQuickSlotManager : MonoBehaviour
         }
     }
 
+    public void SetQuickSlot(int index, JmSlot slot)
+    {
+        JmQuickSlot newSlot = quickSlots[index];
+
+        if (newSlot.linkedSlot != null)
+        {
+            newSlot.linkedSlot = null;
+            //newSlot.linkedSlot
+        }
+        newSlot.linkedSlot = slot;
+        newSlot.UpdateData();
+    }
+
 }
