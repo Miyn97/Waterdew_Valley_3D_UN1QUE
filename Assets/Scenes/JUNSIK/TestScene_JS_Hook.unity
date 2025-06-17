@@ -514,7 +514,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 75aec0b51296b114480ea0f53d8cc5cd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  startPosition: {fileID: 0}
+  startPosition: {fileID: 1176161497}
 --- !u!135 &689723488
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -861,7 +861,8 @@ Transform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
-  m_Children: []
+  m_Children:
+  - {fileID: 1919555857}
   m_Father: {fileID: 8636661889074462051}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1362470454
@@ -1452,7 +1453,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &1919555857
 Transform:
   m_ObjectHideFlags: 0
@@ -1462,12 +1463,12 @@ Transform:
   m_GameObject: {fileID: 1919555856}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 1.6800001, z: 0.75}
+  m_LocalPosition: {x: 0, y: 0.58000004, z: 0.75}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 689723485}
-  m_Father: {fileID: 0}
+  m_Father: {fileID: 1176161497}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1919555858
 MonoBehaviour:
@@ -1481,10 +1482,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6cdfdfe00d43ee94493fdb58203dd5de, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  handTransform: {fileID: 0}
+  handTransform: {fileID: 1176161497}
   hookTransform: {fileID: 689723485}
   hook: {fileID: 689723487}
-  startPoint: {fileID: 0}
+  startPoint: {fileID: 1176161497}
   maxDistance: 10
   maxChargeTime: 1
 --- !u!120 &1919555862
@@ -2116,6 +2117,7 @@ MonoBehaviour:
   controller: {fileID: 1924696180898033980}
   animatorWrapper: {fileID: 5441226901025741876}
   playerCamera: {fileID: 0}
+  buildManager: {fileID: 0}
   hand: {fileID: 1176161497}
   fishingRodPrefab: {fileID: 4745440301438399471, guid: 5947d9ffdd50ee34bbb36f4f8ee9e625,
     type: 3}
@@ -2476,4 +2478,3 @@ SceneRoots:
   - {fileID: 1706281058}
   - {fileID: 1362470456}
   - {fileID: 1185585104850106886}
-  - {fileID: 1919555857}
