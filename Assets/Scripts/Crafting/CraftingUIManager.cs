@@ -8,6 +8,7 @@ using UnityEngine.UI;
 public class CraftingUIManager : MonoBehaviour
 {
     [Header("UI References")]
+    public GameObject craftingPanel;
     public Transform categoryBar;                    // 카테고리 버튼 부모
     public Transform recipeScrollContent;            // 레시피 목록 Content
     public Transform requireItemScrollContent;       // 재료 목록 Content
@@ -34,11 +35,45 @@ public class CraftingUIManager : MonoBehaviour
     public CraftingSystem craftingSystem;
     private CraftingRecipe currentSelectedRecipe;
 
+    private bool isActive = false; // UI 상태
+
     private void Start()
     {
+        if (craftingPanel != null)
+            craftingPanel.SetActive(false); // 전체 패널 비활성화
+
         recipeListPanel.SetActive(false);
         descriptionPanel.SetActive(false);
+
         LoadCategoryButtons();
+    }
+
+    private void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.C))
+        {
+            ToggleCraftingUI();
+        }
+    }
+
+    private void ToggleCraftingUI()
+    {
+        isActive = !isActive;
+
+        if (craftingPanel != null)
+            craftingPanel.SetActive(isActive);
+
+        Cursor.lockState = isActive ? CursorLockMode.None : CursorLockMode.Locked;
+        Cursor.visible = isActive;
+
+        Time.timeScale = isActive ? 0f : 1f;
+
+        if (isActive)
+        {
+            // UI 상태 초기화
+            recipeListPanel.SetActive(false);
+            descriptionPanel.SetActive(false);
+        }
     }
 
     void LoadCategoryButtons()

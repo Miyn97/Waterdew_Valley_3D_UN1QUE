@@ -11,8 +11,9 @@ GameObject:
   - component: {fileID: 927424586833016478}
   - component: {fileID: 392182445013059730}
   - component: {fileID: 6952659859602576409}
-  - component: {fileID: 4051562508030256239}
-  - component: {fileID: 788002476955978507}
+  - component: {fileID: -8241985544618798699}
+  - component: {fileID: -1758734731484100240}
+  - component: {fileID: -7602104182738073025}
   m_Layer: 0
   m_Name: WoodFloor2
   m_TagString: Untagged
@@ -85,28 +86,21 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!65 &4051562508030256239
-BoxCollider:
+--- !u!114 &-8241985544618798699
+MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8638354714538972203}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 0
-  m_ProvidesContacts: 0
   m_Enabled: 1
-  serializedVersion: 3
-  m_Size: {x: 1.9976608, y: 0.07515023, z: 2}
-  m_Center: {x: 0.0020973086, y: -0.000000033527613, z: 0}
---- !u!54 &788002476955978507
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e9d1641d7de2593488a719375469f3a9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  itemData: {fileID: 11400000, guid: 13ece7a6faa3c6c40b5f7ecf08028f8b, type: 2}
+  quantity: 1
+--- !u!54 &-1758734731484100240
 Rigidbody:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -133,3 +127,24 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
+--- !u!65 &-7602104182738073025
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8638354714538972203}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 1.9976609, y: 0.06284884, z: 2}
+  m_Center: {x: 0.0011695623, y: -0.03255656, z: 0}

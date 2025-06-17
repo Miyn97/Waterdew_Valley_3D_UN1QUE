@@ -13,9 +13,9 @@ MonoBehaviour:
   m_Name: Scrap
   m_EditorClassIdentifier: 
   itemName: "\uC2A4\uD06C\uB7A9"
-  icon: {fileID: 10905, guid: 0000000000000000f000000000000000, type: 0}
-  prefab: {fileID: 4843659748696711089, guid: 4296a783b5e268b459a305899d0ce1d5, type: 3}
+  icon: {fileID: 21300000, guid: 5af85b9a8c4dbfa44a3aed4f06845abe, type: 3}
+  prefab: {fileID: 0}
   type: 0
   isStackable: 1
   maxStack: 99
-  resourceType: Scrap
+  description: "\uC624\uB798\uB41C \uBD80\uD488\uC778 \uAC83 \uAC19\uC740\uB370...\uBB58\uAE4C\uC694?"
