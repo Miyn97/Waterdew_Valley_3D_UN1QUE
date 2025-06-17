@@ -89,17 +89,20 @@ public class Player : MonoBehaviour
     // 수영 상태 진입 처리
     private void OnEnterWater()
     {
-        FSM.ChangeState(PlayerStateType.Swim); // 수영 상태로 전이 (수면 아래일 경우)
+        // 애니메이터에 IsSwimming 파라미터 true 설정
+        animatorWrapper.SetSwimming(true);  // 수영 시작 시
+        FSM.ChangeState(PlayerStateType.Swim); // 수영 상태로 전이
     }
+
 
     // 수영 상태 탈출 처리
     private void OnExitWater()
     {
-        // 안전 처리: controller 존재 여부 체크 후 상태 전이
+        animatorWrapper.SetSwimming(false); // 수영 종료
+
         if (controller == null)
             return;
 
-        // 입력이 있는 경우 → 이동 상태, 입력 없을 경우 → 대기 상태
         if (controller.HasMovementInput())
             FSM.ChangeState(PlayerStateType.Move);
         else
