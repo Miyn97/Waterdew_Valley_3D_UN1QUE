@@ -13,9 +13,7 @@ public class FishUI : MonoBehaviour
         EventBus.SubscribeVoid("OnBiteText", OnBiteText);
         EventBus.SubscribeVoid("OffBiteText", OffBiteText);
         EventBus.SubscribeVoid("OnSuccessText", OnSuccessText);
-        EventBus.SubscribeVoid("OffSuccessText", OffSuccessText);
         EventBus.SubscribeVoid("OnFailText", OnFailText);
-        EventBus.SubscribeVoid("OffFailText", OffFailText);
     }
 
     private void OnDisable()
@@ -23,9 +21,7 @@ public class FishUI : MonoBehaviour
         EventBus.UnsubscribeVoid("OnBiteText", OnBiteText);
         EventBus.UnsubscribeVoid("OffBiteText", OffBiteText);
         EventBus.UnsubscribeVoid("OnSuccessText", OnSuccessText);
-        EventBus.UnsubscribeVoid("OffSuccessText", OffSuccessText);
         EventBus.UnsubscribeVoid("OnFailText", OnFailText);
-        EventBus.UnsubscribeVoid("OffFailText", OffFailText);
     }
 
     private void OnBiteText()
