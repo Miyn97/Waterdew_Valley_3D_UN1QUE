@@ -14,7 +14,7 @@ public class PlayerState_Fish : IState
     public void Enter()
     {
         Debug.Log("Entered Fish State");
-        fishingRodPrefab = Object.Instantiate(player.fishingRodPrefab, player.hand.position, Quaternion.identity, player.hand);
+        fishingRodPrefab = Object.Instantiate(player.fishingRodPrefab, player.hand.position, player.transform.rotation, player.hand);
     }
 
     public void Update()

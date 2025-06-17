@@ -105,6 +105,7 @@ public class BuildManager : MonoBehaviour
                     Vector3 spawnPos = GridToWorld(gridPos);
                     GameObject tile = Instantiate(currentData.prefab, spawnPos, Quaternion.identity, ship.transform);
                     Tile tileScript = tile.GetComponent<Tile>();
+                    tileScript.Init(ship);
                     tileScript.gridPosition = gridPos;
                     ship.RegisterTile(gridPos, tileScript);
                 }
@@ -131,14 +132,37 @@ public class BuildManager : MonoBehaviour
         }
     }
 
+    public void ClearPreview()
+    {
+        if (currentPreview != null)
+        {
+            Destroy(currentPreview.gameObject);
+            currentPreview = null;
+        }
+    }
+
     // 타일 전용
-    Vector3 GetMouseWorldPosition()
+    public Vector3 GetMouseWorldPosition()
     {
         Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-        if (Physics.Raycast(ray, out RaycastHit hit, 100f))
+        RaycastHit hit;
+
+        int layerMask = LayerMask.GetMask("Raft");
+        float maxBuildDistance = 10f;
+
+        if (Physics.Raycast(ray, out hit, maxBuildDistance, layerMask))
         {
             return hit.point;
         }
+
+        // fallback: y=0 평면과의 교차점 (거리 제한 추가)
+        float distance;
+        if (new Plane(Vector3.up, new Vector3(0, -1, 0)).Raycast(ray, out distance))
+        {
+            if (distance <= maxBuildDistance)
+                return ray.GetPoint(distance);
+        }
+
         return Vector3.zero;
     }
 
@@ -155,11 +179,11 @@ public class BuildManager : MonoBehaviour
 
     Vector2Int WorldToGrid(Vector3 world)
     {
-        return new Vector2Int(Mathf.RoundToInt(world.x), Mathf.RoundToInt(world.z));
+        return new Vector2Int(Mathf.RoundToInt(world.x / 2f) * 2, Mathf.RoundToInt(world.z / 2f) * 2);
     }
 
     Vector3 GridToWorld(Vector2Int grid)
     {
-        return new Vector3(grid.x, 0, grid.y);
+        return new Vector3(grid.x, -1, grid.y);
     }
 }

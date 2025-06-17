@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class FishingSystem : MonoBehaviour
 {
-    public Inventory inventory;
+    [SerializeField] private Inventory inventory;
     //public UIManager uiManager; // QTE UI 등
     [SerializeField] private List<FishData> fishData;
     [SerializeField] private ResourceItemData bait;
