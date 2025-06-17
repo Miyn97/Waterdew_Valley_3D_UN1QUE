@@ -12,13 +12,13 @@ public class ShipInitializer : MonoBehaviour
 
     void GenerateInitialTiles()
     {
-        Vector3 position = Vector3.zero; // 시작 위치
+        Vector3 position = Vector3.zero;
         GameObject tile = Instantiate(tilePrefab, position, Quaternion.identity, shipTransform);
 
         Tile tileScript = tile.GetComponent<Tile>();
         if (tileScript != null)
         {
-            tileScript.gridPosition = new Vector2Int(0, 0); // 기준이 되는 위치
+            tileScript.gridPosition = Vector2Int.zero;
         }
     }
 }

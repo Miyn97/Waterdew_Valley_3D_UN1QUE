@@ -13,19 +13,14 @@ public class Ship : MonoBehaviour
 
     public void RegisterTile(Vector2Int position, Tile tile)
     {
-        Vector2Int size = tile.size;
+        if (!IsOccupied(position))
+            placedTiles.Add(position, tile);
+    }
 
-        for (int x = 0; x < size.x; x++)
-        {
-            for (int y = 0; y < size.y; y++)
-            {
-                Vector2Int offset = new(position.x + x, position.y + y);
-                if (!IsOccupied(offset))
-                {
-                    placedTiles.Add(offset, tile);
-                }
-            }
-        }
+    public void UnregisterTile(Vector2Int position)
+    {
+        if (IsOccupied(position))
+            placedTiles.Remove(position);
     }
 
     public List<Vector2Int> GetBuildablePositions()
@@ -33,28 +28,18 @@ public class Ship : MonoBehaviour
         HashSet<Vector2Int> result = new();
 
         Vector2Int[] directions = {
-        Vector2Int.up, Vector2Int.down,
-        Vector2Int.left, Vector2Int.right
-    };
+            new Vector2Int(0, 2), new Vector2Int(0, -2),
+            new Vector2Int(-2, 0), new Vector2Int(2, 0)
+        };
 
-        foreach (var tile in placedTiles.Values)
+        foreach (Tile tile in placedTiles.Values)
         {
-            Vector2Int pos = tile.gridPosition;
-            Vector2Int size = tile.size;
-
-            for (int x = 0; x < size.x; x++)
+            foreach (var dir in directions)
             {
-                for (int y = 0; y < size.y; y++)
+                Vector2Int neighbor = tile.gridPosition + dir;
+                if (!IsOccupied(neighbor))
                 {
-                    Vector2Int current = pos + new Vector2Int(x, y);
-                    foreach (var dir in directions)
-                    {
-                        Vector2Int neighbor = current + dir;
-                        if (!IsOccupied(neighbor))
-                        {
-                            result.Add(neighbor);
-                        }
-                    }
+                    result.Add(neighbor);
                 }
             }
         }
@@ -69,13 +54,10 @@ public class Ship : MonoBehaviour
             Tile tile = child.GetComponent<Tile>();
             if (tile != null)
             {
-                Vector3 localPos = child.localPosition;
-                Vector2Int gridPos = new Vector2Int(
-                    Mathf.RoundToInt(localPos.x),
-                    Mathf.RoundToInt(localPos.z)
-                );
-
+                Vector3 pos = child.position;
+                Vector2Int gridPos = new Vector2Int(Mathf.RoundToInt(pos.x), Mathf.RoundToInt(pos.z));
                 tile.gridPosition = gridPos;
+
                 RegisterTile(gridPos, tile);
             }
             else
