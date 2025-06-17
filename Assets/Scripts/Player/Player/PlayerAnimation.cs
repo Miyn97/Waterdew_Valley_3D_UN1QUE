@@ -14,6 +14,9 @@ public class PlayerAnimation : MonoBehaviour
     private readonly int hashIsAttacking = Animator.StringToHash("IsAttacking"); // 공격 상태 해시값
     private readonly int hashIsDead = Animator.StringToHash("IsDead"); // 사망 상태 해시값
     private readonly int hashIsSwimming = Animator.StringToHash("IsSwimming"); // 수영 상태 해시값 추가
+    private readonly int hashHorizontal = Animator.StringToHash("Horizontal"); // 좌우 입력
+    private readonly int hashVertical = Animator.StringToHash("Vertical");     // 전후 입력
+
 
     private void Awake()
     {
@@ -64,4 +67,12 @@ public class PlayerAnimation : MonoBehaviour
     {
         animator.SetBool(hashIsSwimming, isSwimming); // "IsSwimming" 파라미터 설정
     }
+
+    // 방향 파라미터 설정 (Blend Tree용)
+    public void SetDirection(float horizontal, float vertical)
+    {
+        animator.SetFloat(hashHorizontal, horizontal); // "Horizontal" 파라미터 설정
+        animator.SetFloat(hashVertical, vertical);     // "Vertical" 파라미터 설정
+    }
+
 }
