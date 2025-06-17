@@ -19,6 +19,7 @@ public class PlayerState_Jump : IState
     public void Update()
     {
         player.Controller.ReadMoveInput();
+        player.AnimatorWrapper.UpdateFlowDirection(); // 보간된 방향값을 애니메이터에 적용
 
         if (player.Controller.IsGrounded())
         {

@@ -24,7 +24,8 @@ public class PlayerState_Swim : IState
         // 수영 중 상태에서는 입력과 부력 처리는 PlayerController에 위임
         // 상태 전이는 WaterZone.cs → EventBus → FSM.OnExitWater() 경유로 처리됨
 
-        player.Controller.ReadMoveInput(); // 입력 반영 추가
+        player.Controller.ReadMoveInput();
+        player.AnimatorWrapper.UpdateFlowDirection(); // 보간된 방향값을 애니메이터에 적용 // 입력 반영 추가
 
         // 예외 처리: 물에서 벗어났는데 상태 전환이 안 되었을 경우 대비 (보조 안전장치)
         if (!WaterSystem.IsUnderwater(player.transform.position))

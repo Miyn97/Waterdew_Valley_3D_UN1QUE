@@ -85,13 +85,15 @@ public class PlayerState_Move : IState
             if (Mathf.Abs(horizontal) < 0.01f) horizontal = 0f;
             if (Mathf.Abs(vertical) < 0.01f) vertical = 0f;
 
-            player.AnimatorWrapper.SetDirection(horizontal, vertical); // 방향 설정
+            player.AnimatorWrapper.SetDirection(horizontal, vertical);
+            player.AnimatorWrapper.UpdateFlowDirection(); // 보간된 방향값을 애니메이터에 적용 // 방향 설정
         }
 
         // 이동 입력이 완전히 끊긴 경우 → 블렌드트리와 이동 파라미터 초기화
         if (!player.Controller.HasMovementInput() && player.Controller.IsGrounded())
         {
-            player.AnimatorWrapper.SetDirection(0f, 0f); // 블렌드 트리 중앙 복귀
+            player.AnimatorWrapper.SetDirection(0f, 0f);
+            player.AnimatorWrapper.UpdateFlowDirection(); // 보간된 방향값을 애니메이터에 적용 // 블렌드 트리 중앙 복귀
             player.AnimatorWrapper.SetMove(false);       // 이동 파라미터 OFF
         }
 

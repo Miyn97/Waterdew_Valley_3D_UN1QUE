@@ -19,6 +19,7 @@ public class PlayerState_Idle : IState
 
         // Idle 상태 진입 시 반드시 방향 초기화
         player.AnimatorWrapper.SetDirection(0f, 0f);
+        player.AnimatorWrapper.UpdateFlowDirection(); // 보간된 방향값을 애니메이터에 적용
 
         // 수영 중인 상태에서 Idle 상태 진입을 방지
         if (!player.Controller.IsGrounded()) // 접지되지 않은 경우 수영 상태로 강제 전환
