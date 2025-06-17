@@ -168,7 +168,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: efd9ae2d437ce2d49ae3ad930f4a4347, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  tilePrefab: {fileID: 2680447892472314014, guid: 37e10e1c218916443b5de800b18f00b1,
+  tilePrefab: {fileID: 7216079521550578413, guid: 37e10e1c218916443b5de800b18f00b1,
     type: 3}
   shipTransform: {fileID: 42339435}
 --- !u!114 &42339437
@@ -269,7 +269,7 @@ Transform:
   m_GameObject: {fileID: 422891881}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -2.5, y: 0, z: -100}
+  m_LocalPosition: {x: -2.5, y: -5.56, z: -100}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -823,6 +823,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   controller: {fileID: 923123304}
   animatorWrapper: {fileID: 923123303}
+  playerCamera: {fileID: 0}
   hand: {fileID: 0}
   fishingRodPrefab: {fileID: 0}
   hammerPrefab: {fileID: 0}

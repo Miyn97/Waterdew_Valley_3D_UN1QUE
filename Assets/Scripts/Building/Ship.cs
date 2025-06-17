@@ -13,8 +13,19 @@ public class Ship : MonoBehaviour
 
     public void RegisterTile(Vector2Int position, Tile tile)
     {
-        if (!IsOccupied(position))
-            placedTiles.Add(position, tile);
+        Vector2Int size = tile.size;
+
+        for (int x = 0; x < size.x; x++)
+        {
+            for (int y = 0; y < size.y; y++)
+            {
+                Vector2Int offset = new(position.x + x, position.y + y);
+                if (!IsOccupied(offset))
+                {
+                    placedTiles.Add(offset, tile);
+                }
+            }
+        }
     }
 
     public List<Vector2Int> GetBuildablePositions()
@@ -22,18 +33,28 @@ public class Ship : MonoBehaviour
         HashSet<Vector2Int> result = new();
 
         Vector2Int[] directions = {
-            Vector2Int.up, Vector2Int.down,
-            Vector2Int.left, Vector2Int.right
-        };
+        Vector2Int.up, Vector2Int.down,
+        Vector2Int.left, Vector2Int.right
+    };
 
         foreach (var tile in placedTiles.Values)
         {
-            foreach (var dir in directions)
+            Vector2Int pos = tile.gridPosition;
+            Vector2Int size = tile.size;
+
+            for (int x = 0; x < size.x; x++)
             {
-                Vector2Int neighbor = tile.gridPosition + dir;
-                if (!IsOccupied(neighbor))
+                for (int y = 0; y < size.y; y++)
                 {
-                    result.Add(neighbor);
+                    Vector2Int current = pos + new Vector2Int(x, y);
+                    foreach (var dir in directions)
+                    {
+                        Vector2Int neighbor = current + dir;
+                        if (!IsOccupied(neighbor))
+                        {
+                            result.Add(neighbor);
+                        }
+                    }
                 }
             }
         }
@@ -48,10 +69,13 @@ public class Ship : MonoBehaviour
             Tile tile = child.GetComponent<Tile>();
             if (tile != null)
             {
-                Vector3 pos = child.position;
-                Vector2Int gridPos = new Vector2Int(Mathf.RoundToInt(pos.x), Mathf.RoundToInt(pos.z));
-                tile.gridPosition = gridPos;
+                Vector3 localPos = child.localPosition;
+                Vector2Int gridPos = new Vector2Int(
+                    Mathf.RoundToInt(localPos.x),
+                    Mathf.RoundToInt(localPos.z)
+                );
 
+                tile.gridPosition = gridPos;
                 RegisterTile(gridPos, tile);
             }
             else

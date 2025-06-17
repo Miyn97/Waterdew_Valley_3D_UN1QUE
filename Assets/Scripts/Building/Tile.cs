@@ -5,7 +5,8 @@ public class Tile : MonoBehaviour, IBuildableSurface
     [SerializeField] private BuildingData data;
     [SerializeField] private bool isOccupied = false;  // 타일 위에 이미 설치되어 있는가?
 
-    public Vector2Int gridPosition; // 이 타일의 위치
+    public Vector2Int gridPosition;
+    public Vector2Int size = new Vector2Int(2, 2);
 
     public bool CanBuildHere(Vector3 worldPosition)
     {
