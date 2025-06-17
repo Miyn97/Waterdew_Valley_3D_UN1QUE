@@ -1,4 +1,6 @@
-﻿using UnityEngine;
+﻿using System.Runtime.CompilerServices;
+
+using UnityEngine;
 
 // 건축 모드 상태 클래스
 public class PlayerState_Build : IState
@@ -14,7 +16,8 @@ public class PlayerState_Build : IState
     public void Enter()
     {
         Debug.Log("건축 모드 진입"); // 디버그 출력
-        hammerPrefab = Object.Instantiate(player.hammerPrefab, player.hand.position, Quaternion.identity, player.hand);
+        player.buildManager.SetActive(true);
+        hammerPrefab = Object.Instantiate(player.hammerPrefab, player.hand, false);
     }
 
     public void Update()
@@ -31,6 +34,10 @@ public class PlayerState_Build : IState
     public void Exit()
     {
         Debug.Log("건축 모드 종료");
+
+        BuildManager buildManager = player.buildManager.GetComponent<BuildManager>();
+        buildManager.ClearPreview(); // 프리뷰 제거
+        player.buildManager.SetActive(false);
         Object.Destroy(hammerPrefab);
     }
 }
