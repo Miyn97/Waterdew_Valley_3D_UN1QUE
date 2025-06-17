@@ -12,20 +12,27 @@ public class PlayerState_Jump : IState
 
     public void Enter()
     {
-        player.AnimatorWrapper.SetJump(true); // 점프 애니메이션 활성화
+        player.AnimatorWrapper.SetJump(true); // 1. 애니메이션 먼저 설정
+        player.Controller.DoJump();           // 2. Y속도 상승은 그다음
     }
 
     public void Update()
     {
-        player.Controller.ReadMoveInput(); // 입력 처리
+        player.Controller.ReadMoveInput();
+        player.AnimatorWrapper.UpdateFlowDirection(); // 보간된 방향값을 애니메이터에 적용
 
-        // 착지 시 상태 전환
         if (player.Controller.IsGrounded())
         {
+            if (player.AnimatorWrapper != null)
+                player.AnimatorWrapper.SetJump(false); // 애니메이션 먼저 false로 전환
+
+            // 한 프레임 정도 딜레이 두기 → Exit()과 충돌 방지
+            // 예: 다음 프레임에 전이되도록 보장할 수 있는 flag, 또는 상태 잠깐 유지
+
             if (player.Controller.HasMovementInput())
-                player.FSM.ChangeState(PlayerStateType.Move); // 이동 상태로 전환
+                player.FSM.ChangeState(PlayerStateType.Move);
             else
-                player.FSM.ChangeState(PlayerStateType.Idle); // 대기 상태로 전환
+                player.FSM.ChangeState(PlayerStateType.Idle);
         }
     }
 
