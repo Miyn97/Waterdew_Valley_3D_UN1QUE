@@ -39,6 +39,10 @@ public class Bobber : MonoBehaviour
         isFlying = false;
         rb.isKinematic = true;
         transform.position = startPosition.position;
+        EventBus.PublishVoid("OffBiteText");
+        EventBus.PublishVoid("OffSuccessText");
+        EventBus.PublishVoid("OffFailText");
+        EventBus.PublishVoid("FishingExit");
     }
 
     private void OnTriggerEnter(Collider other)

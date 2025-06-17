@@ -20,11 +20,13 @@ public class FishingSystem : MonoBehaviour
     private void OnEnable()
     {
         EventBus.SubscribeVoid("StartFishing", StartFishing);
+        EventBus.SubscribeVoid("StopFishing", StopFishing);
     }
 
     private void OnDisable()
     {
         EventBus.UnsubscribeVoid("StartFishing", StartFishing);
+        EventBus.UnsubscribeVoid("StopFishing", StopFishing);
     }
 
     private void Update()
@@ -99,7 +101,7 @@ public class FishingSystem : MonoBehaviour
         qteTimer = 0f;
         Debug.Log($"미끼 물음 => {qteDuration}초 안에 좌클릭을 눌러주세요");
 
-        //uiManager.ShowQTE(qteDuration); // QTE UI 표시
+        EventBus.PublishVoid("OnBiteText");
 
         yield return new WaitForSeconds(qteDuration);
 
@@ -113,23 +115,22 @@ public class FishingSystem : MonoBehaviour
 
     private void CatchFish()
     {
+        EventBus.PublishVoid("OffBiteText");
         isQTEActive = false;
         isFishing = false;
-        Debug.Log("낚시 성공!");
 
         FishData fish = GetRandomFish();
         //inventory.AddItem(fish);
         Debug.Log($"{fish.ItemName}를 잡음.");
-        //uiManager.ShowCatchResult(caught);
+        EventBus.PublishVoid("OnSuccessText");
     }
 
     private void FailCatch()
     {
+        EventBus.PublishVoid("OffBiteText");
         isQTEActive = false;
         isFishing = false;
-        Debug.Log("낚시 실패");
-
-        //uiManager.ShowFail();
+        EventBus.PublishVoid("OnFailText");
     }
 
     FishData GetRandomFish()
