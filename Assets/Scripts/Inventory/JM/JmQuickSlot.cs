@@ -5,10 +5,20 @@ using UnityEngine.UI;
 
 public class JmQuickSlot : JmSlot
 {
-    public JmSlot linkedSlot = null;
-
     new public void UpdateData()
     {
-        iconImage.sprite = linkedSlot.currentItem.Icon;
+        if (linkedSlot == null)
+        {
+            iconImage.sprite = defaultSprite;
+        }
+        else
+        {
+            iconImage.sprite = linkedSlot.currentItem.Icon;
+        }   
+    }
+
+    public int GetIndex()
+    {
+        return slotIndex;
     }
 }

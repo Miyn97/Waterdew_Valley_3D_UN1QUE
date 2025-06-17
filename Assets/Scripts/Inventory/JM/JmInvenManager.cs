@@ -44,11 +44,11 @@ public class JmInvenManager : MonoBehaviour
 
     public void AddItem1()
     {
-        slotManager.AddItemToFirstEmptySlot(item1);
+        slotManager.AddItem(item1);
     }
 
     public void AddItem2()
     {
-        slotManager.AddItemToFirstEmptySlot(item2);
+        slotManager.AddItem(item2);
     }
 }
