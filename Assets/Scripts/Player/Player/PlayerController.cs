@@ -281,4 +281,11 @@ public class PlayerController : MonoBehaviour
             activeCamera = cam;
         }
     }
+
+    // 외부에서 점프 발동을 명시적으로 호출할 수 있게
+    public void DoJump()
+    {
+        verticalVelocity = jumpPower; // 수직 속도 적용 (점프)
+        jumpBufferCounter = 0f;       // 버퍼 초기화
+    }
 }
