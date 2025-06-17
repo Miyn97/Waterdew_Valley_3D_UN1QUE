@@ -13,11 +13,13 @@ MonoBehaviour:
   m_Name: Watermelon
   m_EditorClassIdentifier: 
   itemName: "\uC218\uBC15"
-  icon: {fileID: 10905, guid: 0000000000000000f000000000000000, type: 0}
+  icon: {fileID: 21300000, guid: 8a29f17bdd7f0a947bf5a743bab73d54, type: 3}
   prefab: {fileID: 6510785524417947894, guid: 8cecfeb0e0a5c45759c73bb110127f26, type: 3}
   type: 2
   isStackable: 1
   maxStack: 99
-  description: 
+  description: "\uC218\uBD84\uC744 \uD574\uC18C\uD558\uACE0 \uBC30\uACE0\uD514\uC774
+    \uB35C\uD574\uC9D1\uB2C8\uB2E4."
   consumableType: 0
-  recoverAmount: 0
+  thirstRecoveryAmount: 50
+  hungerRecoveryAmount: 10

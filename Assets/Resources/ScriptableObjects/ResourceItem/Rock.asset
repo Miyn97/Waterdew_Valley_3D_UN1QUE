@@ -13,9 +13,9 @@ MonoBehaviour:
   m_Name: Rock
   m_EditorClassIdentifier: 
   itemName: "\uB3CC"
-  icon: {fileID: 10905, guid: 0000000000000000f000000000000000, type: 0}
+  icon: {fileID: 21300000, guid: 7f31e6c10eb955e4ea08e0134b937882, type: 3}
   prefab: {fileID: 3880871706849649510, guid: 0f385dd56bb47a04394925f29291cea2, type: 3}
   type: 0
   isStackable: 1
   maxStack: 99
-  description: 
+  description: "\uBB34\uAC70\uC6CC\uC694..."

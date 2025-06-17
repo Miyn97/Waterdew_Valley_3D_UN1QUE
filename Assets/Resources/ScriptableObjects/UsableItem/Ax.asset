@@ -13,12 +13,13 @@ MonoBehaviour:
   m_Name: Ax
   m_EditorClassIdentifier: 
   itemName: "\uB3C4\uB07C"
-  icon: {fileID: 10905, guid: 0000000000000000f000000000000000, type: 0}
+  icon: {fileID: 21300000, guid: 7dd28ca0e1a3d494ab5d7225a4335ac7, type: 3}
   prefab: {fileID: 4586116627414374723, guid: f8036623967dc4ffda3530d823c2aa53, type: 3}
   type: 3
   isStackable: 0
   maxStack: 1
-  description: 
+  description: "\uC798\uBABB \uC9C0\uC5B4\uC9C4 \uAD6C\uC870\uBB3C\uC744 \uCCA0\uAC70\uD560
+    \uC218 \uC788\uC2B5\uB2C8\uB2E4."
   toolType: 3
   durability: 100
   modelPrefab: {fileID: 0}

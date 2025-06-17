@@ -13,12 +13,13 @@ MonoBehaviour:
   m_Name: Hook
   m_EditorClassIdentifier: 
   itemName: "\uAC08\uACE0\uB9AC"
-  icon: {fileID: 10905, guid: 0000000000000000f000000000000000, type: 0}
+  icon: {fileID: 21300000, guid: 71b79229749583c45a48ff914a69eef2, type: 3}
   prefab: {fileID: 8908998305605828380, guid: d81c9c9e334254965a3c7031e4c473b8, type: 3}
   type: 3
   isStackable: 0
   maxStack: 1
-  description: 
+  description: "\uBC14\uB2E4\uC5D0 \uB5A0\uC788\uB294 \uC4F0\uB808\uAE30\uB97C \uAC74\uC838\uC62C\uB9B4
+    \uB54C \uC774 \uB180\uB77C\uC6B4 \uC544\uC774\uD15C\uC744 \uC0AC\uC6A9\uD558\uC138\uC694!"
   toolType: 0
   durability: 100
   modelPrefab: {fileID: 0}

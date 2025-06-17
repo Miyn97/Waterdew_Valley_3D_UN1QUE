@@ -13,12 +13,12 @@ MonoBehaviour:
   m_Name: FishingRod
   m_EditorClassIdentifier: 
   itemName: "\uB09A\uC2DC\uB300"
-  icon: {fileID: 10905, guid: 0000000000000000f000000000000000, type: 0}
+  icon: {fileID: 21300000, guid: f0c75bc11b92c1745bd5c7cdd31b5d14, type: 3}
   prefab: {fileID: 710172043394107229, guid: b8ed8cf95e6884a74bf55806fd281091, type: 3}
   type: 3
   isStackable: 0
   maxStack: 1
-  description: 
+  description: "\uC0DD\uC120\uC744 \uB09A\uC744 \uC218 \uC788\uC2B5\uB2C8\uB2E4."
   toolType: 2
   durability: 100
   modelPrefab: {fileID: 0}
