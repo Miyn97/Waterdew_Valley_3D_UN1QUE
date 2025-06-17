@@ -7,6 +7,10 @@ public class EnemyChaseState : IEnemyState
     private EnemyController enemy;
     private Transform currentTarget;
 
+    // 타겟 변경 쿨타임
+    private float targetSwitchCooldown = 2f;
+    private float lastTargetSwitchTime = -Mathf.Infinity;
+
     public EnemyChaseState(EnemyController enemy)
     {
         this.enemy = enemy;
@@ -15,6 +19,7 @@ public class EnemyChaseState : IEnemyState
     public void Enter(EnemyController enemy)
     {
         currentTarget = enemy.GetTarget();
+        lastTargetSwitchTime = Time.time;
         Debug.Log($"Chase 상태 진입 → 초기 타겟: {currentTarget?.name}");
     }
 
@@ -28,9 +33,11 @@ public class EnemyChaseState : IEnemyState
             return;
         }
 
-        if (newTarget != currentTarget)
+        // 일정 시간 지나야 타겟 변경 허용
+        if (newTarget != currentTarget && Time.time - lastTargetSwitchTime >= targetSwitchCooldown)
         {
             currentTarget = newTarget;
+            lastTargetSwitchTime = Time.time;
             Debug.Log($"Chase 타겟 변경 → {currentTarget.name}");
         }
 
