@@ -11,7 +11,7 @@ public class JmDragManager : MonoBehaviour
     public JmSlot originSlot;
 
     public Image draggingItemImage; // Canvas 위에 떠있는 이미지
-    private TestItem draggingItem;
+    private ItemBaseData draggingItem;
 
     void Awake() => Instance = this;
 
@@ -26,7 +26,7 @@ public class JmDragManager : MonoBehaviour
         originSlot = fromSlot;
         draggingItem = fromSlot.currentItem;
 
-        draggingItemImage.sprite = draggingItem.icon;
+        draggingItemImage.sprite = draggingItem.Icon;
         draggingItemImage.gameObject.SetActive(true);
     }
 

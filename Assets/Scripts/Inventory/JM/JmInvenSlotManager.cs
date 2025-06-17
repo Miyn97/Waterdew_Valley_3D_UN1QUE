@@ -36,7 +36,7 @@ public class JmInvenSlotManager : MonoBehaviour
         }
     }
 
-    public void AddItemToFirstEmptySlot(TestItem item)
+    public void AddItemToFirstEmptySlot(ItemBaseData item)
     {
         foreach (var slot in slotList)
         {

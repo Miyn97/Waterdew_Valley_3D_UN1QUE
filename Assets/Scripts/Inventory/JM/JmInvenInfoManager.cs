@@ -19,7 +19,7 @@ public class JmInvenInfoManager : MonoBehaviour
         iconObjImage = iconObj.GetComponent<Image>();
     }
 
-    public void UpdateInfoState(TestItem slot)
+    public void UpdateInfoState(ItemBaseData slot)
     {
         if (slot == null)
         {
@@ -27,8 +27,8 @@ public class JmInvenInfoManager : MonoBehaviour
             return;
         }
 
-        iconObjImage.sprite = slot.icon;
+        iconObjImage.sprite = slot.Icon;
         nameTxt.text = slot.name;
-        desTxt.text = slot.des;
+        desTxt.text = slot.Description;
     }
 }

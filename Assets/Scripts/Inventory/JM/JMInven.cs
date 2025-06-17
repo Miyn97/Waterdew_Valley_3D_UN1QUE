@@ -27,8 +27,8 @@ public class JMInven : MonoBehaviour
     private List<JmSlot> slotList = new();
 
     [Header("테스트용")]
-    public TestItem item1;
-    public TestItem item2;
+    public ItemBaseData item1;
+    public ItemBaseData item2;
 
 
     void Start()
@@ -136,7 +136,7 @@ public class JMInven : MonoBehaviour
     }
 
     
-    private void AddItemToFirstEmptySlot(TestItem item)
+    private void AddItemToFirstEmptySlot(ItemBaseData item)
     //    아이템을 넣을 때 빈 슬롯을 찾아가게 만들기
     {
         if (item == null)

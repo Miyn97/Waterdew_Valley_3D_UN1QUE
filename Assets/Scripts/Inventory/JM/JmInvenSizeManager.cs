@@ -41,8 +41,6 @@ public class JmInvenSizeManager : MonoBehaviour
     public void ResizeMainInventoryBase(int columns, int rows)
     {
         var vertical = mainInventoryBaseRect.GetComponent<VerticalLayoutGroup>();
-        var padding = vertical.padding;
-        float spacing = vertical.spacing;
 
         // contentRect 크기 기준으로 증가분 계산
         float widthGrowth = (columns - baseColumns) * (slotWidth + spacingX);

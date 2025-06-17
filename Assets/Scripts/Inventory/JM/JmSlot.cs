@@ -3,7 +3,7 @@ using UnityEngine.UI;
 
 public class JmSlot : MonoBehaviour
 {
-    public TestItem currentItem;
+    public ItemBaseData currentItem;
     public Image iconImage;
 
     public int slotIndex;
@@ -16,8 +16,8 @@ public class JmSlot : MonoBehaviour
 
     public void UpdateData()
     {
-        if (currentItem != null && currentItem.icon != null)
-            iconImage.sprite = currentItem.icon;
+        if (currentItem != null && currentItem.Icon != null)
+            iconImage.sprite = currentItem.Icon;
         else
             iconImage.sprite = null;
     }

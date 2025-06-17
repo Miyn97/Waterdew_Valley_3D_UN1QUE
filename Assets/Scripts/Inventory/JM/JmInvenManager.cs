@@ -12,7 +12,7 @@ public class JmInvenManager : MonoBehaviour
     public int defaultRows = 2;
 
     [Header("선택 관련")]
-    public TestItem nowSelectedItem;
+    public ItemBaseData nowSelectedItem;
     //    나중에 아이템 데이터 넣는다면 이곳 바꾸기!
     public bool isSelected = false;
 
@@ -23,8 +23,8 @@ public class JmInvenManager : MonoBehaviour
 
 
     [Header("디버그용")]
-    public TestItem item1;
-    public TestItem item2;
+    public ItemBaseData item1;
+    public ItemBaseData item2;
 
     private void Awake()
     {
