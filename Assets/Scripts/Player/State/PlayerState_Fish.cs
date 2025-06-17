@@ -30,7 +30,7 @@ public class PlayerState_Fish : IState
 
     public void Exit()
     {
-        Debug.Log("낚시 모드 해제");
+        EventBus.PublishVoid("StopFishing");
         Object.Destroy(fishingRodPrefab);
     }
 }

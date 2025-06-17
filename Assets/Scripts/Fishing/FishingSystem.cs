@@ -20,11 +20,13 @@ public class FishingSystem : MonoBehaviour
     private void OnEnable()
     {
         EventBus.SubscribeVoid("StartFishing", StartFishing);
+        EventBus.SubscribeVoid("StopFishing", StopFishing);
     }
 
     private void OnDisable()
     {
         EventBus.UnsubscribeVoid("StartFishing", StartFishing);
+        EventBus.UnsubscribeVoid("StopFishing", StopFishing);
     }
 
     private void Update()

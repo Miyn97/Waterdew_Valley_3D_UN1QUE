@@ -12,6 +12,17 @@ public class FishingRod : MonoBehaviour
 
     private float chargeTimer = 0f;
     private bool isCharging = false;
+    private bool isFishing = false;
+
+    private void OnEnable()
+    {
+        EventBus.SubscribeVoid("FishingExit", FishingExit);
+    }
+
+    private void OnDisable()
+    {
+        EventBus.UnsubscribeVoid("FishingExit", FishingExit);
+    }
 
     void Update()
     {
@@ -21,10 +32,11 @@ public class FishingRod : MonoBehaviour
     void HandleInput()
     {
         // 좌클릭 시작
-        if (Input.GetMouseButtonDown(0))
+        if (!isFishing && Input.GetMouseButtonDown(0))
         {
             chargeTimer = 0f;
             isCharging = true;
+            EventBus.PublishVoid("StartCasting");
         }
 
         // 좌클릭 유지중 => 타이머 증가
@@ -38,12 +50,14 @@ public class FishingRod : MonoBehaviour
         if (isCharging && Input.GetMouseButtonUp(0))
         {
             isCharging = false;
+            EventBus.PublishVoid("StopCasting");
             Cast();
         }
     }
 
     void Cast()
     {
+        isFishing = true;
         float chargePercent = Mathf.Clamp01(chargeTimer / maxChargeTime);
         float distance = chargePercent * maxDistance;
 
@@ -53,5 +67,10 @@ public class FishingRod : MonoBehaviour
         Vector3 direction = (targetPoint - startPoint.position).normalized;
 
         bobber.Throw(direction, distance);
+    }
+
+    private void FishingExit()
+    {
+        isFishing = false;
     }
 }
