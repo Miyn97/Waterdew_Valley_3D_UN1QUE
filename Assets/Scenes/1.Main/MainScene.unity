@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 410087040}
-  m_IndirectSpecularColor: {r: 0.12934391, g: 0.12716216, b: 0.48253366, a: 1}
+  m_IndirectSpecularColor: {r: 0.12101715, g: 0.12709786, b: 0.4849571, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -1186,6 +1186,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   health: 100
   moveSpeed: 3
+  rotationSpeed: 5
   attackRange: 0.5
   patrolRadius: 10
   detectionRange: 25
@@ -1300,7 +1301,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!65 &1042514739
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -1433,6 +1434,66 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1449850992
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1449850995}
+  - component: {fileID: 1449850994}
+  - component: {fileID: 1449850993}
+  m_Layer: 0
+  m_Name: Raft
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1449850993
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1449850992}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: efd9ae2d437ce2d49ae3ad930f4a4347, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  tilePrefab: {fileID: 2639880361665079991, guid: 37e10e1c218916443b5de800b18f00b1,
+    type: 3}
+  shipTransform: {fileID: 1449850995}
+--- !u!114 &1449850994
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1449850992}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b382a19bd3ed61746a68972c9d1f2805, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!4 &1449850995
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1449850992}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1546202430
 GameObject:
   m_ObjectHideFlags: 0
@@ -1556,6 +1617,55 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -0.011330721, y: 2.0263283, z: -0.96613413}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1760691832
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1760691834}
+  - component: {fileID: 1760691833}
+  m_Layer: 0
+  m_Name: BuildManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1760691833
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1760691832}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9af1250eee9dcd74ba3ba7065d7549b5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  datas:
+  - {fileID: 11400000, guid: 7138c761cea90924885f9fc8f2947cdf, type: 2}
+  - {fileID: 11400000, guid: 69e10dd9bcf57d045b8a3fb9a61d2e95, type: 2}
+  - {fileID: 11400000, guid: 3e35c8e5defa6204e809424eacda0da1, type: 2}
+  ship: {fileID: 1449850994}
+--- !u!4 &1760691834
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1760691832}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -2590,7 +2700,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 6436459906577581020}
   m_HandleRect: {fileID: 5443042756417605952}
   m_Direction: 2
-  m_Value: 1
+  m_Value: 0
   m_Size: 1
   m_NumberOfSteps: 0
   m_OnValueChanged:
@@ -5363,6 +5473,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   health: 100
   moveSpeed: 3
+  rotationSpeed: 5
   attackRange: 2
   patrolRadius: 10
   detectionRange: 30
@@ -5370,6 +5481,7 @@ MonoBehaviour:
   raft: {fileID: 1042514742}
   isPlayerInWater: 0
   isDead: 0
+  headTransform: {fileID: 0}
 --- !u!114 &4253232339235859010
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -7570,6 +7682,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   controller: {fileID: 6690902105328845335}
   animatorWrapper: {fileID: 6690902105328845334}
+  playerCamera: {fileID: 0}
   hand: {fileID: 2635160840945300446, guid: c226221eef9bf1a41b5e6b5e2438496e, type: 3}
   fishingRodPrefab: {fileID: 5877046999365019029, guid: d9fc4e67fb7469d43bd318c6d10c6f2e,
     type: 3}
@@ -35706,6 +35819,7 @@ SceneRoots:
   - {fileID: 2096817496}
   - {fileID: 737166296486500462}
   - {fileID: 1685933691}
+  - {fileID: 1449850995}
   - {fileID: 1042514742}
   - {fileID: 654751993}
   - {fileID: 473533395}
@@ -35718,6 +35832,7 @@ SceneRoots:
   - {fileID: 4434155454780162544}
   - {fileID: 4362010005540441290}
   - {fileID: 619880868}
+  - {fileID: 1760691834}
   - {fileID: 32184926}
   - {fileID: 8048453851467666194}
   - {fileID: 947190265}

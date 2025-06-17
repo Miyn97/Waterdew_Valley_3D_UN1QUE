@@ -148,7 +148,7 @@ public class BuildManager : MonoBehaviour
 
         // fallback: y=0 평면과의 교차점 (거리 제한 추가)
         float distance;
-        if (new Plane(Vector3.up, Vector3.zero).Raycast(ray, out distance))
+        if (new Plane(Vector3.up, new Vector3(0, -1, 0)).Raycast(ray, out distance))
         {
             if (distance <= maxBuildDistance)
                 return ray.GetPoint(distance);
@@ -175,6 +175,6 @@ public class BuildManager : MonoBehaviour
 
     Vector3 GridToWorld(Vector2Int grid)
     {
-        return new Vector3(grid.x, 0, grid.y);
+        return new Vector3(grid.x, -1, grid.y);
     }
 }
