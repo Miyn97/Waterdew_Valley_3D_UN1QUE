@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using System.Linq;
 
 using UnityEngine;
 
@@ -125,7 +124,10 @@ public class BuildManager : MonoBehaviour
                 {
                     Vector3 snapped = surface.GetSnappedPosition(mousePos);
                     Instantiate(currentData.prefab, currentPreview.transform.position, currentPreview.transform.rotation);
-                    surface.RegisterBuild(snapped);
+                    if (!currentData.isEdgeBuilding)
+                    {
+                        surface.RegisterBuild(snapped);
+                    }
                 }
             }
         }
