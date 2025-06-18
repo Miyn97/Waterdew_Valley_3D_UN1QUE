@@ -7,20 +7,17 @@ public class ItemPickup : MonoBehaviour
     public ItemBaseData itemData;
     public int quantity = 1;
 
-    private void OnTriggerEnter(Collider other)
+    public void PickUp(GameObject picker)
     {
-        if(other.CompareTag("Player"))
+        var inventory = picker.GetComponent<Inventory>();
+        if (inventory != null)
         {
-            var inventory = other.GetComponent<Inventory>();
-            if (inventory != null)
-            {
-                inventory.AddItem(itemData, quantity);
+            inventory.AddItem(itemData, quantity);
 
-                var ui = FindObjectOfType<UIInventory>();
-                if (ui != null) ui.Refresh();
+            var ui = FindObjectOfType<UIInventory>();
+            if (ui != null) ui.Refresh();
 
-                Destroy(gameObject);
-            }
+            Destroy(gameObject);
         }
     }
 }

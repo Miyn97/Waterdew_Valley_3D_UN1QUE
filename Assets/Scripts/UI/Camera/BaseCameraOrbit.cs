@@ -11,6 +11,7 @@ public class BaseCameraOrbit : MonoBehaviour
     [SerializeField] protected float minY = -30f;      // 피치 최소 각도
     [SerializeField] protected float maxY = 60f;       // 피치 최대 각도
 
+
     [Header("카메라 거리 및 충돌 설정")]
     [SerializeField] protected Vector3 offset = new Vector3(0f, -4.4f, -2.65f); // 기본 오프셋 위치 (3인칭 기준)
     [SerializeField] protected float collisionOffset = 0.2f; // 충돌 시 카메라 거리 보정

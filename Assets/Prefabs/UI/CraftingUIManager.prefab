@@ -1,0 +1,81 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &7789197383838375580
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 4362010006513059931}
+  - component: {fileID: 6527291801734090495}
+  m_Layer: 0
+  m_Name: CraftingUIManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &4362010006513059931
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7789197383838375580}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 293.4044, y: 813.7169, z: -12.188782}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &6527291801734090495
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7789197383838375580}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a1c2b3912013ea04886736f14efe155d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  categoryBar: {fileID: 0}
+  recipeScrollContent: {fileID: 0}
+  requireItemScrollContent: {fileID: 0}
+  categoryButtonPrefab: {fileID: 6682147037545928492, guid: ad9807bed5b16f84ea7b23361f7fffdc,
+    type: 3}
+  recipeButtonPrefab: {fileID: 2776825519207653139, guid: 606b5b04fe557fe4ca67acb5e26f1021,
+    type: 3}
+  requireItemUIPrefab: {fileID: 4639661210233066724, guid: a3b50572555bf424ab8f13316494136b,
+    type: 3}
+  recipeIcon: {fileID: 0}
+  recipeText: {fileID: 0}
+  descriptionText: {fileID: 0}
+  categoryIconImage: {fileID: 0}
+  categoryText: {fileID: 0}
+  recipeListPanel: {fileID: 0}
+  descriptionPanel: {fileID: 0}
+  allRecipes:
+  - {fileID: 11400000, guid: c879e927f969f4b4bbab1689590d504f, type: 2}
+  - {fileID: 11400000, guid: 6a00a03c017aa784a9b74952dc2fde43, type: 2}
+  - {fileID: 11400000, guid: ecd83573267482742aa90a9f0d94b5bd, type: 2}
+  - {fileID: 11400000, guid: abee23b9c82a53845bb316bcf4b917c9, type: 2}
+  - {fileID: 11400000, guid: db2a2ee28910b7d499773656a8907982, type: 2}
+  - {fileID: 11400000, guid: dbf30ab4098437b4c85b4e0b0c8ee74b, type: 2}
+  - {fileID: 11400000, guid: c2fe6b3f0a25f8e409e8a7f9cb4ecaf4, type: 2}
+  - {fileID: 11400000, guid: 5b9a06b36d95905408625d391f7b222c, type: 2}
+  - {fileID: 11400000, guid: f7a0799ad9d99ea4e94c584747045e6a, type: 2}
+  categoryIcons:
+  - {fileID: 10905, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 10905, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 10905, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 10905, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 10905, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 10905, guid: 0000000000000000f000000000000000, type: 0}
+  craftButton: {fileID: 0}
+  craftingSystem: {fileID: 0}

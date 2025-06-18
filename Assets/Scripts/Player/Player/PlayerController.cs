@@ -1,4 +1,6 @@
 ﻿using UnityEngine;
+using UnityEngine.Rendering;
+
 
 // 플레이어의 이동 및 점프 + 수영 부력까지 처리하는 컨트롤러 컴포넌트
 public class PlayerController : MonoBehaviour
@@ -20,6 +22,14 @@ public class PlayerController : MonoBehaviour
     [Header("참조")]
     [SerializeField] private Player player; // FSM 상태 확인용 Player 참조
 
+    [Header("수중 효과")]
+    [SerializeField] private Volume underwaterVolume; // 수중 상태용 볼륨
+    [SerializeField] private float waterSurfaceY = 0f; // 수면 기준 Y (WaterSystem에서 가져올 수도 있음)
+
+    [Header("시점 전환 설정")]
+    [SerializeField] private GameObject bodyRoot; // 플레이어 외형 루트 (예: Body_010)
+    [SerializeField] private bool isFirstPerson = false; // 현재 시점이 1인칭인지 여부
+
     private bool isSwimming = false; // 현재 수영 상태 여부
 
     private CharacterController characterController; // 캐릭터 이동 컨트롤러
@@ -28,17 +38,28 @@ public class PlayerController : MonoBehaviour
 
     private Camera activeCamera; // 현재 참조 중인 카메라
 
+    public Volume UnderwaterVolume => underwaterVolume; // 외부 상태에서 접근 가능하도록 프로퍼티 제공
+
     private void Awake()
     {
-        characterController = GetComponent<CharacterController>(); // 캐릭터 컨트롤러 캐싱
+        characterController = GetComponent<CharacterController>();
 
         if (player == null)
-            player = GetComponent<Player>(); // Player 참조 자동 연결 (없으면 null)
+            player = GetComponent<Player>();
+
+        if (bodyRoot == null)
+        {
+            Transform found = transform.Find("Body_010"); // 외형 루트 자동 탐색
+            if (found != null) bodyRoot = found.gameObject;
+        }
     }
 
     private void Start()
     {
         activeCamera = Camera.main; // 시작 시 메인 카메라 캐싱
+
+        // WaterSystem에서 수면 높이 가져오기 (초기화 한 번만)
+        waterSurfaceY = WaterSystem.GetSurfaceY(); // WaterSystem에 해당 메서드가 존재해야 함
     }
 
     private void Update()
@@ -53,6 +74,39 @@ public class PlayerController : MonoBehaviour
             Camera subCam = GameObject.FindWithTag("SubCamera")?.GetComponent<Camera>(); // SubCamera 검색
             if (subCam != null && subCam.enabled)
                 activeCamera = subCam;
+        }
+
+        // 플레이어가 수면 아래에 있을 경우 물 속 효과 적용
+        if (underwaterVolume != null)
+        {
+            float playerY = transform.position.y;
+            float surfaceY = waterSurfaceY;
+
+            // 수영 중이면서 수면보다 낮으면 수중 효과 적용
+            bool shouldApplyUnderwater =
+                player.FSM.CurrentStateType == PlayerStateType.Swim &&
+                playerY < surfaceY - 0.2f;
+
+            // 상태에 따라 Volume 전환
+            underwaterVolume.weight = shouldApplyUnderwater ? 1f : 0f;
+        }
+    }
+
+    // 시점 전환 시 외형 숨김 처리
+    public void SetFirstPersonView(bool enable)
+    {
+        isFirstPerson = enable;
+
+        if (bodyRoot != null)
+        {
+            // 기존 Renderer.enabled 방식 대신 → GameObject 비활성화
+            SkinnedMeshRenderer[] skinnedMeshes = bodyRoot.GetComponentsInChildren<SkinnedMeshRenderer>(true);
+
+            foreach (var smr in skinnedMeshes)
+            {
+                smr.gameObject.SetActive(!enable); // 1인칭이면 비활성화, 3인칭이면 활성화
+                Debug.Log($"[SkinnedMeshRenderer] {smr.gameObject.name} 활성화: {!enable}");
+            }
         }
     }
 
@@ -79,8 +133,22 @@ public class PlayerController : MonoBehaviour
         Vector3 moveDir = camForward * v + camRight * h; // 방향 계산
         moveInput = moveDir.sqrMagnitude > 0f ? moveDir.normalized : Vector3.zero; // GC 없는 이동 방향
 
-        if (moveInput.sqrMagnitude > 0.01f)
-            transform.forward = moveInput; // 캐릭터 회전
+        // 마우스 위치 기준 회전 (Ray + Plane)
+        Plane groundPlane = new Plane(Vector3.up, transform.position); // 수평 평면 생성
+        Ray ray = activeCamera.ScreenPointToRay(Input.mousePosition);  // 마우스 위치에서 발사
+
+        if (groundPlane.Raycast(ray, out float enter))
+        {
+            Vector3 hitPoint = ray.GetPoint(enter);
+            Vector3 lookDir = hitPoint - transform.position;
+            lookDir.y = 0f;
+
+            if (lookDir.sqrMagnitude > 0.01f)
+            {
+                Quaternion targetRotation = Quaternion.LookRotation(lookDir);
+                transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, Time.deltaTime * 10f); // 부드럽게 회전
+            }
+        }
 
         if (Input.GetKeyDown(KeyCode.Space))
             jumpBufferCounter = jumpBufferTime; // Space 입력 시 점프 버퍼 시작
@@ -141,8 +209,6 @@ public class PlayerController : MonoBehaviour
         verticalVelocity = Mathf.Clamp(verticalVelocity, -3f, 3f); // 속도 제한
     }
 
-
-
     private void HandleGravityAndJump()
     {
         if (characterController.isGrounded)
@@ -201,5 +267,25 @@ public class PlayerController : MonoBehaviour
     public bool IsJumpBuffered()
     {
         return jumpBufferCounter > 0f; // 점프 유예 체크
+    }
+
+    public Vector3 GetMoveInput()
+    {
+        return moveInput; // 현재 입력 방향 외부 제공
+    }
+
+    public void SetActiveCamera(Camera cam)
+    {
+        if (cam != null)
+        {
+            activeCamera = cam;
+        }
+    }
+
+    // 외부에서 점프 발동을 명시적으로 호출할 수 있게
+    public void DoJump()
+    {
+        verticalVelocity = jumpPower; // 수직 속도 적용 (점프)
+        jumpBufferCounter = 0f;       // 버퍼 초기화
     }
 }

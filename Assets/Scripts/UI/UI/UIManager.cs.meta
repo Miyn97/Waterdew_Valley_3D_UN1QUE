@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+<<<<<<<< HEAD:Assets/Scenes/SUMIN/Asset/com.verasl.water-system/Editor/WaterEditor.cs.meta
+guid: a989dcdde8e810547b47d475fb56cfa2
+========
+guid: 07cdec36ae91a8e42b3960cdaf44a09c
+>>>>>>>> develop:Assets/Scripts/UI/UI/UIManager.cs.meta
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences: []
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

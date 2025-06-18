@@ -6,6 +6,7 @@ TagManager:
   tags:
   - Raft
   - SubCamera
+  - Water
   layers:
   - Default
   - TransparentFX
@@ -15,13 +16,13 @@ TagManager:
   - UI
   - Wall
   - Ground
-  - 
+  - Player
   - 
   - 
   - Building
-  - 
-  - 
-  - 
+  - Raft
+  - Item
+  - Interactable
   - 
   - 
   - 

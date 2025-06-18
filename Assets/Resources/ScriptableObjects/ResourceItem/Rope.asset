@@ -13,8 +13,10 @@ MonoBehaviour:
   m_Name: Rope
   m_EditorClassIdentifier: 
   itemName: "\uB85C\uD504"
-  icon: {fileID: 10905, guid: 0000000000000000f000000000000000, type: 0}
-  prefab: {fileID: 7199304126770224487, guid: c5fdccc661d6def4a88b3c3a04c56ed4, type: 3}
+  icon: {fileID: 21300000, guid: 7a97cd367e47f5442b79d9911f1a4917, type: 3}
+  prefab: {fileID: 0}
   type: 0
   isStackable: 1
   maxStack: 99
+  description: "\uC57C\uC790\uC78E \uB450 \uAC1C\uB2F9 \uD558\uB098\uB97C \uB9CC\uB4E4
+    \uC218 \uC788\uC2B5\uB2C8\uB2E4."

@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+
 using UnityEngine;
 
 [CreateAssetMenu(menuName = "Item/Equipment")]
@@ -12,11 +13,11 @@ public class EquipmentItemData : ItemBaseData, IEquipable
 
     public void Equip(GameObject user)
     {
-        // user.GetComponent<PlayerStats>().AddAttack(attackPower);
+        // 장비 효과
     }
 
     public void Unequip(GameObject user)
     {
-        // user.GetComponent<PlayerStats>().RemoveAttack(attackPower);
+        // 장비 효과 해제
     }
 }

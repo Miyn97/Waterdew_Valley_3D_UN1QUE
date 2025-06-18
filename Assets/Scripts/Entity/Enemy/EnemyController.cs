@@ -10,13 +10,14 @@ public abstract class EnemyController : MonoBehaviour
     [Header("Stats")]
     public float health = 100f;
     public float moveSpeed = 3f;
+    public float rotationSpeed = 5f;
     public float attackRange = 0.5f;
 
     [Header("Patrol")]
     public float patrolRadius = 10f;
 
     [Header("Detection")]
-    public float detectionRange = 10f;
+    public float detectionRange = 25f;
 
     public Transform player;
     public Transform raft;

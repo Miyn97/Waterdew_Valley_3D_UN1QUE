@@ -153,7 +153,7 @@ Material:
     - _ReceiveShadows: 1
     - _Saturation: 1
     - _SaturationRef: 0.3
-    - _ScriptControl: 0.21016337
+    - _ScriptControl: 0
     - _Shininess: 0.1
     - _Smoothness: 0.5
     - _SmoothnessTextureChannel: 0

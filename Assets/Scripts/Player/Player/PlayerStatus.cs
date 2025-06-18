@@ -60,10 +60,20 @@ public class PlayerStatus : MonoBehaviour
             Die();//사망
         }
     }
+    public void TakeDamage(float damage)
+    {
+        playerHealth = Mathf.Clamp(playerHealth - damage, 0f, maxHealth);
+
+        if (playerHealth <= 0f)
+        {
+            Die();
+        }
+    }
 
     private void Die()
     {
         EventBus.PublishVoid("OnPlayerDie"); //사망 이벤트 발생
+        Debug.Log("플레이어 사망");
         // TODO : FSM 상태 전환, UI 표시 등 사망 처리
     }
 

@@ -6,9 +6,17 @@ public class Player : MonoBehaviour
     [Header("컴포넌트 참조")]
     [SerializeField] private PlayerController controller; // 이동/점프/수영 처리용 컨트롤러
     [SerializeField] private PlayerAnimation animatorWrapper; // 애니메이션 래퍼 클래스 (Animator 파라미터 제어용)
+    [SerializeField] private Camera playerCamera; // 현재 플레이어가 사용할 카메라 (3인칭 기준)
+    public GameObject buildManager;
+
+    public Transform hand;
+    public GameObject fishingRodPrefab;
+    public GameObject hammerPrefab;
+    public GameObject ropePrefab;
 
     public PlayerController Controller => controller; // 외부에서 접근 가능한 컨트롤러 프로퍼티 (읽기 전용)
     public PlayerAnimation AnimatorWrapper => animatorWrapper; // 외부에서 접근 가능한 애니메이션 래퍼 프로퍼티
+    public Camera PlayerCamera => playerCamera; // 외부에서 사용할 카메라 반환용 프로퍼티
 
     public PlayerFSM FSM { get; private set; } // 플레이어 FSM 상태머신
 
@@ -23,6 +31,10 @@ public class Player : MonoBehaviour
         // controller가 비어 있는 경우 자동으로 PlayerController 컴포넌트를 가져옴
         if (controller == null)
             controller = GetComponent<PlayerController>(); // 컨트롤러 자동 할당
+
+        // playerCamera가 비어 있는 경우 자동으로 Camera.main을 가져옴
+        if (playerCamera == null)
+            playerCamera = Camera.main; // 카메라 참조 자동 할당
     }
 
     private void Start()
@@ -77,17 +89,20 @@ public class Player : MonoBehaviour
     // 수영 상태 진입 처리
     private void OnEnterWater()
     {
-        FSM.ChangeState(PlayerStateType.Swim); // 수영 상태로 전이 (수면 아래일 경우)
+        // 애니메이터에 IsSwimming 파라미터 true 설정
+        animatorWrapper.SetSwimming(true);  // 수영 시작 시
+        FSM.ChangeState(PlayerStateType.Swim); // 수영 상태로 전이
     }
+
 
     // 수영 상태 탈출 처리
     private void OnExitWater()
     {
-        // 안전 처리: controller 존재 여부 체크 후 상태 전이
+        animatorWrapper.SetSwimming(false); // 수영 종료
+
         if (controller == null)
             return;
 
-        // 입력이 있는 경우 → 이동 상태, 입력 없을 경우 → 대기 상태
         if (controller.HasMovementInput())
             FSM.ChangeState(PlayerStateType.Move);
         else
