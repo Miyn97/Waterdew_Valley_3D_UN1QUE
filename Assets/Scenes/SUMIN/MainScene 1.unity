@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 410087040}
-  m_IndirectSpecularColor: {r: 0.12934391, g: 0.12716216, b: 0.48253366, a: 1}
+  m_IndirectSpecularColor: {r: NaN, g: NaN, b: NaN, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -3633,7 +3633,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 13060bdb125d7fd44bcae331aea351d5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  inventory: {fileID: 6690902105328845337}
+  inventory: {fileID: 0}
 --- !u!4 &619880868
 Transform:
   m_ObjectHideFlags: 0
@@ -8647,6 +8647,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: SM_Branch_01
       objectReference: {fileID: 0}
+    - target: {fileID: 6141652758128337264, guid: d45e9e9837680e8448990bc088ba7b07,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 7530913732543248565, guid: d45e9e9837680e8448990bc088ba7b07,
         type: 3}
       propertyPath: m_LocalScale.x
@@ -9054,7 +9059,7 @@ RenderTexture:
   m_TextureSettings:
     serializedVersion: 2
     m_FilterMode: 1
-    m_Aniso: 1
+    m_Aniso: 0
     m_MipBias: 0
     m_WrapU: 1
     m_WrapV: 1
@@ -15287,6 +15292,7 @@ MonoBehaviour:
   slotPrefab: {fileID: 8940059791229830844, guid: db284a57c059db542b8c31854240f2aa,
     type: 3}
   contentParent: {fileID: 5832403167654164682}
+  slotList: []
 --- !u!224 &1961720639473710418
 RectTransform:
   m_ObjectHideFlags: 0
