@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class WaterPurifier : MonoBehaviour, IInteractable
 {
-    [SerializeField] private float purifyTime = 15f;
+    [SerializeField] private float purifyTime = 3f;
     private bool isPurifying = false;
 
     [Header("필요 재료")]

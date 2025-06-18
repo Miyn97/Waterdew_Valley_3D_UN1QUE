@@ -3,7 +3,7 @@ using UnityEngine;
 
 public class Campfire : MonoBehaviour, IInteractable
 {
-    [SerializeField] private float cookTime = 15f;
+    [SerializeField] private float cookTime = 3f;
     private bool isCooking = false;
 
     [Header("필요 재료")]
