@@ -96,7 +96,8 @@ public class JmSlotController : MonoBehaviour, IPointerClickHandler
                 Debug.Log("아이템이 정보 확인하기!");
             }
         }
-       
+
+        invenManager.ClearDraggedItem();
     }
 
     void CompliteChange()
@@ -120,6 +121,9 @@ public class JmSlotController : MonoBehaviour, IPointerClickHandler
                 Debug.Log("아이템이 선택됨!");
                 invenManager.infoManager.UpdateInfoState(slot.currentItem);
                 //    누른 인벤 슬롯 정보 업데이트 하기(혹여나를 위해)
+
+                invenManager.SetCurrentDraggedItem(slot.currentItem);
+                //    드래그 이미지 할당
 
                 invenManager.selectedSlot1 = slot;
                 //    인벤토리 매니저에 처음 누른 슬롯 지정하기

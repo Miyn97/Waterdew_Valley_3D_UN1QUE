@@ -5,6 +5,8 @@ using UnityEngine.UI;
 
 public class JmQuickSlot : JmSlot
 {
+    public GameObject selectedHighlight;
+
     new public void UpdateData()
     {
         if (linkedSlot == null)

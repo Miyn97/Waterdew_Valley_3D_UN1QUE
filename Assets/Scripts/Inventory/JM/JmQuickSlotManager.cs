@@ -45,16 +45,30 @@ public class JmQuickSlotManager : MonoBehaviour
     //    퀵슬롯 사용 함수
     {
         JmQuickSlot slot = quickSlots[index];
+
+        OffAllHighlight();
         if (slot.linkedSlot != null && slot.linkedSlot.currentItem != null)
         {
             currSlot = quickSlots[index];
             Debug.Log($"[퀵슬롯] {index + 1}번 슬롯: {slot.linkedSlot.currentItem.itemName} 사용!");
-            // 여기서 아이템 사용 로직 호출하면 돼!
+
+            quickSlots[index].selectedHighlight.SetActive(true);
         }
         else
         {
             currSlot = quickSlots[index];
             Debug.Log($"[퀵슬롯] {index + 1}번 슬롯에 아무것도 연결되지 않음!");
+
+            quickSlots[index].selectedHighlight.SetActive(true);
+        }
+    }
+
+    void OffAllHighlight()
+    //    혹시 몰라 함수화
+    {
+        foreach (JmQuickSlot slot in quickSlots)
+        {
+            slot.selectedHighlight.SetActive(false);
         }
     }
 
