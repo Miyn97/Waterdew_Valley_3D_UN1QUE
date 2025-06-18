@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class CraftingSystem : MonoBehaviour
 {
-    public Inventory inventory;
+    public JmInvenSlotManager inventory;
 
     // 재료 확인
     public bool CanCraft(CraftingRecipe recipe)
@@ -14,9 +14,9 @@ public class CraftingSystem : MonoBehaviour
         {
             bool found = false;
 
-            foreach (var slot in inventory.slots)
+            foreach (var slot in inventory.slotList)
             {
-                if (slot.itemData == req.item && slot.quantity >= req.quantity)
+                if (slot.currentItem == req.item)
                 {
                     found = true;
                     break;
@@ -39,14 +39,27 @@ public class CraftingSystem : MonoBehaviour
             return;
         }
 
+        /*
         // 재료 차감
         foreach (var req in recipe.requiredItems)
         {
             inventory.RemoveItem(req.item, req.quantity);
         }
+        */
+
+        foreach(var req in recipe.requiredItems)
+        {
+            foreach(var slot in inventory.slotList)
+            {
+                if(slot.currentItem == req.item)
+                {
+                    slot.ClearSlot();
+                }
+            }
+        }
 
         // 결과 아이템 추가
-        inventory.AddItem(recipe.resultItem, recipe.resultQuantity);
+        inventory.AddItem(recipe.resultItem);
         Debug.Log($"제작 완료: {recipe.resultItem.ItemName}");
     }
 }

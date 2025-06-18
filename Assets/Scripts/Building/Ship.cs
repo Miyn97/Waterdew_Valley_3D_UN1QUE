@@ -54,10 +54,9 @@ public class Ship : MonoBehaviour
             Tile tile = child.GetComponent<Tile>();
             if (tile != null)
             {
-                Vector3 pos = child.position;
-                Vector2Int gridPos = new Vector2Int(Mathf.RoundToInt(pos.x), Mathf.RoundToInt(pos.z));
+                Vector3 localPos = child.localPosition;
+                Vector2Int gridPos = new Vector2Int(Mathf.RoundToInt(localPos.x), Mathf.RoundToInt(localPos.z));
                 tile.gridPosition = gridPos;
-
                 RegisterTile(gridPos, tile);
             }
             else
