@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using System.Linq;
 
 using UnityEngine;
 
@@ -32,6 +31,14 @@ public class BuildManager : MonoBehaviour
         else if (Input.GetKeyDown(KeyCode.Alpha3))
         {
             SetBuildItem(datas[2]);
+        }
+        else if (Input.GetKeyDown(KeyCode.Alpha4))
+        {
+            SetBuildItem(datas[3]);
+        }
+        else if (Input.GetKeyDown(KeyCode.Alpha5))
+        {
+            SetBuildItem(datas[4]);
         }
     }
 
@@ -117,7 +124,10 @@ public class BuildManager : MonoBehaviour
                 {
                     Vector3 snapped = surface.GetSnappedPosition(mousePos);
                     Instantiate(currentData.prefab, currentPreview.transform.position, currentPreview.transform.rotation);
-                    surface.RegisterBuild(snapped);
+                    if (!currentData.isEdgeBuilding)
+                    {
+                        surface.RegisterBuild(snapped);
+                    }
                 }
             }
         }

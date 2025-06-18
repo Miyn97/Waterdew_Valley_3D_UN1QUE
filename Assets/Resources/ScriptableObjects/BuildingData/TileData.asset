@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 252ddf3551864a0459e24459ca04d7fd, type: 3}
   m_Name: TileData
   m_EditorClassIdentifier: 
-  objName: "\uD0C0\uC77C"
-  description: "\uADF8\uB0E5 \uD0C0\uC77C"
+  objName: "\uD1A0\uB300"
+  description: "\uD1A0\uB300\uC785\uB2C8\uB2E4."
   icon: {fileID: 0}
   prefab: {fileID: 2639880361665079991, guid: 37e10e1c218916443b5de800b18f00b1, type: 3}
   preview: {fileID: 1958929863179281165, guid: b57eb8071b930c34e8dc99f2f8739f79, type: 3}

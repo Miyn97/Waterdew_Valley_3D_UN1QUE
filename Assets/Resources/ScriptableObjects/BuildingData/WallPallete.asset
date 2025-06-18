@@ -1,0 +1,20 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 252ddf3551864a0459e24459ca04d7fd, type: 3}
+  m_Name: WallPallete
+  m_EditorClassIdentifier: 
+  objName: "\uBCBD \uD314\uB808\uD2B8"
+  description: "\uBCBD \uD314\uB808\uD2B8\uC785\uB2C8\uB2E4."
+  icon: {fileID: 0}
+  prefab: {fileID: 6846051206053151885, guid: 04030db68fc7b0048aac2b6f9edb6667, type: 3}
+  preview: {fileID: 5333774340281592154, guid: e3ab9d94b564afe46bf593c49bb72058, type: 3}
+  isEdgeBuilding: 1

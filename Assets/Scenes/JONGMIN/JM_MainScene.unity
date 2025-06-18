@@ -7190,6 +7190,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a1c2b3912013ea04886736f14efe155d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  craftingPanel: {fileID: 0}
   categoryBar: {fileID: 5083402940401358516}
   recipeScrollContent: {fileID: 7825703711796851617}
   requireItemScrollContent: {fileID: 3619401297663164576}
@@ -7223,7 +7224,7 @@ MonoBehaviour:
   - {fileID: 10905, guid: 0000000000000000f000000000000000, type: 0}
   - {fileID: 10905, guid: 0000000000000000f000000000000000, type: 0}
   - {fileID: 10905, guid: 0000000000000000f000000000000000, type: 0}
-  craftButton: {fileID: 6775356224544768392}
+  craftButton: {fileID: 0}
   craftingSystem: {fileID: 0}
 --- !u!222 &6539398851656428913
 CanvasRenderer:
@@ -7369,9 +7370,9 @@ MonoBehaviour:
   swimSpeedMultiplier: 0.5
   swimVerticalSpeed: 2
   player: {fileID: 6690902105328845336}
-  underwaterVolume: {fileID: 832575518}
+  underwaterVolume: {fileID: 0}
   waterSurfaceY: 0
-  bodyRoot: {fileID: 5533443742397458082}
+  bodyRoot: {fileID: 0}
   isFirstPerson: 0
 --- !u!114 &6690902105328845336
 MonoBehaviour:
@@ -7389,13 +7390,10 @@ MonoBehaviour:
   animatorWrapper: {fileID: 6690902105328845334}
   playerCamera: {fileID: 0}
   buildManager: {fileID: 0}
-  hand: {fileID: 2635160840945300446, guid: c226221eef9bf1a41b5e6b5e2438496e, type: 3}
-  fishingRodPrefab: {fileID: 5877046999365019029, guid: d9fc4e67fb7469d43bd318c6d10c6f2e,
-    type: 3}
-  hammerPrefab: {fileID: 3117215516917313736, guid: 60a4f98ab1c84aa4988c610df895b0f1,
-    type: 3}
-  ropePrefab: {fileID: 2588234626549800564, guid: 0561a657ab291b041b0560c07c46a34e,
-    type: 3}
+  hand: {fileID: 0}
+  fishingRodPrefab: {fileID: 0}
+  hammerPrefab: {fileID: 0}
+  ropePrefab: {fileID: 0}
 --- !u!114 &6690902105328845337
 MonoBehaviour:
   m_ObjectHideFlags: 0

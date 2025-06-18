@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class JmInvenManager : MonoBehaviour
 {
@@ -25,6 +26,8 @@ public class JmInvenManager : MonoBehaviour
     public JmSlot selectedSlot2;
     //    두번째로 선택된 슬롯
 
+    //    더블클릭 확인용
+    public DragSlot dragSlot;
 
     [Header("디버그용")]
     public ItemBaseData item1;
@@ -42,13 +45,28 @@ public class JmInvenManager : MonoBehaviour
         sizeManager.ResizeContent(newCols, newRows);
     }
 
+    public void SetCurrentDraggedItem(ItemBaseData itemData)
+    {
+        dragSlot.SetItem(itemData.Icon);
+        dragSlot.gameObject.SetActive(true);
+    }
+
+    public void ClearDraggedItem()
+    {
+        if (dragSlot != null)
+        {
+            dragSlot.gameObject.SetActive(false);
+        }
+    }
+
+    //    디버그용
     public void AddItem1()
     {
-        slotManager.AddItemToFirstEmptySlot(item1);
+        slotManager.AddItem(item1);
     }
 
     public void AddItem2()
     {
-        slotManager.AddItemToFirstEmptySlot(item2);
+        slotManager.AddItem(item2);
     }
 }
