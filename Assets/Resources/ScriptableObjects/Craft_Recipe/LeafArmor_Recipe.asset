@@ -17,6 +17,6 @@ MonoBehaviour:
   resultQuantity: 1
   requiredItems:
   - item: {fileID: 11400000, guid: b1af1a3b92c3e4c46ac68a43052657ce, type: 2}
-    quantity: 24
+    quantity: 1
   - item: {fileID: 11400000, guid: c505978cf5884384f844ea5c28851866, type: 2}
-    quantity: 8
+    quantity: 1

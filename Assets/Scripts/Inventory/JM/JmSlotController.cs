@@ -22,6 +22,7 @@ public class JmSlotController : MonoBehaviour, IPointerClickHandler
     private void Update()
     {
         GetKeyAndSetQuickSlot();
+        //    키 값 읽어오기
     }
 
     public void OnPointerClick(PointerEventData eventData)
@@ -46,6 +47,7 @@ public class JmSlotController : MonoBehaviour, IPointerClickHandler
         {
             OnRightClick();
         }
+        invenManager.slotManager.UpdateAllSlots();
 
         lastClickTime = Time.time;
     }
@@ -192,6 +194,18 @@ public class JmSlotController : MonoBehaviour, IPointerClickHandler
 
     private void OnRightClick()
     {
-        // 우클릭 기능은 여기에!
+        //    우클릭 기능은 여기에!
+        //    크아아악! 원래는 사용인데!!
+
+        if (slot != null && slot.currentItem != null)
+        {            
+            invenManager.nowSelectedSlot = null;
+            invenManager.nowSelectedSlot = slot;
+            slot.ClearSlot();
+            invenManager.slotManager.UpdateAllSlots();
+
+            Debug.Log("아이템이 정보 확인하기!");
+        }
     }
+
 }

@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 410087040}
-  m_IndirectSpecularColor: {r: 0.121130645, g: 0.12701151, b: 0.48462147, a: 1}
+  m_IndirectSpecularColor: {r: NaN, g: NaN, b: NaN, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -619,7 +619,7 @@ MonoBehaviour:
   itemLayer:
     serializedVersion: 2
     m_Bits: 8192
---- !u!84 &223243143
+--- !u!84 &207887822
 RenderTexture:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -1504,7 +1504,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 13060bdb125d7fd44bcae331aea351d5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  inventory: {fileID: 6690902105328845337}
+  inventory: {fileID: 1916545563856526736}
 --- !u!4 &619880868
 Transform:
   m_ObjectHideFlags: 0
@@ -6040,7 +6040,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 6436459906577581020}
   m_HandleRect: {fileID: 5443042756417605952}
   m_Direction: 2
-  m_Value: 0
+  m_Value: 1
   m_Size: 1
   m_NumberOfSteps: 0
   m_OnValueChanged:
@@ -7214,6 +7214,7 @@ MonoBehaviour:
   slotPrefab: {fileID: 8940059791229830844, guid: db284a57c059db542b8c31854240f2aa,
     type: 3}
   contentParent: {fileID: 5832403167654164682}
+  slotList: []
 --- !u!224 &1961720639473710418
 RectTransform:
   m_ObjectHideFlags: 0
@@ -10368,7 +10369,7 @@ MonoBehaviour:
   m_HandleRect: {fileID: 4204552735651599062}
   m_Direction: 0
   m_Value: 0
-  m_Size: 1
+  m_Size: 0.99999994
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
@@ -38969,7 +38970,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   computeOverride: 0
-  _depthTex: {fileID: 223243143}
+  _depthTex: {fileID: 207887822}
   bakedDepthTex: {fileID: 0}
   _waves:
   - amplitude: 0.30540264

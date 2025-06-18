@@ -32,6 +32,22 @@ public class JmSlot : MonoBehaviour
         }
     }
 
+    public void ClearSlot()
+    {
+        iconImage.sprite = defaultSprite;
+
+        if(currentItem != null)
+            currentItem = null;
+
+        if (quickSlotHighlight.activeInHierarchy)
+            quickSlotHighlight.SetActive(false);
+
+        if (stackText.gameObject.activeInHierarchy)
+            stackText.gameObject.SetActive(false);
+
+        UpdateData();
+    }
+
     public void SetIndex(int index)
     {
         slotIndex = index;
@@ -54,7 +70,14 @@ public class JmSlot : MonoBehaviour
             if (quickSlotHighlight != null)
             //    이건 설정하는거 따로 만들기
             {
-
+                if(linkedSlot != null)
+                {
+                    quickSlotHighlight.SetActive(true);
+                }
+                else
+                {
+                    quickSlotHighlight.SetActive(false);
+                }
             }
 
 
