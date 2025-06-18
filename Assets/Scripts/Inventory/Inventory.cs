@@ -2,7 +2,7 @@
 
 using UnityEngine;
 
-public class Inventory : MonoBehaviour
+public class Inventory : Singleton<Inventory>
 {
     public class InventorySlot
     {

@@ -28,7 +28,7 @@ public class CameraSwitcher : MonoBehaviour
 
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.V)) // V 키 입력 시 카메라 전환
+        if (Input.GetKeyDown(KeyCode.Pause)) // Pause 키 입력 시 카메라 전환
         {
             isMainCameraActive = !isMainCameraActive;
 

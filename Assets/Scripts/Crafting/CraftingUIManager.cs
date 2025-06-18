@@ -120,6 +120,12 @@ public class CraftingUIManager : MonoBehaviour
             GameObject go = Instantiate(recipeButtonPrefab, recipeScrollContent);
             go.GetComponentInChildren<TextMeshProUGUI>().text = recipe.resultItem.ItemName;
 
+            Image iconImage = go.transform.Find("Icon")?.GetComponent<Image>();
+            if (iconImage != null)
+            {
+                iconImage.sprite = recipe.resultItem.Icon;
+            }
+
             go.GetComponent<Button>().onClick.AddListener(() =>
             {
                 ShowRecipeDetail(recipe);
