@@ -365,44 +365,6 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 1, y: 6, z: 1}
   m_Center: {x: 0, y: -3, z: 0}
---- !u!84 &184674563
-RenderTexture:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_Name: WaterDepthMap
-  m_ImageContentsHash:
-    serializedVersion: 2
-    Hash: 00000000000000000000000000000000
-  m_ForcedFallbackFormat: 4
-  m_DownscaleFallback: 0
-  m_IsAlphaChannelOptional: 0
-  serializedVersion: 5
-  m_Width: 1024
-  m_Height: 1024
-  m_AntiAliasing: 1
-  m_MipCount: -1
-  m_DepthStencilFormat: 94
-  m_ColorFormat: 0
-  m_MipMap: 0
-  m_GenerateMips: 1
-  m_SRGB: 0
-  m_UseDynamicScale: 0
-  m_BindMS: 0
-  m_EnableCompatibleFormat: 1
-  m_EnableRandomWrite: 0
-  m_TextureSettings:
-    serializedVersion: 2
-    m_FilterMode: 1
-    m_Aniso: 0
-    m_MipBias: 0
-    m_WrapU: 1
-    m_WrapV: 1
-    m_WrapW: 1
-  m_Dimension: 2
-  m_VolumeDepth: 1
-  m_ShadowSamplingMode: 2
 --- !u!1 &259143542
 GameObject:
   m_ObjectHideFlags: 0
@@ -1998,7 +1960,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!65 &1042514739
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -2197,6 +2159,7 @@ MonoBehaviour:
   slotPrefab: {fileID: 3131984594904250166, guid: 7969999020724424d9a3d481c8b9969a,
     type: 3}
   contentParent: {fileID: 1101114416}
+  currSlot: {fileID: 0}
 --- !u!222 &1101114420
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -2759,7 +2722,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bc179318cc7a1064baf2fdfbc1218a57, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  player: {fileID: 0}
+  playerPrefab: {fileID: 0}
+  spawnPoint: {fileID: 0}
 --- !u!4 &1362470456
 Transform:
   m_ObjectHideFlags: 0
@@ -2940,8 +2904,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   datas:
   - {fileID: 11400000, guid: 7138c761cea90924885f9fc8f2947cdf, type: 2}
-  - {fileID: 11400000, guid: 69e10dd9bcf57d045b8a3fb9a61d2e95, type: 2}
-  - {fileID: 11400000, guid: 3e35c8e5defa6204e809424eacda0da1, type: 2}
+  - {fileID: 11400000, guid: 93967e5180dd9a34c8d0183921e4fe9d, type: 2}
+  - {fileID: 11400000, guid: a97ea4a7fbad8f648b83c6d9dafa5975, type: 2}
+  - {fileID: 11400000, guid: 319f0ccda951b9f41a252c6cc594f858, type: 2}
   ship: {fileID: 7455817644224667478}
 --- !u!4 &1422426708
 Transform:
@@ -3305,6 +3270,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   contentRect: {fileID: 1632159729}
   mainInventoryBaseRect: {fileID: 1637233151}
+  helpUI: {fileID: 0}
   inventoryAreaRect: {fileID: 68845672}
   slotWidth: 90
   slotHeight: 90
@@ -3335,6 +3301,7 @@ MonoBehaviour:
   isSelected: 0
   selectedSlot1: {fileID: 0}
   selectedSlot2: {fileID: 0}
+  dragSlot: {fileID: 0}
   item1: {fileID: 11400000, guid: b1af1a3b92c3e4c46ac68a43052657ce, type: 2}
   item2: {fileID: 11400000, guid: c505978cf5884384f844ea5c28851866, type: 2}
 --- !u!224 &1637233151
@@ -3782,6 +3749,44 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1782937928}
   m_CullTransparentMesh: 1
+--- !u!84 &1792622597
+RenderTexture:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: WaterDepthMap
+  m_ImageContentsHash:
+    serializedVersion: 2
+    Hash: 00000000000000000000000000000000
+  m_ForcedFallbackFormat: 4
+  m_DownscaleFallback: 0
+  m_IsAlphaChannelOptional: 0
+  serializedVersion: 5
+  m_Width: 1024
+  m_Height: 1024
+  m_AntiAliasing: 1
+  m_MipCount: -1
+  m_DepthStencilFormat: 94
+  m_ColorFormat: 0
+  m_MipMap: 0
+  m_GenerateMips: 1
+  m_SRGB: 0
+  m_UseDynamicScale: 0
+  m_BindMS: 0
+  m_EnableCompatibleFormat: 1
+  m_EnableRandomWrite: 0
+  m_TextureSettings:
+    serializedVersion: 2
+    m_FilterMode: 1
+    m_Aniso: 0
+    m_MipBias: 0
+    m_WrapU: 1
+    m_WrapV: 1
+    m_WrapW: 1
+  m_Dimension: 2
+  m_VolumeDepth: 1
+  m_ShadowSamplingMode: 2
 --- !u!1 &1859899784
 GameObject:
   m_ObjectHideFlags: 0
@@ -6797,7 +6802,7 @@ Transform:
   m_GameObject: {fileID: 3167583505056111498}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -409.2, y: 0, z: 367.24}
+  m_LocalPosition: {x: -399.76, y: -1, z: 356.07}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -6919,9 +6924,9 @@ GameObject:
   - component: {fileID: 3046807418126186815}
   - component: {fileID: 7455817644224667478}
   - component: {fileID: 6559478322292844932}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Raft
-  m_TagString: Untagged
+  m_TagString: Raft
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -11970,7 +11975,7 @@ MonoBehaviour:
     type: 3}
   hammerPrefab: {fileID: 1726080695632769110, guid: 836a83d96fb34ec4d80558c6030d0fec,
     type: 3}
-  ropePrefab: {fileID: 2588234626549800564, guid: 0561a657ab291b041b0560c07c46a34e,
+  ropePrefab: {fileID: 6184935572641447442, guid: e4e64b256aa313c469f337cb09234f2a,
     type: 3}
 --- !u!114 &8359418725112243272
 MonoBehaviour:
@@ -35546,7 +35551,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   computeOverride: 0
-  _depthTex: {fileID: 184674563}
+  _depthTex: {fileID: 1792622597}
   bakedDepthTex: {fileID: 0}
   _waves:
   - amplitude: 0.30540264
