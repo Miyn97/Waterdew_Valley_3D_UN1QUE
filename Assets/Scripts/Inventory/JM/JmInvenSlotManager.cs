@@ -8,7 +8,7 @@ public class JmInvenSlotManager : MonoBehaviour
     public GameObject slotPrefab;
     public Transform contentParent;
 
-    private List<JmSlot> slotList = new();
+    public List<JmSlot> slotList = new();
 
     public void Init(int columns, int rows)
     {
