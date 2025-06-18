@@ -13,7 +13,7 @@ public class ShipInitializer : MonoBehaviour
     void GenerateInitialTiles()
     {
         GameObject tile = Instantiate(tilePrefab, shipTransform);
-        tile.transform.localPosition = new Vector3(10, -1, 10);
+        tile.transform.localPosition = new Vector3(0, -1, 0);
 
         Tile tileScript = tile.GetComponent<Tile>();
         if (tileScript != null)

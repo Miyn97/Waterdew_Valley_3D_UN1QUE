@@ -16,6 +16,5 @@ public class BuildingData : ScriptableObject
     public GameObject prefab;        // 실체 프리팹
     public GameObject preview;       // 프리뷰 프리팹
     public bool isEdgeBuilding;
-    //public float hitPoint;
     //public List<BuildCost> costs;
 }
