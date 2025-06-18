@@ -15,6 +15,7 @@ public class PlayerState_ThrowHook : IState
     public void Enter()
     {
         Debug.Log("Entered ThrowHook State");
+        //ropePrefab = Object.Instantiate(player.ropePrefab, player.hand.position, player.transform.rotation, player.hand);
         ropePrefab = Object.Instantiate(player.ropePrefab, player.hand.position, Quaternion.identity, player.hand);
         rope = ropePrefab.GetComponent<Rope>();
         hook = ropePrefab.GetComponentInChildren<Hook>();

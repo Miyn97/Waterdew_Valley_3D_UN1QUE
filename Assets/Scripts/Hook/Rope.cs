@@ -14,6 +14,17 @@ public class Rope : MonoBehaviour
 
     private float chargeTimer = 0f;
     private bool isCharging = false;
+    private bool isThrowing = false;
+
+    private void OnEnable()
+    {
+        EventBus.SubscribeVoid("ThrowingExit", ThrowingExit);
+    }
+
+    private void OnDisable()
+    {
+        EventBus.UnsubscribeVoid("ThrowingExit", ThrowingExit);
+    }
 
     void Update()
     {
@@ -23,10 +34,11 @@ public class Rope : MonoBehaviour
     void HandleInput()
     {
         // 좌클릭 시작
-        if (Input.GetMouseButtonDown(0))
+        if (!isThrowing && Input.GetMouseButtonDown(0))
         {
             chargeTimer = 0f;
             isCharging = true;
+            EventBus.PublishVoid("StartCasting");
         }
 
         // 좌클릭 유지중 => 타이머 증가
@@ -40,12 +52,14 @@ public class Rope : MonoBehaviour
         if (isCharging && Input.GetMouseButtonUp(0))
         {
             isCharging = false;
+            EventBus.PublishVoid("StopCasting");
             Cast();
         }
     }
 
     void Cast()
     {
+        isThrowing = true;
         float chargePercent = Mathf.Clamp01(chargeTimer / maxChargeTime);
         float distance = chargePercent * maxDistance;
 
@@ -55,5 +69,10 @@ public class Rope : MonoBehaviour
         Vector3 direction = (targetPoint - startPoint.position).normalized;
 
         hook.Throw(direction, distance);
+    }
+
+    private void ThrowingExit()
+    {
+        isThrowing = false;
     }
 }

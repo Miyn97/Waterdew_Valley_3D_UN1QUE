@@ -34,7 +34,6 @@ public class Hook : MonoBehaviour
     {
         if (isReturning) return; // 중복 방지
         isReturning = true;
-
         StartCoroutine(MoveBackToHand());
     }
 
@@ -52,6 +51,7 @@ public class Hook : MonoBehaviour
         transform.position = startPosition.position;
         isReturning = false;
 
+        EventBus.PublishVoid("ThrowingExit");
         hookSystem.HookSystemOff();
     }
 
