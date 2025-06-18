@@ -1,16 +1,12 @@
 ﻿using UnityEngine;
 
-[RequireComponent(typeof(LineRenderer))]
 public class Rope : MonoBehaviour
 {
-    public Transform handTransform;
     [SerializeField] private Transform hookTransform;
-
-    private LineRenderer line;
 
     [Header("References")]
     public Hook hook;
-    public Transform startPoint; // == handTransform
+    public Transform startPoint;
 
     [Header("Casting Settings")]
     public float maxDistance = 10f;
@@ -18,39 +14,31 @@ public class Rope : MonoBehaviour
 
     private float chargeTimer = 0f;
     private bool isCharging = false;
+    private bool isThrowing = false;
 
-    private void Awake()
+    private void OnEnable()
     {
-        line = GetComponent<LineRenderer>();
-        line.positionCount = 2;
-        line.startWidth = 1f;
-        line.endWidth = 1f;
-        line.useWorldSpace = true;
+        EventBus.SubscribeVoid("ThrowingExit", ThrowingExit);
+    }
+
+    private void OnDisable()
+    {
+        EventBus.UnsubscribeVoid("ThrowingExit", ThrowingExit);
     }
 
     void Update()
     {
-        DrawLine();
         HandleInput();
-    }
-
-    private void DrawLine()
-    {
-        if (handTransform == null || hookTransform == null)
-            return;
-
-        // 항상 손과 훅 사이를 선으로 그림(로프)
-        line.SetPosition(0, handTransform.position);
-        line.SetPosition(1, hookTransform.position);
     }
 
     void HandleInput()
     {
         // 좌클릭 시작
-        if (Input.GetMouseButtonDown(0))
+        if (!isThrowing && Input.GetMouseButtonDown(0))
         {
             chargeTimer = 0f;
             isCharging = true;
+            EventBus.PublishVoid("StartCasting");
         }
 
         // 좌클릭 유지중 => 타이머 증가
@@ -64,12 +52,14 @@ public class Rope : MonoBehaviour
         if (isCharging && Input.GetMouseButtonUp(0))
         {
             isCharging = false;
+            EventBus.PublishVoid("StopCasting");
             Cast();
         }
     }
 
     void Cast()
     {
+        isThrowing = true;
         float chargePercent = Mathf.Clamp01(chargeTimer / maxChargeTime);
         float distance = chargePercent * maxDistance;
 
@@ -79,5 +69,10 @@ public class Rope : MonoBehaviour
         Vector3 direction = (targetPoint - startPoint.position).normalized;
 
         hook.Throw(direction, distance);
+    }
+
+    private void ThrowingExit()
+    {
+        isThrowing = false;
     }
 }

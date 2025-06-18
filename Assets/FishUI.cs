@@ -1,4 +1,6 @@
-﻿using TMPro;
+﻿using System.Collections;
+
+using TMPro;
 
 using UnityEngine;
 
@@ -13,9 +15,7 @@ public class FishUI : MonoBehaviour
         EventBus.SubscribeVoid("OnBiteText", OnBiteText);
         EventBus.SubscribeVoid("OffBiteText", OffBiteText);
         EventBus.SubscribeVoid("OnSuccessText", OnSuccessText);
-        EventBus.SubscribeVoid("OffSuccessText", OffSuccessText);
         EventBus.SubscribeVoid("OnFailText", OnFailText);
-        EventBus.SubscribeVoid("OffFailText", OffFailText);
     }
 
     private void OnDisable()
@@ -23,9 +23,7 @@ public class FishUI : MonoBehaviour
         EventBus.UnsubscribeVoid("OnBiteText", OnBiteText);
         EventBus.UnsubscribeVoid("OffBiteText", OffBiteText);
         EventBus.UnsubscribeVoid("OnSuccessText", OnSuccessText);
-        EventBus.UnsubscribeVoid("OffSuccessText", OffSuccessText);
         EventBus.UnsubscribeVoid("OnFailText", OnFailText);
-        EventBus.UnsubscribeVoid("OffFailText", OffFailText);
     }
 
     private void OnBiteText()
@@ -41,20 +39,18 @@ public class FishUI : MonoBehaviour
     private void OnSuccessText()
     {
         successText.SetActive(true);
-    }
-
-    private void OffSuccessText()
-    {
-        successText.SetActive(false);
+        StartCoroutine(HideAfterDelay(successText, 2f));
     }
 
     private void OnFailText()
     {
         failText.SetActive(true);
+        StartCoroutine(HideAfterDelay(failText, 2f));
     }
 
-    private void OffFailText()
+    private IEnumerator HideAfterDelay(GameObject target, float delay)
     {
-        failText.SetActive(false);
+        yield return new WaitForSeconds(delay);
+        target.SetActive(false);
     }
 }

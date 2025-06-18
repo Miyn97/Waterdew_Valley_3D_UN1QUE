@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class Hook : MonoBehaviour
 {
+    [SerializeField] private LayerMask itemLayer; // 붙을 수 있는 오브젝트의 레이어
     public Transform startPosition;
     private Rigidbody rb;
     private HookSystem hookSystem;
@@ -33,7 +34,6 @@ public class Hook : MonoBehaviour
     {
         if (isReturning) return; // 중복 방지
         isReturning = true;
-
         StartCoroutine(MoveBackToHand());
     }
 
@@ -51,6 +51,7 @@ public class Hook : MonoBehaviour
         transform.position = startPosition.position;
         isReturning = false;
 
+        EventBus.PublishVoid("ThrowingExit");
         hookSystem.HookSystemOff();
     }
 
@@ -63,7 +64,7 @@ public class Hook : MonoBehaviour
         rb.velocity = Vector3.zero;
         rb.angularVelocity = Vector3.zero;
 
-        if (other.CompareTag("Water"))
+        if (other.CompareTag("Water") || ((1 << other.gameObject.layer) & itemLayer) != 0)
         {
             hookSystem.HookSystemOn();
         }
