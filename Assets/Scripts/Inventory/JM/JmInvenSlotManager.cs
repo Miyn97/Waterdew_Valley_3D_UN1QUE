@@ -36,7 +36,8 @@ public class JmInvenSlotManager : MonoBehaviour
         }
     }
 
-    public void AddItemToFirstEmptySlot(ItemBaseData item)
+    public void AddItem(ItemBaseData item)
+    //    디버그용
     {
         foreach (var slot in slotList)
         {
@@ -45,6 +46,26 @@ public class JmInvenSlotManager : MonoBehaviour
                 slot.currentItem = item;
                 slot.UpdateData();
                 break;
+            }
+        }
+    }
+
+    public void AddItem(ItemBaseData item, int? num)
+    //    나중에 쓰게 될 것
+    {
+        int amountToAdd = num ?? 1;
+
+        if (item.IsStackable)
+        {
+            // 스택 가능한 아이템이면 한번에 추가
+            //TryAddToStack(item, amountToAdd);
+        }
+        else
+        {
+            // 스택 불가능하면 하나씩 반복해서 추가
+            for (int i = 0; i < amountToAdd; i++)
+            {
+                //TryAddToInventory(item);
             }
         }
     }

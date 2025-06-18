@@ -8,34 +8,20 @@ public class JmSlotController : MonoBehaviour, IPointerClickHandler
 
     [HideInInspector] public JmInvenManager invenManager;
 
-    // JmSlot 참조
+    //    JmSlot 참조
     private JmSlot slot;
 
 
     private void Awake()
     {
-        // 같은 오브젝트에 붙어 있다고 가정
+        //    같은 오브젝트에 붙어 있다고 가정
         slot = GetComponent<JmSlot>();
         invenManager = GetComponentInParent<JmInvenManager>();
     }
 
     private void Update()
     {
-        if (invenManager.nowSelectedSlot != null)
-        {
-            for (int i = 0; i < 9; i++)
-            {
-                if (Input.GetKeyDown(KeyCode.Alpha1 + i))
-                {
-                    invenManager.quickSlotManager.SetQuickSlot(i, invenManager.nowSelectedSlot);
-
-                    Debug.Log($"퀵슬롯 {i + 1}번에 {invenManager.nowSelectedSlot} 등록!");
-
-                    invenManager.nowSelectedSlot = null;
-                    break;
-                }
-            }
-        }
+        GetKeyAndSetQuickSlot();
     }
 
     public void OnPointerClick(PointerEventData eventData)
@@ -48,18 +34,16 @@ public class JmSlotController : MonoBehaviour, IPointerClickHandler
             if (timeSinceLastClick <= doubleClickThreshold)
             //    만약 더블클릭 감지 시간 내에 두번 클릭했다면?
             {
-                //Debug.Log("좌클릭 두 번 감지!");
                 OnDoubleClick();
             }
             else
+            //    감지시간이 초기화된 상태라면(어차피 더블클릭도 여길 거친다.....)
             {
-                //Debug.Log("좌클릭 감지!");
                 OnSingleClick();
             }
         }
         else if (eventData.button == PointerEventData.InputButton.Right)
         {
-            //Debug.Log("우클릭 감지!");
             OnRightClick();
         }
 
@@ -73,6 +57,7 @@ public class JmSlotController : MonoBehaviour, IPointerClickHandler
         //    놓는것도 더블클릭이면 많이 불편할 것이다
         {
             if (slot != null && slot.currentItem == null)
+            //    만약 슬롯에 아이템이 없다면?
             {
                 // 두 번째 슬롯 지정
                 invenManager.selectedSlot2 = slot;
@@ -81,53 +66,49 @@ public class JmSlotController : MonoBehaviour, IPointerClickHandler
                 invenManager.selectedSlot2.currentItem = invenManager.selectedSlot1.currentItem;
                 invenManager.selectedSlot1.currentItem = null;
 
-                invenManager.selectedSlot1.UpdateData();
-                invenManager.selectedSlot2.UpdateData();
-
-                //    상태 초기화
-                invenManager.selectedSlot1 = null;
-                invenManager.selectedSlot2 = null;
-                invenManager.isSelected = false;
-
-                Debug.Log("아이템 옮기기 완료!");
+                CompliteChange();
             }
             else if (slot != null && slot.currentItem != null)
             {
-                // 두 번째 슬롯 지정
+                //    두 번째 슬롯 지정
                 invenManager.selectedSlot2 = slot;
 
-                // 임시 아이템 저장
+                //    임시 아이템 저장
                 var tempItem = invenManager.selectedSlot1.currentItem;
 
-                // 서로 교체!
+                //    서로 교체!
                 invenManager.selectedSlot1.currentItem = invenManager.selectedSlot2.currentItem;
                 invenManager.selectedSlot2.currentItem = tempItem;
 
-                invenManager.selectedSlot1.UpdateData();
-                invenManager.selectedSlot2.UpdateData();
-
-                // 선택 초기화
-                invenManager.selectedSlot1 = null;
-                invenManager.selectedSlot2 = null;
-                invenManager.isSelected = false;
-
-                Debug.Log("아이템 교체 완료!");
+                CompliteChange();
             }
         }
         else
-        //    하지만 선택되지 않은 상태라면
+        //    하지만 아이템이 선택되지 않은 상태라면
         {
             if (slot != null && slot.currentItem != null)
             {
-                invenManager.nowSelectedSlot = null;
                 //    이전에 선택됬던거 할당 해제하기!
+                invenManager.nowSelectedSlot = null;
 
                 invenManager.infoManager.UpdateInfoState(slot.currentItem);
                 invenManager.nowSelectedSlot = slot;
                 Debug.Log("아이템이 정보 확인하기!");
             }
         }
-       
+
+        invenManager.ClearDraggedItem();
+    }
+
+    void CompliteChange()
+    {
+        invenManager.selectedSlot1.UpdateData();
+        invenManager.selectedSlot2.UpdateData();
+
+        //    선택 초기화
+        invenManager.selectedSlot1 = null;
+        invenManager.selectedSlot2 = null;
+        invenManager.isSelected = false;
     }
 
     private void OnDoubleClick()
@@ -140,6 +121,9 @@ public class JmSlotController : MonoBehaviour, IPointerClickHandler
                 Debug.Log("아이템이 선택됨!");
                 invenManager.infoManager.UpdateInfoState(slot.currentItem);
                 //    누른 인벤 슬롯 정보 업데이트 하기(혹여나를 위해)
+
+                invenManager.SetCurrentDraggedItem(slot.currentItem);
+                //    드래그 이미지 할당
 
                 invenManager.selectedSlot1 = slot;
                 //    인벤토리 매니저에 처음 누른 슬롯 지정하기
@@ -155,6 +139,56 @@ public class JmSlotController : MonoBehaviour, IPointerClickHandler
         }
         
     }
+
+    public void GetKeyAndSetQuickSlot()
+    {
+        if (invenManager.nowSelectedSlot != null)
+        {
+            for (int i = 0; i <= 9; i++)
+            {
+                if (Input.GetKeyDown(KeyCode.Alpha1 + i) && !Input.GetKeyDown(KeyCode.Alpha0))
+                {
+                    if(invenManager.nowSelectedSlot.linkedSlot == null)
+                    //    링크된 슬롯이 아직 없다면?
+                    {
+                        SetSlotInController(i);
+                        break;
+                    }
+                    else
+                    //    링크된 슬롯이 있다면
+                    {
+                        UnsetQuickSlotInController();
+                        SetSlotInController(i);
+                        break;
+                    }
+                }
+                else if (Input.GetKeyDown(KeyCode.Alpha0))
+                //    할당 해제
+                {
+                    UnsetQuickSlotInController();
+                    invenManager.nowSelectedSlot = null;
+                    break;
+                }
+            }
+        }
+    }
+
+    //========================================================================
+    //    요 아래는 중복되서 함수화 시킨것들
+    void SetSlotInController(int index)
+    {
+        invenManager.quickSlotManager.SetQuickSlot(index, invenManager.nowSelectedSlot);
+        invenManager.nowSelectedSlot = null;
+    }
+
+    void UnsetQuickSlotInController()
+    {
+        invenManager.quickSlotManager.UnsetQuickSlot(
+                        invenManager.nowSelectedSlot.linkedSlot.slotIndex,
+                        invenManager.nowSelectedSlot);
+    }
+    //========================================================================
+
 
     private void OnRightClick()
     {

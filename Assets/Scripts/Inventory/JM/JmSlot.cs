@@ -13,8 +13,14 @@ public class JmSlot : MonoBehaviour
 
     public int slotIndex;
 
+    [Header("퀵슬롯 관련")]
+    public JmSlot linkedSlot = null;
+
+    [Header("디폴트 설정")]
+    public Sprite defaultSprite;
+
     private void Start()
-    {
+    { 
         if(quickSlotHighlight != null)
         {
             quickSlotHighlight.SetActive(false);
@@ -33,23 +39,32 @@ public class JmSlot : MonoBehaviour
 
     public void UpdateData()
     {
-        if (currentItem != null && currentItem.Icon != null)
-            iconImage.sprite = currentItem.Icon;
-        else
-            iconImage.sprite = null;
-
-        if (quickSlotHighlight != null)
-        //    이건 설정하는거 따로 만들기
+        if(currentItem == null)
         {
-            
+            iconImage.sprite = defaultSprite;
+            stackText.gameObject.SetActive(false);
         }
-
-        if (currentItem.IsStackable)
+        else
         {
-            stackText.gameObject.SetActive(true);
-            stackText.text = currentItem.MaxStack.ToString();
-            //    일단 max로 지정
-            //    후에 생성된다면 이걸로 수정
+            if (currentItem != null && currentItem.Icon != null)
+                iconImage.sprite = currentItem.Icon;
+            else
+                iconImage.sprite = null;
+
+            if (quickSlotHighlight != null)
+            //    이건 설정하는거 따로 만들기
+            {
+
+            }
+
+
+            if (currentItem.IsStackable)
+            {
+                stackText.gameObject.SetActive(true);
+                stackText.text = currentItem.MaxStack.ToString();
+                //    일단 max로 지정
+                //    후에 생성된다면 이걸로 수정
+            }
         }
 
     }

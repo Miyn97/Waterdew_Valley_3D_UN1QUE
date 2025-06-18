@@ -8,6 +8,7 @@ public class JmInvenSizeManager : MonoBehaviour
     [Header("참조")]
     public RectTransform contentRect;
     public RectTransform mainInventoryBaseRect;
+    public RectTransform helpUI;
     public RectTransform inventoryAreaRect;
 
     [Header("슬롯 사이즈")]
@@ -50,6 +51,7 @@ public class JmInvenSizeManager : MonoBehaviour
         float newHeight = baseMainInventorySize.y + heightGrowth;
 
         mainInventoryBaseRect.sizeDelta = new Vector2(newWidth, newHeight);
+        helpUI.sizeDelta = new Vector2(newWidth, newHeight);
 
     }
 }
