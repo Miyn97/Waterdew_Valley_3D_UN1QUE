@@ -123,7 +123,8 @@ public class BuildManager : MonoBehaviour
                 if (surface != null && surface.CanBuildHere(mousePos))
                 {
                     Vector3 snapped = surface.GetSnappedPosition(mousePos);
-                    Instantiate(currentData.prefab, currentPreview.transform.position, currentPreview.transform.rotation);
+                    Transform parentTransform = ((MonoBehaviour)surface).transform;
+                    Instantiate(currentData.prefab, currentPreview.transform.position, currentPreview.transform.rotation, parentTransform);
                     if (!currentData.isEdgeBuilding)
                     {
                         surface.RegisterBuild(snapped);
