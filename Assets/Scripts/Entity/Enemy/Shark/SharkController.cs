@@ -1,4 +1,6 @@
-﻿using UnityEngine;
+﻿using System;
+
+using UnityEngine;
 
 
 public class SharkController : EnemyController
@@ -22,16 +24,18 @@ public class SharkController : EnemyController
         else if (target.CompareTag("Raft"))
         {
             Vector3 closestCorner = GetClosestCornerPosition(target.position, attackOrigin);
-            Debug.DrawLine(attackOrigin, closestCorner, Color.red, 1f); // 디버깅용
-            Debug.Log($"Shark가 뗏목의 가장 가까운 모서리({closestCorner})를 공격했습니다.");
-
-            // Raft 내구도 감소 로직 추가 필요
+            Tile tile = target.GetComponent<Tile>();
+            if (tile != null)
+            {
+                tile.TakeDamage(20f);
+                Debug.Log("Shark가 플레이어에게 피해를 입혔습니다.");
+            }
         }
     }
 
     public Vector3 GetClosestCornerPosition(Vector3 raftCenter, Vector3 fromPosition)
     {
-        float halfSize = 5f; // 타일의 절반
+        float halfSize = 1f; // 타일의 절반
         Vector3[] cornerOffsets =
         {
             new Vector3(-halfSize, 0, -halfSize),

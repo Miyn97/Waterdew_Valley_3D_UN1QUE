@@ -12,14 +12,15 @@ public class ShipInitializer : MonoBehaviour
 
     void GenerateInitialTiles()
     {
-        Vector3 position = new Vector3(0, -1, 0);
-        //Vector3 position = new Vector3(-400, -1, 355);
-        GameObject tile = Instantiate(tilePrefab, position, Quaternion.identity, shipTransform);
+        GameObject tile = Instantiate(tilePrefab, shipTransform);
+        tile.transform.localPosition = new Vector3(0, -1, 0);
 
         Tile tileScript = tile.GetComponent<Tile>();
         if (tileScript != null)
         {
-            tileScript.gridPosition = Vector2Int.zero;
+            Vector3 localPos = tile.transform.localPosition;
+            Vector2Int gridPos = new Vector2Int(Mathf.RoundToInt(localPos.x), Mathf.RoundToInt(localPos.z));
+            tileScript.gridPosition = gridPos;
         }
     }
 }
