@@ -48,7 +48,6 @@ public class GameManager : Singleton<GameManager> // 싱글톤 패턴 적용
     public void OnPlayerDead()
     {
         Debug.Log("GameManager: 플레이어 사망 처리");
-        EventBus.PublishVoid("OnPlayerDie"); // FSM 상태 전환 유도
     }
 
     // 게임 오버 로직 (예: UI 처리 등)
