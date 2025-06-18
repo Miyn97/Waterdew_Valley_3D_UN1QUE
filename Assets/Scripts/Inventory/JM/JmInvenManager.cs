@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class JmInvenManager : MonoBehaviour
+public class JmInvenManager : Singleton<JmInvenManager>
 {
     public JmInvenSlotManager slotManager;
     public JmInvenSizeManager sizeManager;
